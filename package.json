@@ -1,0 +1,29 @@
+{
+	"name": "@rangex/editor-toolbar",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"fix": "biome check --write",
+		"fix:unsafe": "biome check --write --unsafe",
+		"lint": "biome check && tsc"
+	},
+	"dependencies": {
+		"react": "^19.0.0-rc-163365a0-20240717",
+		"react-dom": "^19.0.0-rc-163365a0-20240717"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"@vitejs/plugin-react-swc": "^3.7.2",
+		"autoprefixer": "^10.4.20",
+		"postcss": "^8.4.49",
+		"tailwindcss": "^3.4.6",
+		"typescript": "^5.5.3",
+		"vite": "^6.0.3",
+		"vite-tsconfig-paths": "^5.1.3"
+	}
+}

@@ -1,0 +1,49 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"files": { "ignore": ["node_modules", ".next", "dist"] },
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"complexity": {
+				"useSimplifiedLogicExpression": "warn"
+			},
+			"correctness": {
+				"noUnusedImports": "warn",
+				"noUnusedPrivateClassMembers": "warn",
+				"noUnusedVariables": "warn"
+			},
+			"nursery": {
+				"useSortedClasses": "warn"
+			},
+			"style": {
+				"noDefaultExport": "warn",
+				"noNegationElse": "warn",
+				"noParameterProperties": "warn",
+				"useBlockStatements": "warn",
+				"useForOf": "warn",
+				"useShorthandArrayType": "warn",
+				"useShorthandAssign": "warn"
+			},
+			"suspicious": {
+				"noEmptyBlockStatements": "warn",
+				"noConfusingVoidType": "off"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"include": ["vite.config.ts", "tailwind.config.ts", "postcss.config.js"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDefaultExport": "off"
+					}
+				}
+			}
+		}
+	]
+}
