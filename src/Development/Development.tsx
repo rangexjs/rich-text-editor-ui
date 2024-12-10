@@ -1,4 +1,4 @@
-import { createRichTextEditor } from "src/Product";
+import { createRichTextEditor } from "src/Production";
 
 import { createRoot } from "react-dom/client";
 import type { SimulateProductEnvironmentProps } from "./Development-types";

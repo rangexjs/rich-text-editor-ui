@@ -7,7 +7,7 @@ import { EditorToolbar } from "./components";
 import type {
 	CreateRichTextEditorProps,
 	CreateRichTextEditorReturn,
-} from "./Product-types";
+} from "./Production-types";
 
 export const createRichTextEditor = ({
 	domNode,
