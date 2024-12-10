@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 
-import "./global.css";
+// @ts-ignore
+import inlineCss from "./global.css?inline";
 
 import { EditorToolbar } from "./components";
 
@@ -13,7 +14,15 @@ export const createRichTextEditor = ({
 	domNode,
 	richTextArea,
 }: CreateRichTextEditorProps): CreateRichTextEditorReturn => {
-	const root = createRoot(domNode);
+	const shadowRoot = domNode.attachShadow({ mode: "closed" });
+
+	const styleSheet = new CSSStyleSheet();
+
+	styleSheet.replaceSync(inlineCss);
+
+	shadowRoot.adoptedStyleSheets.push(styleSheet);
+
+	const root = createRoot(shadowRoot);
 
 	root.render(<EditorToolbar richTextArea={richTextArea} />);
 
