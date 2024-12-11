@@ -4,6 +4,7 @@
 	"organizeImports": {
 		"enabled": true
 	},
+	"formatter": { "enabled": false },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -15,9 +16,6 @@
 				"noUnusedImports": "warn",
 				"noUnusedPrivateClassMembers": "warn",
 				"noUnusedVariables": "warn"
-			},
-			"nursery": {
-				"useSortedClasses": "warn"
 			},
 			"style": {
 				"noDefaultExport": "warn",
