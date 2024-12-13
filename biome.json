@@ -27,6 +27,7 @@
 				"useShorthandAssign": "warn"
 			},
 			"suspicious": {
+				"noArrayIndexKey": "off",
 				"noEmptyBlockStatements": "warn",
 				"noConfusingVoidType": "off"
 			}
