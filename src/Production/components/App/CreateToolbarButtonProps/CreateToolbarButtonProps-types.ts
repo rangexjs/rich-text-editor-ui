@@ -62,6 +62,14 @@ export interface CreateItalicPropsProps
 	extends ToolbarButtonsStateManagerObj,
 		GetFormattableState<"italic"> {}
 
+export interface CreateStrikethroughPropsProps
+	extends ToolbarButtonsStateManagerObj,
+		GetFormattableState<"strikethrough"> {}
+
+export interface CreateUnderlinePropsProps
+	extends ToolbarButtonsStateManagerObj,
+		GetFormattableState<"underline"> {}
+
 type ButtonName = (typeof buttonsName)[keyof typeof buttonsName];
 
 export interface CreateToolbarButtonPropsProps

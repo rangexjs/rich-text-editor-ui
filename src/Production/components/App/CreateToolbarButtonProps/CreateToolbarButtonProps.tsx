@@ -10,6 +10,8 @@ import {
 	HistoryBackIcon,
 	HistoryForwardIcon,
 	ItalicIcon,
+	StrikethroughIcon,
+	UnderlineIcon,
 } from "../../SVGs";
 import type {
 	ToolbarButtonOnClickFn,
@@ -25,8 +27,10 @@ import type {
 	CreateColorPropsProps,
 	CreateHistoryBackPropsProps,
 	CreateItalicPropsProps,
+	CreateStrikethroughPropsProps,
 	CreateToolbarButtonPropsProps,
 	CreateToolbarButtonPropsReturn,
+	CreateUnderlinePropsProps,
 } from "./CreateToolbarButtonProps-types";
 
 const createAnchorProps = ({
@@ -55,7 +59,7 @@ const createBackgroundColorProps = ({
 	return {
 		isChecked: false,
 		isDisabled: state.isDisabled,
-		isChevron: false,
+		isChevron: true,
 		onClick,
 		children: [<BackgroundColorIcon key="background-color" />],
 	};
@@ -122,7 +126,7 @@ const createColorProps = ({
 	return {
 		isChecked: false,
 		isDisabled: state.isDisabled,
-		isChevron: false,
+		isChevron: true,
 		onClick,
 		children: [<ColorIcon key="color" />],
 	};
@@ -179,6 +183,44 @@ const createItalicProps = ({
 	};
 };
 
+const createStrikethroughProps = ({
+	toolbarButtonsStateManager,
+	state,
+}: CreateStrikethroughPropsProps): ToolbarButtonProps => {
+	const onClick: ToolbarButtonOnClickFn = ({ isChecked }) => {
+		const textDecoration = isChecked ? null : "line-through";
+
+		toolbarButtonsStateManager.onFormatStylesChange?.({ textDecoration });
+	};
+
+	return {
+		isChecked: state.isChecked,
+		isDisabled: state.isDisabled,
+		isChevron: false,
+		onClick,
+		children: [<StrikethroughIcon key="strikethrough" />],
+	};
+};
+
+const createUnderlineProps = ({
+	toolbarButtonsStateManager,
+	state,
+}: CreateUnderlinePropsProps): ToolbarButtonProps => {
+	const onClick: ToolbarButtonOnClickFn = ({ isChecked }) => {
+		const textDecoration = isChecked ? null : "underline";
+
+		toolbarButtonsStateManager.onFormatStylesChange?.({ textDecoration });
+	};
+
+	return {
+		isChecked: state.isChecked,
+		isDisabled: state.isDisabled,
+		isChevron: false,
+		onClick,
+		children: [<UnderlineIcon key="underline" />],
+	};
+};
+
 export const createToolbarButtonProps = ({
 	buttonName,
 	toolbarButtonsStateManager,
@@ -186,7 +228,8 @@ export const createToolbarButtonProps = ({
 	insertionButtons,
 	navigationButtons,
 }: CreateToolbarButtonPropsProps): CreateToolbarButtonPropsReturn => {
-	const { backgroundColor, bold, color, italic } = formattableButtons;
+	const { backgroundColor, bold, color, italic, strikethrough, underline } =
+		formattableButtons;
 
 	const { anchor, blockQuote, codeBlock } = insertionButtons;
 
@@ -244,6 +287,20 @@ export const createToolbarButtonProps = ({
 
 	if (buttonName === buttonsName.italic) {
 		return createItalicProps({ toolbarButtonsStateManager, state: italic });
+	}
+
+	if (buttonName === buttonsName.strikethrough) {
+		return createStrikethroughProps({
+			toolbarButtonsStateManager,
+			state: strikethrough,
+		});
+	}
+
+	if (buttonName === buttonsName.underline) {
+		return createUnderlineProps({
+			toolbarButtonsStateManager,
+			state: underline,
+		});
 	}
 
 	throw new Error("Every type has to be handled.");

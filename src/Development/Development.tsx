@@ -23,7 +23,16 @@ export const simulateProductEnvironment = ({
 
 	const editorToolbar: EditorToolbarRowsName = [
 		[["history-back", "history-forward"]],
-		[["bold", "italic", "color", "background-color"]],
+		[
+			[
+				"bold",
+				"italic",
+				"underline",
+				"strikethrough",
+				"color",
+				"background-color",
+			],
+		],
 	];
 
 	const richTextEditor = new RichTextEditor({
@@ -35,8 +44,12 @@ export const simulateProductEnvironment = ({
 	// Set initial state
 	setTimeout(() => {
 		richTextEditor.updateFormattableStyles({
+			backgroundColor: { isDisabled: false, values: new Set() },
 			bold: { isChecked: true, isDisabled: false },
+			color: { isDisabled: false, values: new Set() },
 			italic: { isChecked: false, isDisabled: false },
+			strikethrough: { isChecked: false, isDisabled: false },
+			underline: { isChecked: false, isDisabled: false },
 		});
 	}, 2e3);
 
