@@ -6,8 +6,12 @@
 		"newLine": "lf",
 		"baseUrl": ".",
 		"paths": {
-			"@components": ["src/Product/components"],
-			"@layouts": ["./src/layouts"]
+			"@components": ["src/Production/components"],
+			"@constants": ["src/Production/Constants"],
+			"@externalStores": ["src/Production/ExternalStores"],
+			"@toolbarButtonsStateManager": [
+				"src/Production/ToolbarButtonsStateManager"
+			]
 		},
 		"esModuleInterop": true,
 		"module": "ESNext",

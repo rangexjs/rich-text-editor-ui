@@ -24,7 +24,7 @@ export const ToolbarButton = ({
 	return (
 		<button
 			ref={buttonRef}
-			onClick={onClick}
+			onClick={(event) => onClick({ event, isChecked, isDisabled })}
 			type="button"
 			data-is-checked={isChecked}
 			data-is-disabled={isDisabled}
