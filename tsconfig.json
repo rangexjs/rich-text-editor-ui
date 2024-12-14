@@ -6,6 +6,7 @@
 		"newLine": "lf",
 		"baseUrl": ".",
 		"paths": {
+			"@public/*": ["src/Production/public/*"],
 			"@components": ["src/Production/components"],
 			"@constants": ["src/Production/Constants"],
 			"@externalStores": ["src/Production/ExternalStores"],
@@ -25,6 +26,6 @@
 		"plugins": [{ "name": "next" }],
 		"allowJs": true
 	},
-	"include": ["src/**/*", "index.ts"],
+	"include": ["src/**/*", "declaration.d.ts", "index.ts"],
 	"exclude": ["node_modules"]
 }
