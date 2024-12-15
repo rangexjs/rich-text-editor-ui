@@ -1,4 +1,6 @@
-interface HSLProps {
+import type { CSSProperties } from "react";
+
+export interface HSLProps {
 	h: number;
 	s: number;
 	l: number;
@@ -76,6 +78,10 @@ export interface OnColorChangeFnProps {
 export type OnColorChangeFn = (props: OnColorChangeFnProps) => void;
 
 export interface SpectrumColorProps {
-	hslColorState: HSLProps;
+	hsl: HSLProps;
+	panelWidth: number;
+	panelHeight: number;
 	onColorChange: OnColorChangeFn;
+	className?: string;
+	style?: CSSProperties;
 }

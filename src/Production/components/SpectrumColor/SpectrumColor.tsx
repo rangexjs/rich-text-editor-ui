@@ -5,7 +5,6 @@ import transparentBg from "@public/transparent.jpg";
 import { type OnThumbChangeFn, type RenderChildrenFn, Slider } from "../Slider";
 
 import type {
-	SpectrumColorProps,
 	GetHSLColorProps,
 	GetHorizontalThumbPositionProps,
 	GetPositionFromSaturationLightnessProps,
@@ -16,6 +15,7 @@ import type {
 	GetThumbPositionInPercentageReturn,
 	GetVerticalThumbPositionProps,
 	ManageThumbUpdateProps,
+	SpectrumColorProps,
 	ThumbPosition,
 } from "./SpectrumColor-types";
 
@@ -135,17 +135,17 @@ const getSaturationLightnessFromPosition = ({
 };
 
 const panelAnchor = "--panel-anchor";
-const panelWidth = 240;
-const panelHeight = 160;
 
 const thumbSize = 18;
 
 export const SpectrumColor = ({
-	hslColorState,
+	hsl,
+	panelWidth,
+	panelHeight,
 	onColorChange,
+	className,
+	style,
 }: SpectrumColorProps) => {
-	const [hsl, setHSL] = useState(hslColorState);
-
 	const thumbInitialPosition = getPositionFromSaturationLightness({
 		saturation: hsl.s,
 		lightness: hsl.l,
@@ -158,24 +158,6 @@ export const SpectrumColor = ({
 
 	const [isChangedFromColor, setIsChangedFromColor] = useState(true);
 	const panelRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		const { h, s, l, a } = hslColorState;
-
-		/**
-		 * Color can be controlled from outer scope, in order to
-		 * avoid infinite loop, we should not change the state if it's same
-		 */
-		if (hsl.h === h && hsl.s === s && hsl.l === l && hsl.a === a) {
-			return;
-		}
-
-		setHSL(hslColorState);
-	}, [hsl, hslColorState]);
-
-	useEffect(() => {
-		onColorChange({ hsl });
-	}, [onColorChange, hsl]);
 
 	useEffect(() => {
 		isChangedFromColor && setIsChangedFromColor(false);
@@ -229,7 +211,7 @@ export const SpectrumColor = ({
 		const roundedS = Math.round(saturation);
 		const roundedL = Math.round(lightness);
 
-		setHSL((prev) => ({ ...prev, s: roundedS, l: roundedL }));
+		onColorChange({ hsl: { ...hsl, s: roundedS, l: roundedL } });
 	};
 
 	const onPointerDown = (pointerEvent: PointerEvent) => {
@@ -279,13 +261,13 @@ export const SpectrumColor = ({
 	const onHueThumbChange: OnThumbChangeFn = ({ value }) => {
 		const hue = Math.round(360 * (value / 100));
 
-		setHSL((prev) => ({ ...prev, h: hue }));
+		onColorChange({ hsl: { ...hsl, h: hue } });
 	};
 
 	const onAlphaThumbChange: OnThumbChangeFn = ({ value }) => {
 		const alpha = +(value / 100).toFixed(2);
 
-		setHSL((prev) => ({ ...prev, a: alpha }));
+		onColorChange({ hsl: { ...hsl, a: alpha } });
 	};
 
 	const renderAlphaSliderChildren: RenderChildrenFn = ({ sliderAnchor }) => (
@@ -304,7 +286,7 @@ export const SpectrumColor = ({
 	);
 
 	return (
-		<div className="inline-block">
+		<div className={`inline-block ${className}`} style={style}>
 			<div
 				ref={panelRef}
 				style={{
