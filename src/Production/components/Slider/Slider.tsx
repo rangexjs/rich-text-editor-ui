@@ -41,6 +41,7 @@ export const Slider = ({
 	sliderTrackColor,
 	initialPosition = 0,
 	onThumbChange,
+	renderChildren,
 }: SliderProps) => {
 	const sliderTrackRef = useRef<HTMLDivElement>(null);
 
@@ -104,7 +105,7 @@ export const Slider = ({
 	return (
 		<div
 			ref={sliderTrackRef}
-			className="h-4 rounded-full"
+			className="h-4 overflow-clip rounded-full"
 			style={{
 				// @ts-ignore
 				anchorScope: sliderAnchor,
@@ -116,7 +117,7 @@ export const Slider = ({
 			onPointerUp={onPointerUp}
 		>
 			<span
-				className="absolute rounded-full border-2 border-white shadow-[0px_0px_4px_1px_#888]"
+				className="absolute z-50 rounded-full border-2 border-white shadow-[0px_0px_4px_1px_#888]"
 				style={{
 					// @ts-ignore
 					positionAnchor: sliderAnchor,
@@ -129,6 +130,7 @@ export const Slider = ({
 				onPointerDown={onPointerDown}
 				onPointerUp={onPointerUp}
 			/>
+			{renderChildren?.({ sliderAnchor })}
 		</div>
 	);
 };

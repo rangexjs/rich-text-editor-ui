@@ -2,7 +2,7 @@ import { type PointerEvent, useEffect, useRef, useState } from "react";
 
 import transparentBg from "@public/transparent.jpg";
 
-import { type OnThumbChangeFn, Slider } from "../Slider";
+import { type OnThumbChangeFn, type RenderChildrenFn, Slider } from "../Slider";
 
 import type {
 	ColorPickerProps,
@@ -179,11 +179,13 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 
 	const hueThumbInitialPosition = Math.round((hsl.h / 360) * 100);
 
-	const alphaThumbInitialPosition = Math.round(hsl.a * 100);
-
 	const hueSliderTrackColor = Array.from({ length: 12 }, (_, i) =>
 		getHSLColor({ h: i * 30, s: 100, l: 50, a: 1 }),
 	).join(", ");
+
+	const alphaThumbInitialPosition = Math.round(hsl.a * 100);
+
+	const alphaSliderTrackColor = getHSLColor({ ...hsl, a: 0.7 });
 
 	const manageThumbUpdate = ({
 		clientX,
@@ -270,6 +272,21 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 		setHSL((prev) => ({ ...prev, a: +truncatedAlpha }));
 	};
 
+	const renderAlphaSliderChildren: RenderChildrenFn = ({ sliderAnchor }) => (
+		<div
+			className="absolute rounded-full"
+			style={{
+				// @ts-ignore
+				positionAnchor: sliderAnchor,
+				top: "anchor(top)",
+				left: "anchor(left)",
+				right: "anchor(right)",
+				bottom: "anchor(bottom)",
+				background: `linear-gradient(to left, ${alphaSliderTrackColor}, #fff0)`,
+			}}
+		/>
+	);
+
 	return (
 		<div className="inline-block">
 			<div
@@ -337,6 +354,7 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 							sliderTrackColor={`url(${transparentBg}) center / 120%`}
 							initialPosition={alphaThumbInitialPosition}
 							onThumbChange={onAlphaThumbChange}
+							renderChildren={renderAlphaSliderChildren}
 						/>
 					</div>
 				</div>
