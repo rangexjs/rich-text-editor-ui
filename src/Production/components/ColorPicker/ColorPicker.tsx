@@ -141,10 +141,10 @@ const panelHeight = 160;
 const thumbSize = 18;
 
 export const ColorPicker = ({
-	initialColor,
+	hslColorState,
 	onColorChange,
 }: ColorPickerProps) => {
-	const [hsl, setHSL] = useState(initialColor);
+	const [hsl, setHSL] = useState(hslColorState);
 
 	const thumbInitialPosition = getPositionFromSaturationLightness({
 		saturation: hsl.s,
@@ -158,6 +158,20 @@ export const ColorPicker = ({
 
 	const [isChangedFromColor, setIsChangedFromColor] = useState(true);
 	const panelRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const { h, s, l, a } = hslColorState;
+
+		/**
+		 * Color can be controlled from outer scope, in order to
+		 * avoid infinite loop, we should not change the state if it's same
+		 */
+		if (hsl.h === h && hsl.s === s && hsl.l === l && hsl.a === a) {
+			return;
+		}
+
+		setHSL(hslColorState);
+	}, [hsl, hslColorState]);
 
 	useEffect(() => {
 		onColorChange({ hsl });
