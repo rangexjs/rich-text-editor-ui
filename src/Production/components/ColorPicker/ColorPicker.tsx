@@ -140,7 +140,10 @@ const panelHeight = 160;
 
 const thumbSize = 18;
 
-export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
+export const ColorPicker = ({
+	initialColor,
+	onColorChange,
+}: ColorPickerProps) => {
 	const [hsl, setHSL] = useState(initialColor);
 
 	const thumbInitialPosition = getPositionFromSaturationLightness({
@@ -155,6 +158,10 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 
 	const [isChangedFromColor, setIsChangedFromColor] = useState(true);
 	const panelRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		onColorChange({ hsl });
+	}, [onColorChange, hsl]);
 
 	useEffect(() => {
 		isChangedFromColor && setIsChangedFromColor(false);
@@ -205,7 +212,10 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 			yPosition,
 		});
 
-		setHSL((prev) => ({ ...prev, s: saturation, l: lightness }));
+		const roundedS = Math.round(saturation);
+		const roundedL = Math.round(lightness);
+
+		setHSL((prev) => ({ ...prev, s: roundedS, l: roundedL }));
 	};
 
 	const onPointerDown = (pointerEvent: PointerEvent) => {
@@ -259,17 +269,9 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 	};
 
 	const onAlphaThumbChange: OnThumbChangeFn = ({ value }) => {
-		const alpha = value / 100;
+		const alpha = +(value / 100).toFixed(2);
 
-		const matchedAlpha = `${alpha}`.match(/\d+(\.\d{0,2})?/);
-
-		if (matchedAlpha === null) {
-			throw new Error("MatchedAlpha can't be null.");
-		}
-
-		const [truncatedAlpha] = matchedAlpha;
-
-		setHSL((prev) => ({ ...prev, a: +truncatedAlpha }));
+		setHSL((prev) => ({ ...prev, a: alpha }));
 	};
 
 	const renderAlphaSliderChildren: RenderChildrenFn = ({ sliderAnchor }) => (

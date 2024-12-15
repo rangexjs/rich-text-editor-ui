@@ -69,6 +69,13 @@ export interface ManageThumbUpdateProps {
 	panel: HTMLDivElement;
 }
 
+export interface OnColorChangeFnProps {
+	hsl: HSLProps;
+}
+
+export type OnColorChangeFn = (props: OnColorChangeFnProps) => void;
+
 export interface ColorPickerProps {
 	initialColor: HSLProps;
+	onColorChange: OnColorChangeFn;
 }
