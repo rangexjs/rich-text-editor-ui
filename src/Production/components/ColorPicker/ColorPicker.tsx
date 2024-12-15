@@ -209,39 +209,45 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 	const onPointerDown = (pointerEvent: PointerEvent) => {
 		pointerEvent.preventDefault();
 
-		const { currentTarget, pointerId, clientX, clientY } = pointerEvent;
+		const { pointerId, clientX, clientY } = pointerEvent;
 
-		if (!(currentTarget instanceof HTMLDivElement)) {
-			throw new Error("CurrentTarget's type is invalid.");
+		const panel = panelRef.current;
+
+		if (!panel) {
+			throw new Error("Panel can't be null.");
 		}
 
-		currentTarget.setPointerCapture(pointerId);
+		panel.setPointerCapture(pointerId);
 
-		manageThumbUpdate({ clientX, clientY, panel: currentTarget });
+		manageThumbUpdate({ clientX, clientY, panel });
 	};
 
 	const onPointerMove = (pointerEvent: PointerEvent) => {
-		const { currentTarget, pointerId, clientX, clientY } = pointerEvent;
+		const { pointerId, clientX, clientY } = pointerEvent;
 
-		if (!(currentTarget instanceof HTMLDivElement)) {
-			throw new Error("CurrentTarget's type is invalid.");
+		const panel = panelRef.current;
+
+		if (!panel) {
+			throw new Error("Panel can't be null.");
 		}
 
-		if (!currentTarget.hasPointerCapture(pointerId)) {
+		if (!panel.hasPointerCapture(pointerId)) {
 			return;
 		}
 
-		manageThumbUpdate({ clientX, clientY, panel: currentTarget });
+		manageThumbUpdate({ clientX, clientY, panel });
 	};
 
 	const onPointerUp = (pointerEvent: PointerEvent) => {
-		const { currentTarget, pointerId } = pointerEvent;
+		const { pointerId } = pointerEvent;
 
-		if (!(currentTarget instanceof HTMLDivElement)) {
-			throw new Error("CurrentTarget's type is invalid.");
+		const panel = panelRef.current;
+
+		if (!panel) {
+			throw new Error("Panel can't be null.");
 		}
 
-		currentTarget.releasePointerCapture(pointerId);
+		panel.releasePointerCapture(pointerId);
 	};
 
 	const onHueThumbChange: OnThumbChangeFn = ({ value }) => {
@@ -294,7 +300,7 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 					}}
 				/>
 				<span
-					className="pointer-events-none absolute rounded-full border-2 border-white shadow-[0px_0px_4px_1px_#888]"
+					className="absolute rounded-full border-2 border-white shadow-[0px_0px_4px_1px_#888]"
 					style={{
 						// @ts-ignore
 						positionAnchor: panelAnchor,
@@ -304,6 +310,8 @@ export const ColorPicker = ({ initialColor }: ColorPickerProps) => {
 						height: `${thumbSize}px`,
 						backgroundColor: filledHslColor,
 					}}
+					onPointerDown={onPointerDown}
+					onPointerUp={onPointerUp}
 				/>
 			</div>
 			<div className="px-2 py-4">

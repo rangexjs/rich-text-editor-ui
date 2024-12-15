@@ -42,7 +42,7 @@ export const Slider = ({
 	initialPosition = 0,
 	onThumbChange,
 }: SliderProps) => {
-	const thumbRef = useRef<HTMLSpanElement>(null);
+	const sliderTrackRef = useRef<HTMLDivElement>(null);
 
 	const [xPosition, setXPosition] = useState(initialPosition);
 
@@ -60,49 +60,50 @@ export const Slider = ({
 	const onPointerDown = (pointerEvent: PointerEvent) => {
 		pointerEvent.preventDefault();
 
-		const { currentTarget, pointerId, clientX } = pointerEvent;
+		const { pointerId, clientX } = pointerEvent;
 
-		if (!(currentTarget instanceof HTMLDivElement)) {
-			throw new Error("CurrentTarget's type is invalid.");
+		const sliderTrack = sliderTrackRef.current;
+
+		if (!sliderTrack) {
+			throw new Error("SliderTrack can't be null.");
 		}
 
-		currentTarget.setPointerCapture(pointerId);
+		sliderTrack.setPointerCapture(pointerId);
 
-		manageThumbUpdate({ clientX, sliderTrack: currentTarget });
+		manageThumbUpdate({ clientX, sliderTrack });
 	};
 
 	const onPointerMove = (pointerEvent: PointerEvent) => {
-		const { currentTarget, pointerId, clientX } = pointerEvent;
+		const { pointerId, clientX } = pointerEvent;
 
-		if (!(currentTarget instanceof HTMLDivElement)) {
-			throw new Error("CurrentTarget's type is invalid.");
+		const sliderTrack = sliderTrackRef.current;
+
+		if (!sliderTrack) {
+			throw new Error("SliderTrack can't be null.");
 		}
 
-		if (!currentTarget.hasPointerCapture(pointerId)) {
+		if (!sliderTrack.hasPointerCapture(pointerId)) {
 			return;
 		}
 
-		const thumb = thumbRef.current;
-
-		if (!thumb) {
-			throw new Error("Thumb can't be null.");
-		}
-
-		manageThumbUpdate({ clientX, sliderTrack: currentTarget });
+		manageThumbUpdate({ clientX, sliderTrack });
 	};
 
 	const onPointerUp = (pointerEvent: PointerEvent) => {
-		const { currentTarget, pointerId } = pointerEvent;
+		const { pointerId } = pointerEvent;
 
-		if (!(currentTarget instanceof HTMLDivElement)) {
-			throw new Error("CurrentTarget's type is invalid.");
+		const sliderTrack = sliderTrackRef.current;
+
+		if (!sliderTrack) {
+			throw new Error("SliderTrack can't be null.");
 		}
 
-		currentTarget.releasePointerCapture(pointerId);
+		sliderTrack.releasePointerCapture(pointerId);
 	};
 
 	return (
 		<div
+			ref={sliderTrackRef}
 			className="h-4 rounded-full"
 			style={{
 				// @ts-ignore
@@ -115,8 +116,7 @@ export const Slider = ({
 			onPointerUp={onPointerUp}
 		>
 			<span
-				ref={thumbRef}
-				className="pointer-events-none absolute rounded-full border-2 border-white shadow-[0px_0px_4px_1px_#888]"
+				className="absolute rounded-full border-2 border-white shadow-[0px_0px_4px_1px_#888]"
 				style={{
 					// @ts-ignore
 					positionAnchor: sliderAnchor,
@@ -126,6 +126,8 @@ export const Slider = ({
 					left: `calc(anchor(${xPosition}%) - ${thumbSize / 2}px)`,
 					background: thumbColor,
 				}}
+				onPointerDown={onPointerDown}
+				onPointerUp={onPointerUp}
 			/>
 		</div>
 	);
