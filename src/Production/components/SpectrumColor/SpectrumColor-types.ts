@@ -75,7 +75,7 @@ export interface OnColorChangeFnProps {
 
 export type OnColorChangeFn = (props: OnColorChangeFnProps) => void;
 
-export interface ColorPickerProps {
+export interface SpectrumColorProps {
 	hslColorState: HSLProps;
 	onColorChange: OnColorChangeFn;
 }

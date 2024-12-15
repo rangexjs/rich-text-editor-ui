@@ -5,7 +5,7 @@ import transparentBg from "@public/transparent.jpg";
 import { type OnThumbChangeFn, type RenderChildrenFn, Slider } from "../Slider";
 
 import type {
-	ColorPickerProps,
+	SpectrumColorProps,
 	GetHSLColorProps,
 	GetHorizontalThumbPositionProps,
 	GetPositionFromSaturationLightnessProps,
@@ -17,7 +17,7 @@ import type {
 	GetVerticalThumbPositionProps,
 	ManageThumbUpdateProps,
 	ThumbPosition,
-} from "./ColorPicker-types";
+} from "./SpectrumColor-types";
 
 const getPositionFromSaturationLightness = ({
 	saturation,
@@ -140,10 +140,10 @@ const panelHeight = 160;
 
 const thumbSize = 18;
 
-export const ColorPicker = ({
+export const SpectrumColor = ({
 	hslColorState,
 	onColorChange,
-}: ColorPickerProps) => {
+}: SpectrumColorProps) => {
 	const [hsl, setHSL] = useState(hslColorState);
 
 	const thumbInitialPosition = getPositionFromSaturationLightness({
