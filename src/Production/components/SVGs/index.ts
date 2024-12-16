@@ -16,6 +16,7 @@ export * from "./ItalicIcon";
 export * from "./LetterSpacingIcon";
 export * from "./LineHeightIcon";
 export * from "./ListIcon";
+export * from "./RemoveColorIcon";
 export * from "./RemoveFormatIcon";
 export * from "./StrikethroughIcon";
 export * from "./SymbolIcon";
