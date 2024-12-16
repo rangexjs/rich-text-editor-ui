@@ -1,4 +1,4 @@
-import { useDeferredValue, useState } from "react";
+import { useState } from "react";
 
 import type { HSLFormat } from "@utilities";
 
@@ -49,8 +49,6 @@ export const ColorPanel = ({
 	onSelectedColor,
 }: ColorPanelProps) => {
 	const [hsl, setHSL] = useState<HSLFormat>({ h: 289, s: 86, l: 24, a: 0.5 });
-
-	const deferredHSL = useDeferredValue(hsl);
 
 	const [activeTabName, setActiveTabName] = useState<TabName>("Grid");
 
@@ -174,15 +172,12 @@ export const ColorPanel = ({
 					/>
 					<div style={{ display: activeTabName === "Spectrum" ? "" : "none" }}>
 						<SpectrumColor
-							hsl={deferredHSL}
+							hsl={hsl}
 							panelWidth={240}
 							panelHeight={120}
 							onColorChange={onSpectrumColorChange}
 						/>
-						<InputColorFormat
-							hsl={deferredHSL}
-							onColorChange={onColorFormatChange}
-						/>
+						<InputColorFormat hsl={hsl} onColorChange={onColorFormatChange} />
 					</div>
 				</div>
 				<div
