@@ -1,11 +1,6 @@
 import type { CSSProperties } from "react";
 
-export interface HSLProps {
-	h: number;
-	s: number;
-	l: number;
-	a: number;
-}
+import type { HSLFormat } from "@utilities";
 
 export interface ThumbPosition {
 	xPosition: number;
@@ -22,7 +17,19 @@ export interface GetPositionFromSaturationLightnessReturn {
 	yPosition: number;
 }
 
-export interface GetHSLColorProps extends HSLProps {}
+export interface GetHueThumbPositionProps {
+	hue: number;
+}
+
+export interface GetAlphaThumbPositionProps {
+	alpha: number;
+}
+
+export interface GetHSLColorProps extends HSLFormat {}
+
+export interface ManageColorUpdateProps {
+	hsl: HSLFormat;
+}
 
 export interface GetHorizontalThumbPositionProps {
 	clientX: number;
@@ -71,17 +78,19 @@ export interface ManageThumbUpdateProps {
 	panel: HTMLDivElement;
 }
 
-export interface OnColorChangeFnProps {
-	hsl: HSLProps;
+export interface OnSpectrumColorChangeFnProps {
+	hsl: HSLFormat;
 }
 
-export type OnColorChangeFn = (props: OnColorChangeFnProps) => void;
+export type OnSpectrumColorChangeFn = (
+	props: OnSpectrumColorChangeFnProps,
+) => void;
 
 export interface SpectrumColorProps {
-	hsl: HSLProps;
+	hsl: HSLFormat;
 	panelWidth: number;
 	panelHeight: number;
-	onColorChange: OnColorChangeFn;
 	className?: string;
 	style?: CSSProperties;
+	onColorChange: OnSpectrumColorChangeFn;
 }

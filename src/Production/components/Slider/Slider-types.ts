@@ -11,7 +11,7 @@ export interface ManageThumbUpdateProps {
 }
 
 interface OnThumbChangeFnProps {
-	value: number;
+	position: number;
 }
 
 export type OnThumbChangeFn = (props: OnThumbChangeFnProps) => void;
@@ -25,7 +25,7 @@ export type RenderChildrenFn = (props: RenderChildrenFnProps) => ReactNode;
 export interface SliderProps {
 	thumbColor: string;
 	sliderTrackColor: string;
-	initialPosition?: number;
+	position: number;
 	onThumbChange: OnThumbChangeFn;
 	renderChildren?: RenderChildrenFn;
 }

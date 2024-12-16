@@ -1,12 +1,15 @@
 import { type PointerEvent, useEffect, useRef, useState } from "react";
 
 import transparentBg from "@public/transparent.jpg";
+import type { HSLFormat } from "@utilities";
 
 import { type OnThumbChangeFn, type RenderChildrenFn, Slider } from "../Slider";
 
 import type {
+	GetAlphaThumbPositionProps,
 	GetHSLColorProps,
 	GetHorizontalThumbPositionProps,
+	GetHueThumbPositionProps,
 	GetPositionFromSaturationLightnessProps,
 	GetPositionFromSaturationLightnessReturn,
 	GetSaturationLightnessFromPositionProps,
@@ -14,6 +17,7 @@ import type {
 	GetThumbPositionInPercentageProps,
 	GetThumbPositionInPercentageReturn,
 	GetVerticalThumbPositionProps,
+	ManageColorUpdateProps,
 	ManageThumbUpdateProps,
 	SpectrumColorProps,
 	ThumbPosition,
@@ -35,6 +39,12 @@ const getPositionFromSaturationLightness = ({
 
 	return { xPosition, yPosition };
 };
+
+const getHueThumbPosition = ({ hue }: GetHueThumbPositionProps) =>
+	Math.round((hue / 360) * 100);
+
+const getAlphaThumbPosition = ({ alpha }: GetAlphaThumbPositionProps) =>
+	Math.round(alpha * 100);
 
 const getHSLColor = ({ h, s, l, a }: GetHSLColorProps) =>
 	`hsl(${h}deg, ${s}%, ${l}%, ${a})` as const;
@@ -142,9 +152,9 @@ export const SpectrumColor = ({
 	hsl,
 	panelWidth,
 	panelHeight,
-	onColorChange,
 	className,
 	style,
+	onColorChange,
 }: SpectrumColorProps) => {
 	const thumbInitialPosition = getPositionFromSaturationLightness({
 		saturation: hsl.s,
@@ -156,15 +166,38 @@ export const SpectrumColor = ({
 		yPosition: thumbInitialPosition.yPosition,
 	});
 
-	const [isChangedFromColor, setIsChangedFromColor] = useState(true);
+	const [scopedHSL, setScopedHSL] = useState<HSLFormat>({
+		h: Number.NaN,
+		s: Number.NaN,
+		l: Number.NaN,
+		a: Number.NaN,
+	});
+
+	const initialHueThumbPosition = getHueThumbPosition({ hue: hsl.h });
+
+	const [hueThumbPosition, setHueThumbPosition] = useState(
+		initialHueThumbPosition,
+	);
+
+	const initialAlphaThumbPosition = getAlphaThumbPosition({ alpha: hsl.a });
+
+	const [alphaThumbPosition, setAlphaThumbPosition] = useState(
+		initialAlphaThumbPosition,
+	);
+
 	const panelRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		isChangedFromColor && setIsChangedFromColor(false);
-
-		if (!isChangedFromColor) {
+		if (
+			hsl.h === scopedHSL.h &&
+			hsl.s === scopedHSL.s &&
+			hsl.l === scopedHSL.l &&
+			hsl.a === scopedHSL.a
+		) {
 			return;
 		}
+
+		setScopedHSL(hsl);
 
 		const { xPosition, yPosition } = getPositionFromSaturationLightness({
 			saturation: hsl.s,
@@ -172,7 +205,15 @@ export const SpectrumColor = ({
 		});
 
 		setThumbPosition({ xPosition, yPosition });
-	}, [hsl, isChangedFromColor]);
+
+		const updatedHueThumbPosition = getHueThumbPosition({ hue: hsl.h });
+
+		setHueThumbPosition(updatedHueThumbPosition);
+
+		const updatedAlphaThumbPosition = getAlphaThumbPosition({ alpha: hsl.a });
+
+		setAlphaThumbPosition(updatedAlphaThumbPosition);
+	}, [hsl, scopedHSL]);
 
 	const hslColor = getHSLColor(hsl);
 
@@ -180,15 +221,17 @@ export const SpectrumColor = ({
 
 	const hueColor = getHSLColor({ h: hsl.h, s: 100, l: 50, a: 1 });
 
-	const hueThumbInitialPosition = Math.round((hsl.h / 360) * 100);
-
 	const hueSliderTrackColor = Array.from({ length: 12 }, (_, i) =>
 		getHSLColor({ h: i * 30, s: 100, l: 50, a: 1 }),
 	).join(", ");
 
-	const alphaThumbInitialPosition = Math.round(hsl.a * 100);
-
 	const alphaSliderTrackColor = getHSLColor({ ...hsl, a: 0.7 });
+
+	const manageColorUpdate = ({ hsl }: ManageColorUpdateProps) => {
+		setScopedHSL(hsl);
+
+		onColorChange({ hsl });
+	};
 
 	const manageThumbUpdate = ({
 		clientX,
@@ -211,7 +254,7 @@ export const SpectrumColor = ({
 		const roundedS = Math.round(saturation);
 		const roundedL = Math.round(lightness);
 
-		onColorChange({ hsl: { ...hsl, s: roundedS, l: roundedL } });
+		manageColorUpdate({ hsl: { ...hsl, s: roundedS, l: roundedL } });
 	};
 
 	const onPointerDown = (pointerEvent: PointerEvent) => {
@@ -258,16 +301,16 @@ export const SpectrumColor = ({
 		panel.releasePointerCapture(pointerId);
 	};
 
-	const onHueThumbChange: OnThumbChangeFn = ({ value }) => {
+	const onHueThumbChange: OnThumbChangeFn = ({ position: value }) => {
 		const hue = Math.round(360 * (value / 100));
 
-		onColorChange({ hsl: { ...hsl, h: hue } });
+		manageColorUpdate({ hsl: { ...hsl, h: hue } });
 	};
 
-	const onAlphaThumbChange: OnThumbChangeFn = ({ value }) => {
+	const onAlphaThumbChange: OnThumbChangeFn = ({ position: value }) => {
 		const alpha = +(value / 100).toFixed(2);
 
-		onColorChange({ hsl: { ...hsl, a: alpha } });
+		manageColorUpdate({ hsl: { ...hsl, a: alpha } });
 	};
 
 	const renderAlphaSliderChildren: RenderChildrenFn = ({ sliderAnchor }) => (
@@ -286,7 +329,7 @@ export const SpectrumColor = ({
 	);
 
 	return (
-		<div className={`inline-block ${className}`} style={style}>
+		<div className={`inline-block ${className ?? ""}`} style={style}>
 			<div
 				ref={panelRef}
 				style={{
@@ -331,26 +374,27 @@ export const SpectrumColor = ({
 			</div>
 			<div className="px-2 py-4">
 				<div className="flex gap-6">
-					<span
-						className="relative h-11 w-11 overflow-clip rounded-full"
-						style={{ backgroundColor: hslColor }}
-					>
+					<span className="relative h-11 w-11 overflow-clip rounded-full">
 						<span
-							className="absolute inset-0 z-[-1]"
+							className="absolute inset-0"
 							style={{ background: `url(${transparentBg}) center / 500%` }}
+						/>
+						<span
+							className="absolute inset-0"
+							style={{ backgroundColor: hslColor }}
 						/>
 					</span>
 					<div className="flex flex-grow flex-col justify-between">
 						<Slider
 							thumbColor={hueColor}
 							sliderTrackColor={`linear-gradient(to right, ${hueSliderTrackColor})`}
-							initialPosition={hueThumbInitialPosition}
+							position={hueThumbPosition}
 							onThumbChange={onHueThumbChange}
 						/>
 						<Slider
 							thumbColor="#b3b3b3"
 							sliderTrackColor={`url(${transparentBg}) center / 120%`}
-							initialPosition={alphaThumbInitialPosition}
+							position={alphaThumbPosition}
 							onThumbChange={onAlphaThumbChange}
 							renderChildren={renderAlphaSliderChildren}
 						/>

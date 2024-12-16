@@ -1,4 +1,4 @@
-import { type PointerEvent, useRef, useState } from "react";
+import { type PointerEvent, useEffect, useRef, useState } from "react";
 
 import type {
 	GetThumbPositionInPercentageProps,
@@ -39,13 +39,17 @@ const thumbSize = 18;
 export const Slider = ({
 	thumbColor,
 	sliderTrackColor,
-	initialPosition = 0,
+	position,
 	onThumbChange,
 	renderChildren,
 }: SliderProps) => {
 	const sliderTrackRef = useRef<HTMLDivElement>(null);
 
-	const [xPosition, setXPosition] = useState(initialPosition);
+	const [xPosition, setXPosition] = useState(position);
+
+	useEffect(() => {
+		setXPosition(position);
+	}, [position]);
 
 	const manageThumbUpdate = ({
 		clientX,
@@ -55,7 +59,7 @@ export const Slider = ({
 
 		setXPosition(position);
 
-		onThumbChange({ value: position });
+		onThumbChange({ position: position });
 	};
 
 	const onPointerDown = (pointerEvent: PointerEvent) => {
