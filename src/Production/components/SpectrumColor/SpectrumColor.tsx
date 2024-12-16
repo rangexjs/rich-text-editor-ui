@@ -41,7 +41,7 @@ const getPositionFromSaturationLightness = ({
 };
 
 const getHueThumbPosition = ({ hue }: GetHueThumbPositionProps) =>
-	Math.round((hue / 360) * 100);
+	Math.round((hue / 359) * 100);
 
 const getAlphaThumbPosition = ({ alpha }: GetAlphaThumbPositionProps) =>
 	Math.round(alpha * 100);
@@ -302,7 +302,7 @@ export const SpectrumColor = ({
 	};
 
 	const onHueThumbChange: OnThumbChangeFn = ({ position: value }) => {
-		const hue = Math.round(360 * (value / 100));
+		const hue = Math.round(359 * (value / 100));
 
 		manageColorUpdate({ hsl: { ...hsl, h: hue } });
 	};

@@ -298,7 +298,7 @@ export const InputColorFormat = ({
 
 		setInputHSL(updatedHSL);
 
-		const h = Math.min(360, Math.max(0, +updatedHSL.h));
+		const h = Math.min(359, Math.max(0, +updatedHSL.h));
 		const s = Math.min(100, Math.max(0, +updatedHSL.s));
 		const l = Math.min(100, Math.max(0, +updatedHSL.l));
 
@@ -323,7 +323,7 @@ export const InputColorFormat = ({
 		const isNotNormalized = value === normalizedValue;
 
 		const isHueValid =
-			hslInputName.hue === name && numValue <= 360 && numValue >= 0;
+			hslInputName.hue === name && numValue <= 359 && numValue >= 0;
 
 		const isSaturationLightnessValid =
 			(hslInputName.saturation === name || hslInputName.lightness === name) &&
