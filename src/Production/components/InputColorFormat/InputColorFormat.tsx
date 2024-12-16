@@ -1,7 +1,6 @@
 import {
 	type ChangeEvent,
 	type FocusEvent,
-	useDeferredValue,
 	useEffect,
 	useRef,
 	useState,
@@ -27,8 +26,6 @@ export const InputColorFormat = ({
 	hsl,
 	onColorChange,
 }: InputColorFormatProps) => {
-	const deferredHSL = useDeferredValue(hsl);
-
 	const [scopedHSL, setScopedHSL] = useState<HSLFormat>({
 		h: Number.NaN,
 		s: Number.NaN,
@@ -39,12 +36,12 @@ export const InputColorFormat = ({
 	const [colorFormat, setColorFormat] = useState<ColorFormat>("Hex");
 
 	const [inputHSL, setInputHSL] = useState<InputHSLFormat>({
-		h: `${deferredHSL.h}`,
-		s: `${deferredHSL.s}`,
-		l: `${deferredHSL.l}`,
+		h: `${hsl.h}`,
+		s: `${hsl.s}`,
+		l: `${hsl.l}`,
 	});
 
-	const rgb = Color.hsl(deferredHSL).rgb();
+	const rgb = Color.hsl(hsl).rgb();
 
 	const [inputRGB, setInputRGB] = useState<InputRGBFormat>({
 		r: `${rgb.r}`,
@@ -52,12 +49,12 @@ export const InputColorFormat = ({
 		b: `${rgb.b}`,
 	});
 
-	const { hex } = Color.hsl(deferredHSL).hex();
+	const { hex } = Color.hsl(hsl).hex();
 
 	const [inputHex, setInputHex] = useState<InputHexFormat>(hex.slice(1, 7));
 
 	const [inputAlpha, setInputAlpha] = useState<InputAlphaFormat>(
-		`${Math.round(deferredHSL.a * 100)}`,
+		`${Math.round(hsl.a * 100)}`,
 	);
 
 	const colorFormatButtonRef = useRef<HTMLButtonElement>(null);
@@ -154,7 +151,7 @@ export const InputColorFormat = ({
 
 		const { h, s, l } = Color.hex({ hex: `#${replacedValue}` }).hexToHsl();
 
-		const { a } = deferredHSL;
+		const { a } = hsl;
 
 		manageColorUpdate({ hsl: { h, s, l, a } });
 	};
@@ -177,7 +174,7 @@ export const InputColorFormat = ({
 		const isContainsInvalidCharacter = /[^0-9a-f]/.test(replacedValue);
 
 		if (isInvalidLength || isContainsInvalidCharacter) {
-			const { hex } = Color.hsl(deferredHSL).hex();
+			const { hex } = Color.hsl(hsl).hex();
 
 			const slicedHex = hex.slice(1, 7);
 
@@ -237,7 +234,7 @@ export const InputColorFormat = ({
 
 		const { h, s, l } = Color.rgb(numRGB).rgbToHsl();
 
-		const { a } = deferredHSL;
+		const { a } = hsl;
 
 		manageColorUpdate({ hsl: { h, s, l, a } });
 	};
@@ -259,7 +256,7 @@ export const InputColorFormat = ({
 			return;
 		}
 
-		const { r, g, b } = Color.hsl(deferredHSL).rgb();
+		const { r, g, b } = Color.hsl(hsl).rgb();
 
 		setInputRGB({ r: `${r}`, g: `${g}`, b: `${b}` });
 	};
@@ -305,7 +302,7 @@ export const InputColorFormat = ({
 		const s = Math.min(100, Math.max(0, +updatedHSL.s));
 		const l = Math.min(100, Math.max(0, +updatedHSL.l));
 
-		const { a } = deferredHSL;
+		const { a } = hsl;
 
 		manageColorUpdate({ hsl: { h, s, l, a } });
 	};
@@ -337,7 +334,7 @@ export const InputColorFormat = ({
 			return;
 		}
 
-		const { h, s, l } = deferredHSL;
+		const { h, s, l } = hsl;
 
 		setInputHSL({ h: `${h}`, s: `${s}`, l: `${l}` });
 	};
@@ -356,7 +353,7 @@ export const InputColorFormat = ({
 		const numA = +(+value / 100).toFixed(2);
 		const a = Math.min(1, Math.max(0, numA));
 
-		const { h, s, l } = deferredHSL;
+		const { h, s, l } = hsl;
 
 		manageColorUpdate({ hsl: { h, s, l, a } });
 	};
