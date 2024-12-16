@@ -12,7 +12,8 @@
 			"@externalStores": ["src/Production/ExternalStores"],
 			"@toolbarButtonsStateManager": [
 				"src/Production/ToolbarButtonsStateManager"
-			]
+			],
+			"@utilities": ["src/Production/Utilities"]
 		},
 		"esModuleInterop": true,
 		"module": "ESNext",
