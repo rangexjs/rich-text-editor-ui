@@ -1,14 +1,12 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 
-import { EditorToolbar, type EditorToolbarRows } from "../EditorToolbar";
-
-import { createToolbarButtonProps } from "./CreateToolbarButtonProps";
+import { EditorToolbar } from "../EditorToolbar";
 
 import type { AppProps } from "./App-types";
 
 export const App = ({
-	editorToolbar,
-	toolbarStateManager: toolbarButtonsStateManager,
+	toolbarButtons,
+	toolbarButtonsActionManager,
 	formattableButtonsStore,
 	insertionButtonsStore,
 	navigationButtonsStore,
@@ -16,17 +14,17 @@ export const App = ({
 }: AppProps) => {
 	const richTextEditorRef = useRef<HTMLDivElement>(null);
 
-	const formattableButtons = useSyncExternalStore(
+	const formattableButtonsState = useSyncExternalStore(
 		formattableButtonsStore.subscribe.bind(formattableButtonsStore),
 		formattableButtonsStore.getSnapshot.bind(formattableButtonsStore),
 	);
 
-	const insertionButtons = useSyncExternalStore(
+	const insertionButtonsState = useSyncExternalStore(
 		insertionButtonsStore.subscribe.bind(insertionButtonsStore),
 		insertionButtonsStore.getSnapshot.bind(insertionButtonsStore),
 	);
 
-	const navigationButtons = useSyncExternalStore(
+	const navigationButtonsState = useSyncExternalStore(
 		navigationButtonsStore.subscribe.bind(navigationButtonsStore),
 		navigationButtonsStore.getSnapshot.bind(navigationButtonsStore),
 	);
@@ -39,26 +37,18 @@ export const App = ({
 		richTextEditorRef.current.append(richTextArea);
 	});
 
-	const toolbarRows: EditorToolbarRows = editorToolbar.map((toolbarRow) =>
-		toolbarRow.map((group) =>
-			group.map((buttonName) =>
-				createToolbarButtonProps({
-					buttonName,
-					toolbarButtonsStateManager,
-					formattableButtons,
-					insertionButtons,
-					navigationButtons,
-				}),
-			),
-		),
-	);
-
 	return (
 		<div
 			ref={richTextEditorRef}
 			className="rounded border border-slate-300 border-solid"
 		>
-			<EditorToolbar toolbarRows={toolbarRows} />
+			<EditorToolbar
+				toolbarRows={toolbarButtons}
+				toolbarButtonsActionManager={toolbarButtonsActionManager}
+				formattableButtonsState={formattableButtonsState}
+				insertionButtonsState={insertionButtonsState}
+				navigationButtonsState={navigationButtonsState}
+			/>
 		</div>
 	);
 };

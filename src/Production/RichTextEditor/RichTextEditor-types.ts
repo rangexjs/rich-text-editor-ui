@@ -3,10 +3,10 @@ import type { FormattableButtonsState } from "@externalStores";
 import type {
 	OnFormatStylesChangeFn,
 	OnNavigationChangeFn,
-} from "@toolbarButtonsStateManager";
+} from "@toolbarButtonsActionManager";
 
 export interface RichTextEditorConstructorProps
-	extends Pick<AppProps, "editorToolbar" | "richTextArea"> {
+	extends Pick<AppProps, "toolbarButtons" | "richTextArea"> {
 	domNode: Element;
 }
 

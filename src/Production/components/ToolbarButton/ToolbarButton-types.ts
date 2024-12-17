@@ -1,4 +1,10 @@
-import type { Dispatch, MouseEvent, ReactNode, SetStateAction } from "react";
+import type {
+	Dispatch,
+	MouseEvent,
+	ReactNode,
+	RefObject,
+	SetStateAction,
+} from "react";
 
 interface OnClickFnProps {
 	event: MouseEvent;
@@ -11,9 +17,10 @@ export type ToolbarButtonOnClickFn = (props: OnClickFnProps) => void;
 
 export interface ToolbarButtonProps {
 	children: ReactNode;
-	anchorName?: string;
 	isChevron: boolean;
 	checked: boolean;
 	disabled: boolean;
-	onClick: ToolbarButtonOnClickFn;
+	anchorName?: string;
+	popoverTargetElementRef?: RefObject<HTMLElement>;
+	onClick?: ToolbarButtonOnClickFn;
 }

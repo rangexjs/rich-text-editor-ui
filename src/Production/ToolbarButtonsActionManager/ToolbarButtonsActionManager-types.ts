@@ -12,7 +12,7 @@ export interface FormatStylesState {
 	lineHeight?: `${number}` | `${number}.${number}` | null;
 	paddingInlineStart?: `${number}px` | null;
 	textAlign?: "center" | "justify" | "left" | "right" | null;
-	textDecoration?: "line-through" | "underline" | null;
+	textDecoration?: Set<"line-through" | "underline">;
 }
 
 interface OnFormatStylesChangeFnProps extends FormatStylesState {}

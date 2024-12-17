@@ -1,20 +1,17 @@
-import type { buttonsName } from "@constants";
 import type {
 	FormattableButtonsStore,
 	InsertionButtonsStore,
 	NavigationButtonsStore,
 } from "@externalStores";
-import type { ToolbarButtonsStateManager } from "@toolbarButtonsStateManager";
+import type { ToolbarButtonsActionManager } from "src/Production/ToolbarButtonsActionManager";
 
 import type { EditorToolbarRows } from "../EditorToolbar";
 
-type ButtonsName = (typeof buttonsName)[keyof typeof buttonsName];
-
-export type EditorToolbarRowsName = EditorToolbarRows<ButtonsName>;
+export type ToolbarButtons = EditorToolbarRows;
 
 export interface AppProps {
-	editorToolbar: EditorToolbarRowsName;
-	toolbarStateManager: ToolbarButtonsStateManager;
+	toolbarButtons: ToolbarButtons;
+	toolbarButtonsActionManager: ToolbarButtonsActionManager;
 	formattableButtonsStore: FormattableButtonsStore;
 	insertionButtonsStore: InsertionButtonsStore;
 	navigationButtonsStore: NavigationButtonsStore;

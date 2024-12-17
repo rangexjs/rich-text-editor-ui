@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 
 import { RichTextEditor } from "src/Production";
-import type { EditorToolbarRowsName } from "src/Production/components";
+import type { ToolbarButtons } from "src/Production/components";
 
 import { getFormattableButtonsState } from "./GetFormattableButtonsState";
 import { DevelopmentView } from "./components";
@@ -21,7 +21,7 @@ export const simulateProductEnvironment = ({
 
 	richTextArea.textContent = "Text of the Rich Text Area.";
 
-	const editorToolbar: EditorToolbarRowsName = [
+	const toolbarButtons: ToolbarButtons = [
 		[["history-back", "history-forward"]],
 		[
 			[
@@ -37,7 +37,7 @@ export const simulateProductEnvironment = ({
 
 	const richTextEditor = new RichTextEditor({
 		domNode: innerRoot,
-		editorToolbar,
+		toolbarButtons,
 		richTextArea,
 	});
 
@@ -51,7 +51,7 @@ export const simulateProductEnvironment = ({
 			strikethrough: { isChecked: false, isDisabled: false },
 			underline: { isChecked: false, isDisabled: false },
 		});
-	}, 2e3);
+	}, 0e3);
 
 	richTextEditor.onFormatStylesChange((formatStylesState) => {
 		const { formattableButtonsState } = getFormattableButtonsState({

@@ -47,7 +47,7 @@ const ColorPalette = ({
 
 export const ColorPanel = ({
 	activeColors,
-	onSelectedColor,
+	onColorSelected,
 }: ColorPanelProps) => {
 	const [hsl, setHSL] = useState<HSLFormat>({ h: 289, s: 86, l: 24, a: 0.5 });
 
@@ -110,7 +110,7 @@ export const ColorPanel = ({
 		const l = Math.round(+lightness);
 		const a = +(+alpha).toFixed(2);
 
-		onSelectedColor({ hsl: { h, s, l, a } });
+		onColorSelected({ hsl: { h, s, l, a } });
 	};
 
 	const onSpectrumColorChange: OnSpectrumColorChangeFn = ({ hsl }) => {
@@ -159,7 +159,7 @@ export const ColorPanel = ({
 			<button
 				type="button"
 				className="mb-2 inline-flex items-center gap-2 self-start rounded-md border border-slate-200 bg-slate-200 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
-				onClick={() => onSelectedColor({ hsl: null })}
+				onClick={() => onColorSelected({ hsl: null })}
 			>
 				<RemoveColorIcon /> Remove color
 			</button>
@@ -182,7 +182,7 @@ export const ColorPanel = ({
 						<button
 							type="button"
 							className="mt-1 inline-flex items-center gap-1 self-start rounded-md border border-slate-200 bg-slate-200 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
-							onClick={() => onSelectedColor({ hsl })}
+							onClick={() => onColorSelected({ hsl })}
 						>
 							<CheckIcon size={0.8} /> Apply color
 						</button>

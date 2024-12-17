@@ -1,13 +1,25 @@
-import type { ToolbarButtonProps } from "../ToolbarButton";
+import type { buttonsName } from "@constants";
+import type {
+	FormattableButtonsState,
+	InsertionButtonsState,
+	NavigationButtonsState,
+} from "@externalStores";
+import type { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
-type EditorToolbarRowGroup<ButtonProps = ToolbarButtonProps> = ButtonProps[];
+type ButtonsName = typeof buttonsName;
 
-type EditorToolbarRow<ButtonProps = ToolbarButtonProps> =
-	EditorToolbarRowGroup<ButtonProps>[];
+type ButtonsNameValues = ButtonsName[keyof ButtonsName];
 
-export type EditorToolbarRows<ButtonProps = ToolbarButtonProps> =
-	EditorToolbarRow<ButtonProps>[];
+type EditorToolbarRowGroup = ButtonsNameValues[];
+
+type EditorToolbarRow = EditorToolbarRowGroup[];
+
+export type EditorToolbarRows = EditorToolbarRow[];
 
 export interface EditorToolbarProps {
 	toolbarRows: EditorToolbarRows;
+	toolbarButtonsActionManager: ToolbarButtonsActionManager;
+	formattableButtonsState: FormattableButtonsState;
+	insertionButtonsState: InsertionButtonsState;
+	navigationButtonsState: NavigationButtonsState;
 }

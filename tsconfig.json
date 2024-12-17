@@ -10,8 +10,8 @@
 			"@components": ["src/Production/components"],
 			"@constants": ["src/Production/Constants"],
 			"@externalStores": ["src/Production/ExternalStores"],
-			"@toolbarButtonsStateManager": [
-				"src/Production/ToolbarButtonsStateManager"
+			"@toolbarButtonsActionManager": [
+				"src/Production/ToolbarButtonsActionManager"
 			],
 			"@utilities": ["src/Production/Utilities"]
 		},

@@ -2,9 +2,9 @@ import type {
 	OnFormatStylesChangeFn,
 	OnInsertionChangeFn,
 	OnNavigationChangeFn,
-} from "./ToolbarButtonsStateManager-types";
+} from "./ToolbarButtonsActionManager-types";
 
-export class ToolbarButtonsStateManager {
+export class ToolbarButtonsActionManager {
 	onFormatStylesChange: OnFormatStylesChangeFn | null = null;
 	onInsertionChange: OnInsertionChangeFn | null = null;
 	onNavigationChange: OnNavigationChangeFn | null = null;

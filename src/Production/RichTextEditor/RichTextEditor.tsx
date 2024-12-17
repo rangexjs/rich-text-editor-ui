@@ -6,7 +6,7 @@ import {
 	InsertionButtonsStore,
 	NavigationButtonsStore,
 } from "@externalStores";
-import { ToolbarButtonsStateManager } from "@toolbarButtonsStateManager";
+import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
 // @ts-ignore
 import inlineCss from "../global.css?inline";
@@ -20,14 +20,14 @@ import type {
 
 export class RichTextEditor {
 	#root;
-	#toolbarStateManager = new ToolbarButtonsStateManager();
+	#toolbarStateManager = new ToolbarButtonsActionManager();
 	#formattableButtonsStore = new FormattableButtonsStore();
 	#insertionButtonsStore = new InsertionButtonsStore();
 	#navigationButtonsStore = new NavigationButtonsStore();
 
 	constructor({
 		domNode,
-		editorToolbar,
+		toolbarButtons,
 		richTextArea,
 	}: RichTextEditorConstructorProps) {
 		const shadowRoot = domNode.attachShadow({ mode: "closed" });
@@ -57,8 +57,8 @@ export class RichTextEditor {
 
 		this.#root.render(
 			<App
-				editorToolbar={editorToolbar}
-				toolbarStateManager={this.#toolbarStateManager}
+				toolbarButtons={toolbarButtons}
+				toolbarButtonsActionManager={this.#toolbarStateManager}
 				formattableButtonsStore={this.#formattableButtonsStore}
 				insertionButtonsStore={this.#insertionButtonsStore}
 				navigationButtonsStore={this.#navigationButtonsStore}

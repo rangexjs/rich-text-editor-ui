@@ -5,10 +5,11 @@ import type { ToolbarButtonProps } from "./ToolbarButton-types";
 
 export const ToolbarButton = ({
 	children,
-	anchorName,
 	isChevron,
 	checked,
 	disabled,
+	anchorName,
+	popoverTargetElementRef,
 	onClick,
 }: ToolbarButtonProps) => {
 	const [isChecked, setIsChecked] = useState(checked);
@@ -26,11 +27,27 @@ export const ToolbarButton = ({
 		buttonRef.current.setAttribute("data-is-transition", "true");
 	}, []);
 
+	useEffect(() => {
+		const button = buttonRef.current;
+
+		if (!button) {
+			return;
+		}
+
+		const popoverTargetElement = popoverTargetElementRef?.current;
+
+		if (!popoverTargetElement) {
+			return;
+		}
+
+		button.popoverTargetElement = popoverTargetElement;
+	}, [popoverTargetElementRef]);
+
 	return (
 		<button
 			ref={buttonRef}
 			onClick={(event) =>
-				onClick({
+				onClick?.({
 					event,
 					isChecked,
 					isDisabled: disabled,
