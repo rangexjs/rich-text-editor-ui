@@ -6,10 +6,9 @@ import {
 	useState,
 } from "react";
 
-import { ChevronSVG } from "@components";
 import { Color, type HSLFormat } from "@utilities";
 
-import { CheckIcon } from "../SVGs/CheckIcon";
+import { CheckIcon, ChevronSVG } from "../SVGs";
 
 import type {
 	ChangeColorFormatProps,
