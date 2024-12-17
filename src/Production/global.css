@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
+	:host {
 		/* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
 		interpolate-size: allow-keywords;
 		--primary-color: #f29100;
