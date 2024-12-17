@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import type { DevelopmentViewProps } from "./DevelopmentView-types";
 
+import "../../../Production/global.css";
+
 export const DevelopmentView = ({
 	innerRoot: children,
 }: DevelopmentViewProps) => {
