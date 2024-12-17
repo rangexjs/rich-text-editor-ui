@@ -270,6 +270,8 @@ export const SpectrumColor = ({
 
 		panel.setPointerCapture(pointerId);
 
+		panel.style.cursor = "move";
+
 		manageThumbUpdate({ clientX, clientY, panel });
 	};
 
@@ -299,6 +301,8 @@ export const SpectrumColor = ({
 		}
 
 		panel.releasePointerCapture(pointerId);
+
+		panel.style.removeProperty("cursor");
 	};
 
 	const onHueThumbChange: OnThumbChangeFn = ({ position: value }) => {
@@ -332,6 +336,7 @@ export const SpectrumColor = ({
 		<div className={`inline-block ${className ?? ""}`} style={style}>
 			<div
 				ref={panelRef}
+				className="cursor-crosshair"
 				style={{
 					// @ts-ignore
 					anchorScope: panelAnchor,
@@ -389,12 +394,14 @@ export const SpectrumColor = ({
 							thumbColor={hueColor}
 							sliderTrackColor={`linear-gradient(to right, ${hueSliderTrackColor})`}
 							position={hueThumbPosition}
+							className="cursor-crosshair"
 							onThumbChange={onHueThumbChange}
 						/>
 						<Slider
 							thumbColor="#b3b3b3"
 							sliderTrackColor={`url(${transparentBg}) center / 120%`}
 							position={alphaThumbPosition}
+							className="cursor-crosshair"
 							onThumbChange={onAlphaThumbChange}
 							renderChildren={renderAlphaSliderChildren}
 						/>

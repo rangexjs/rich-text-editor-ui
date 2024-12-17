@@ -40,6 +40,7 @@ export const Slider = ({
 	thumbColor,
 	sliderTrackColor,
 	position,
+	className,
 	onThumbChange,
 	renderChildren,
 }: SliderProps) => {
@@ -75,6 +76,8 @@ export const Slider = ({
 
 		sliderTrack.setPointerCapture(pointerId);
 
+		sliderTrack.style.cursor = "ew-resize";
+
 		manageThumbUpdate({ clientX, sliderTrack });
 	};
 
@@ -104,12 +107,14 @@ export const Slider = ({
 		}
 
 		sliderTrack.releasePointerCapture(pointerId);
+
+		sliderTrack.style.removeProperty("cursor");
 	};
 
 	return (
 		<div
 			ref={sliderTrackRef}
-			className="h-4 overflow-clip rounded-full"
+			className={`h-4 overflow-clip rounded-full ${className}`}
 			style={{
 				// @ts-ignore
 				anchorScope: sliderAnchor,
