@@ -2,6 +2,7 @@ export * from "./AnchorIcon";
 export * from "./BackgroundColorIcon";
 export * from "./BlockQuoteIcon";
 export * from "./BoldIcon";
+export * from "./CheckIcon";
 export * from "./Chevron";
 export * from "./CodeBlockIcon";
 export * from "./ColorIcon";
