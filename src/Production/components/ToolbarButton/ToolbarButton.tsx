@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronSVG } from "../SVGs";
+import { ChevronIcon } from "../SVGs";
 
 import type { ToolbarButtonProps } from "./ToolbarButton-types";
 
@@ -62,7 +62,7 @@ export const ToolbarButton = ({
 			style={{ anchorName }}
 		>
 			<span className="inline-flex items-center">{children}</span>
-			{isChevron && <ChevronSVG />}
+			{isChevron && <ChevronIcon />}
 		</button>
 	);
 };

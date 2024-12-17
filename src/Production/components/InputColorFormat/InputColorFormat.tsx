@@ -8,7 +8,7 @@ import {
 
 import { Color, type HSLFormat } from "@utilities";
 
-import { CheckIcon, ChevronSVG } from "../SVGs";
+import { CheckIcon, ChevronIcon } from "../SVGs";
 
 import type {
 	ChangeColorFormatProps,
@@ -390,7 +390,7 @@ export const InputColorFormat = ({
 						anchorName: formatAnchor,
 					}}
 				>
-					{colorFormat} <ChevronSVG />
+					{colorFormat} <ChevronIcon />
 				</button>
 				<div
 					ref={colorFormatDropdownRef}

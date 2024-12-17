@@ -3,7 +3,7 @@ export * from "./BackgroundColorIcon";
 export * from "./BlockQuoteIcon";
 export * from "./BoldIcon";
 export * from "./CheckIcon";
-export * from "./Chevron";
+export * from "./ChevronIcon";
 export * from "./CodeBlockIcon";
 export * from "./ColorIcon";
 export * from "./CustomComponentIcon";
