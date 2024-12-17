@@ -41,8 +41,8 @@ const createAnchorProps = ({
 	const onClick: ToolbarButtonOnClickFn = () => {};
 
 	return {
-		isChecked: false,
-		isDisabled: state.isDisabled,
+		checked: false,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<AnchorIcon key="anchor" />],
@@ -53,12 +53,16 @@ const createBackgroundColorProps = ({
 	toolbarButtonsStateManager: _,
 	state,
 }: CreateBackgroundColorPropsProps): ToolbarButtonProps => {
-	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-	const onClick: ToolbarButtonOnClickFn = () => {};
+	const anchorName = "--background-color-button";
+
+	const onClick: ToolbarButtonOnClickFn = ({ isChecked, setIsChecked }) => {
+		setIsChecked(!isChecked);
+	};
 
 	return {
-		isChecked: false,
-		isDisabled: state.isDisabled,
+		anchorName,
+		checked: false,
+		disabled: state.isDisabled,
 		isChevron: true,
 		onClick,
 		children: [<BackgroundColorIcon key="background-color" />],
@@ -73,8 +77,8 @@ const createBlockQuoteProps = ({
 	const onClick: ToolbarButtonOnClickFn = () => {};
 
 	return {
-		isChecked: false,
-		isDisabled: state.isDisabled,
+		checked: false,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<BlockQuoteIcon key="block-quote" />],
@@ -92,8 +96,8 @@ const createBoldProps = ({
 	};
 
 	return {
-		isChecked: state.isChecked,
-		isDisabled: state.isDisabled,
+		checked: state.isChecked,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<BoldIcon key="bold" />],
@@ -108,8 +112,8 @@ const createCodeBlockProps = ({
 	const onClick: ToolbarButtonOnClickFn = () => {};
 
 	return {
-		isChecked: false,
-		isDisabled: state.isDisabled,
+		checked: false,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<CodeBlockIcon key="code-block" />],
@@ -124,8 +128,8 @@ const createColorProps = ({
 	const onClick: ToolbarButtonOnClickFn = () => {};
 
 	return {
-		isChecked: false,
-		isDisabled: state.isDisabled,
+		checked: false,
+		disabled: state.isDisabled,
 		isChevron: true,
 		onClick,
 		children: [<ColorIcon key="color" />],
@@ -140,8 +144,8 @@ const createHistoryBackProps = ({
 	};
 
 	return {
-		isChecked: false,
-		isDisabled: true,
+		checked: false,
+		disabled: true,
 		isChevron: false,
 		onClick,
 		children: [<HistoryBackIcon key="history-back" />],
@@ -156,8 +160,8 @@ const createHistoryForwardProps = ({
 	};
 
 	return {
-		isChecked: false,
-		isDisabled: true,
+		checked: false,
+		disabled: true,
 		isChevron: false,
 		onClick,
 		children: [<HistoryForwardIcon key="history-forward" />],
@@ -175,8 +179,8 @@ const createItalicProps = ({
 	};
 
 	return {
-		isChecked: state.isChecked,
-		isDisabled: state.isDisabled,
+		checked: state.isChecked,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<ItalicIcon key="italic" />],
@@ -194,8 +198,8 @@ const createStrikethroughProps = ({
 	};
 
 	return {
-		isChecked: state.isChecked,
-		isDisabled: state.isDisabled,
+		checked: state.isChecked,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<StrikethroughIcon key="strikethrough" />],
@@ -213,8 +217,8 @@ const createUnderlineProps = ({
 	};
 
 	return {
-		isChecked: state.isChecked,
-		isDisabled: state.isDisabled,
+		checked: state.isChecked,
+		disabled: state.isDisabled,
 		isChevron: false,
 		onClick,
 		children: [<UnderlineIcon key="underline" />],
