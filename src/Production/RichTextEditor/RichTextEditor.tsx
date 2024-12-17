@@ -40,6 +40,21 @@ export class RichTextEditor {
 
 		this.#root = createRoot(shadowRoot);
 
+		/**
+		 * In development: Handle HMR updates manually
+		 *
+		 * HMR does not update the ?inline style changes automatically
+		 */
+		if (import.meta.hot) {
+			import.meta.hot.accept("../global.css?inline", (module) => {
+				if (!module) {
+					throw new Error("Module can't be undefined.");
+				}
+
+				styleSheet.replaceSync(module.default);
+			});
+		}
+
 		this.#root.render(
 			<App
 				editorToolbar={editorToolbar}
