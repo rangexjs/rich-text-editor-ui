@@ -7,6 +7,7 @@ import {
 	type OnColorFormatChangeFn,
 } from "../InputColorFormat";
 import { RemoveColorIcon } from "../SVGs";
+import { CheckIcon } from "../SVGs/CheckIcon";
 import { type OnSpectrumColorChangeFn, SpectrumColor } from "../SpectrumColor";
 
 import type {
@@ -50,7 +51,7 @@ export const ColorPanel = ({
 }: ColorPanelProps) => {
 	const [hsl, setHSL] = useState<HSLFormat>({ h: 289, s: 86, l: 24, a: 0.5 });
 
-	const [activeTabName, setActiveTabName] = useState<TabName>("Grid");
+	const [activeTabName, setActiveTabName] = useState<TabName>("Spectrum");
 
 	const tabList: TabList = [
 		{ name: "Grid", anchorName: "--grid-anchor" },
@@ -178,6 +179,13 @@ export const ColorPanel = ({
 							onColorChange={onSpectrumColorChange}
 						/>
 						<InputColorFormat hsl={hsl} onColorChange={onColorFormatChange} />
+						<button
+							type="button"
+							className="mt-1 inline-flex items-center gap-1 self-start rounded-md border border-slate-200 bg-slate-200 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+							onClick={() => onSelectedColor({ hsl })}
+						>
+							<CheckIcon size={0.8} /> Apply color
+						</button>
 					</div>
 				</div>
 				<div
