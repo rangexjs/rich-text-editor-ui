@@ -171,10 +171,13 @@ export const ColorPanel = ({
 						isHidden={activeTabName !== "Grid"}
 						onClick={colorPaletteClick}
 					/>
-					<div style={{ display: activeTabName === "Spectrum" ? "" : "none" }}>
+					<div
+						className="flex flex-col items-center"
+						style={{ display: activeTabName === "Spectrum" ? "" : "none" }}
+					>
 						<SpectrumColor
 							hsl={hsl}
-							panelWidth={240}
+							panelWidth={230}
 							panelHeight={120}
 							onColorChange={onSpectrumColorChange}
 						/>
