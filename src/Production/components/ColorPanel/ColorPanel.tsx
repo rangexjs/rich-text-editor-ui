@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import type { HSLFormat } from "@utilities";
+import { Color, type HSLFormat } from "@utilities";
 
 import {
 	InputColorFormat,
@@ -32,15 +32,19 @@ const ColorPalette = ({
 				gridTemplateColumns: `repeat(${paletteCols}, auto)`,
 			}}
 		>
-			{paletteColors.map((backgroundColor) => (
-				<button
-					type="button"
-					key={backgroundColor}
-					className="relative inline-block h-5 w-5 scale-100 outline-primary transition-[transform] hover:z-10 hover:scale-125 hover:outline"
-					style={{ backgroundColor }}
-					onClick={() => onClick(backgroundColor)}
-				/>
-			))}
+			{paletteColors.map((hslFormat) => {
+				const backgroundColor = Color.hsl(hslFormat).color();
+
+				return (
+					<button
+						type="button"
+						key={backgroundColor}
+						className="relative inline-block h-5 w-5 scale-100 outline-primary transition-[transform] hover:z-10 hover:scale-125 hover:outline"
+						style={{ backgroundColor }}
+						onClick={() => onClick(hslFormat)}
+					/>
+				);
+			})}
 		</div>
 	);
 };
@@ -49,7 +53,7 @@ export const ColorPanel = ({
 	activeColors,
 	onColorSelected,
 }: ColorPanelProps) => {
-	const [hsl, setHSL] = useState<HSLFormat>({ h: 289, s: 86, l: 24, a: 0.5 });
+	const [hsl, setHSL] = useState<HSLFormat>({ h: 0, s: 100, l: 100, a: 1 });
 
 	const [activeTabName, setActiveTabName] = useState<TabName>("Spectrum");
 
@@ -75,42 +79,32 @@ export const ColorPanel = ({
 		{ length: paletteRows - 3 },
 		(_, rowIndex) =>
 			Array.from({ length: paletteCols }, (_, colIndex) => {
-				const hue = (360 / paletteCols) * colIndex;
+				const h = (360 / paletteCols) * colIndex;
 
-				const saturation = (100 / paletteRows) * (paletteRows - rowIndex);
+				const s = (100 / paletteRows) * (paletteRows - rowIndex);
 
-				const lightness = (100 / paletteRows) * (paletteRows - (rowIndex + 1));
+				const l = (100 / paletteRows) * (paletteRows - (rowIndex + 1));
 
-				return `hsl(${hue}deg, ${saturation}%, ${lightness}%, 1)`;
+				return { h, s, l, a: 1 };
 			}),
 	);
 
-	const grayColors = [
+	const grayColors: HSLFormat[] = [
 		...Array.from({ length: paletteCols - 1 }, (_, index) => {
-			const lightness = 100 - index * (100 / paletteCols);
+			const l = 100 - index * (100 / paletteCols);
 
-			return `hsl(0deg, 0%, ${lightness}%, 1)`;
+			return { h: 0, s: 0, l: l, a: 1 };
 		}),
-		"hsl(0deg, 0%, 0%, 1)",
+		{ h: 0, s: 0, l: 0, a: 1 },
 	];
 
-	const gridPaletteColors = [grayColors, ...gridFilledColors].flat();
+	const gridPaletteColors: HSLFormat[] = [
+		grayColors,
+		...gridFilledColors,
+	].flat();
 
-	const colorPaletteClick: ColorPaletteOnClickFn = (color) => {
-		const matchedColor = color.match(/\d+(\.\d+)?/g);
-
-		if (!matchedColor) {
-			throw new Error("Colors wasn't found.");
-		}
-
-		const [hue, saturation, lightness, alpha] = matchedColor;
-
-		const h = +hue;
-		const s = Math.round(+saturation);
-		const l = Math.round(+lightness);
-		const a = +(+alpha).toFixed(2);
-
-		onColorSelected({ hsl: { h, s, l, a } });
+	const colorPaletteClick: ColorPaletteOnClickFn = (hsl) => {
+		onColorSelected({ hsl });
 	};
 
 	const onSpectrumColorChange: OnSpectrumColorChangeFn = ({ hsl }) => {

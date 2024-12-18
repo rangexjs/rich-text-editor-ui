@@ -22,13 +22,13 @@ export type TabItem = {
 
 export type TabList = TabItem[];
 
-export type ColorPaletteOnClickFn = (color: string) => void;
+export type ColorPaletteOnClickFn = (hsl: HSLFormat) => void;
 
 export interface ColorPaletteProps {
-	paletteColors: string[];
+	paletteColors: HSLFormat[];
 	paletteCols: number;
 	isHidden: boolean;
-	onClick: (color: string) => void;
+	onClick: ColorPaletteOnClickFn;
 }
 
 interface OnSelectedColorFnProps {
@@ -38,6 +38,6 @@ interface OnSelectedColorFnProps {
 export type OnColorSelected = (props: OnSelectedColorFnProps) => void;
 
 export interface ColorPanelProps {
-	activeColors: string[];
+	activeColors: HSLFormat[];
 	onColorSelected: OnColorSelected;
 }
