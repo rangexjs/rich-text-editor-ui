@@ -59,7 +59,7 @@ export const ColorPanel = ({
 	activeColors,
 	onColorSelected,
 }: ColorPanelProps) => {
-	const [hsl, setHSL] = useState<HSLFormat>({ h: 0, s: 100, l: 100, a: 1 });
+	const [hsl, setHSL] = useState<HSLFormat>({ h: 0, s: 0, l: 0, a: 1 });
 
 	const [activeTabName, setActiveTabName] = useState<TabName>("Grid");
 
