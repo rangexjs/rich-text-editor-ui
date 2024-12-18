@@ -24,23 +24,29 @@ const ColorPalette = ({
 	isHidden,
 	onClick,
 }: ColorPaletteProps) => {
+	const colorSize = 20;
+
 	return (
 		<div
 			className="grid justify-center gap-0.5"
 			style={{
 				display: isHidden ? "none" : "",
-				gridTemplateColumns: `repeat(${paletteCols}, auto)`,
+				gridTemplateColumns: `repeat(${paletteCols}, ${colorSize}px)`,
 			}}
 		>
-			{paletteColors.map((hslFormat) => {
+			{paletteColors.map((hslFormat, index) => {
 				const backgroundColor = Color.hsl(hslFormat).color();
 
 				return (
 					<button
 						type="button"
-						key={backgroundColor}
-						className="relative inline-block h-5 w-5 scale-100 outline-primary transition-[transform] hover:z-10 hover:scale-125 hover:outline"
-						style={{ backgroundColor }}
+						key={index}
+						className="relative inline-block scale-100 outline-primary transition-[transform] hover:z-10 hover:scale-125 hover:outline"
+						style={{
+							width: `${colorSize}px`,
+							height: `${colorSize}px`,
+							backgroundColor,
+						}}
 						onClick={() => onClick(hslFormat)}
 					/>
 				);
