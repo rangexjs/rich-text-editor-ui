@@ -122,7 +122,7 @@ export const ColorPanel = ({
 	};
 
 	return (
-		<div className="flex w-64 flex-col rounded-lg border border-slate-200 bg-slate-50 p-1">
+		<div className="flex w-64 flex-col bg-slate-50 p-1">
 			<div className="mb-2 flex justify-around rounded-lg bg-slate-100 ">
 				{tabList.map(({ name, anchorName }) => (
 					<button

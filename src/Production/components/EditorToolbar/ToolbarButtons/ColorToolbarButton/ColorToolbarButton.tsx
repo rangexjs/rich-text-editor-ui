@@ -71,7 +71,7 @@ export const ColorToolbarButton = ({
 			</ToolbarButton>
 			<div
 				ref={popoverTargetElementRef}
-				className="mt-1 shadow-md"
+				className="mt-1 rounded-lg border border-slate-200 shadow-md"
 				popover="auto"
 				style={{
 					// @ts-ignore
