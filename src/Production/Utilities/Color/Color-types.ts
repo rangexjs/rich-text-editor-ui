@@ -16,6 +16,8 @@ export interface HexFormat {
 	hex: `#${string}`;
 }
 
+export interface HSLToColorProps extends HSLFormat {}
+
 export interface HSLToRGBProps extends HSLFormat {}
 
 export interface HSLToRGBReturn extends RGBFormat {}

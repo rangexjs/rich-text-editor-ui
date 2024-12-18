@@ -2,6 +2,7 @@ import type {
 	ColorHSLProps,
 	ColorHexProps,
 	ColorRGBProps,
+	HSLToColorProps,
 	HSLToHexProps,
 	HSLToHexReturn,
 	HSLToRGBProps,
@@ -11,6 +12,9 @@ import type {
 	RGBToHSLProps,
 	RGBToHSLReturn,
 } from "./Color-types";
+
+const hslToColor = ({ h, s, l, a }: HSLToColorProps) =>
+	`hsl(${h}deg, ${s}%, ${l}%, ${a})` as const;
 
 /**
  * Converts HSL to RGBA.
@@ -161,6 +165,7 @@ const hexToHsl = ({ hex }: HexToHSLProps): HexToHSLReturn => {
 export const Color = {
 	hsl(props: ColorHSLProps) {
 		return {
+			color: () => hslToColor(props),
 			rgb: () => hslToRgb(props),
 			hex: () => hslToHex(props),
 		};

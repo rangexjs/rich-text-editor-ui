@@ -25,8 +25,6 @@ export interface GetAlphaThumbPositionProps {
 	alpha: number;
 }
 
-export interface GetHSLColorProps extends HSLFormat {}
-
 export interface ManageColorUpdateProps {
 	hsl: HSLFormat;
 }

@@ -1,13 +1,12 @@
 import { type PointerEvent, useEffect, useRef, useState } from "react";
 
 import transparentBg from "@public/transparent.jpg";
-import type { HSLFormat } from "@utilities";
+import { Color, type HSLFormat } from "@utilities";
 
 import { type OnThumbChangeFn, type RenderChildrenFn, Slider } from "../Slider";
 
 import type {
 	GetAlphaThumbPositionProps,
-	GetHSLColorProps,
 	GetHorizontalThumbPositionProps,
 	GetHueThumbPositionProps,
 	GetPositionFromSaturationLightnessProps,
@@ -45,9 +44,6 @@ const getHueThumbPosition = ({ hue }: GetHueThumbPositionProps) =>
 
 const getAlphaThumbPosition = ({ alpha }: GetAlphaThumbPositionProps) =>
 	Math.round(alpha * 100);
-
-const getHSLColor = ({ h, s, l, a }: GetHSLColorProps) =>
-	`hsl(${h}deg, ${s}%, ${l}%, ${a})` as const;
 
 const getHorizontalThumbPosition = ({
 	clientX,
@@ -215,17 +211,17 @@ export const SpectrumColor = ({
 		setAlphaThumbPosition(updatedAlphaThumbPosition);
 	}, [hsl, scopedHSL]);
 
-	const hslColor = getHSLColor(hsl);
+	const hslColor = Color.hsl(hsl).color();
 
-	const filledHslColor = getHSLColor({ ...hsl, a: 1 });
+	const filledHslColor = Color.hsl({ ...hsl, a: 1 }).color();
 
-	const hueColor = getHSLColor({ h: hsl.h, s: 100, l: 50, a: 1 });
+	const hueColor = Color.hsl({ h: hsl.h, s: 100, l: 50, a: 1 }).color();
 
 	const hueSliderTrackColor = Array.from({ length: 12 }, (_, i) =>
-		getHSLColor({ h: i * 30, s: 100, l: 50, a: 1 }),
+		Color.hsl({ h: i * 30, s: 100, l: 50, a: 1 }).color(),
 	).join(", ");
 
-	const alphaSliderTrackColor = getHSLColor({ ...hsl, a: 0.7 });
+	const alphaSliderTrackColor = Color.hsl({ ...hsl, a: 0.7 }).color();
 
 	const manageColorUpdate = ({ hsl }: ManageColorUpdateProps) => {
 		setScopedHSL(hsl);
