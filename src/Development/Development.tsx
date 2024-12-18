@@ -44,7 +44,16 @@ export const simulateProductEnvironment = ({
 	// Set initial state
 	setTimeout(() => {
 		richTextEditor.updateFormattableStyles({
-			backgroundColor: { isDisabled: false, values: new Set() },
+			backgroundColor: {
+				isDisabled: false,
+				values: new Set([
+					"#ccc",
+					"rgba(250, 250, 0, 1)",
+					"rgb(100, 200, 50, 0.2)",
+					"rgb(100, 100, 50, .2)",
+					"rgba(100, 100, 50, .2)",
+				]),
+			},
 			bold: { isChecked: true, isDisabled: false },
 			color: { isDisabled: false, values: new Set() },
 			italic: { isChecked: false, isDisabled: false },
