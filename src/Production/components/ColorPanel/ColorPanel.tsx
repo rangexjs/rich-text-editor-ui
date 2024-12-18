@@ -122,7 +122,7 @@ export const ColorPanel = ({
 	};
 
 	return (
-		<div className="flex w-64 flex-col bg-slate-50 p-1">
+		<div className="flex w-[264px] flex-col bg-slate-50 p-1">
 			<div className="mb-2 flex justify-around rounded-lg bg-slate-100 ">
 				{tabList.map(({ name, anchorName }) => (
 					<button
@@ -171,13 +171,10 @@ export const ColorPanel = ({
 						isHidden={activeTabName !== "Grid"}
 						onClick={colorPaletteClick}
 					/>
-					<div
-						className="flex flex-col items-center"
-						style={{ display: activeTabName === "Spectrum" ? "" : "none" }}
-					>
+					<div style={{ display: activeTabName === "Spectrum" ? "" : "none" }}>
 						<SpectrumColor
 							hsl={hsl}
-							panelWidth={230}
+							panelWidth={240}
 							panelHeight={120}
 							onColorChange={onSpectrumColorChange}
 						/>
