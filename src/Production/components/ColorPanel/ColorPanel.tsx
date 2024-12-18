@@ -55,7 +55,7 @@ export const ColorPanel = ({
 }: ColorPanelProps) => {
 	const [hsl, setHSL] = useState<HSLFormat>({ h: 0, s: 100, l: 100, a: 1 });
 
-	const [activeTabName, setActiveTabName] = useState<TabName>("Spectrum");
+	const [activeTabName, setActiveTabName] = useState<TabName>("Grid");
 
 	const tabList: TabList = [
 		{ name: "Grid", anchorName: "--grid-anchor" },
