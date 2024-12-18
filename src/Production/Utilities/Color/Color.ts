@@ -2,6 +2,9 @@ import type {
 	ColorHSLProps,
 	ColorHexProps,
 	ColorRGBProps,
+	FromColorProps,
+	GetHSLFormatFromColorProps,
+	GetHSLFormatFromColorReturn,
 	HSLToColorProps,
 	HSLToHexProps,
 	HSLToHexReturn,
@@ -88,6 +91,14 @@ const hslToHex = ({ h, s, l, a }: HSLToHexProps): HSLToHexReturn => {
  * Converts RGBA to HSLA.
  */
 const rgbToHsl = ({ r, g, b, a = 1 }: RGBToHSLProps): RGBToHSLReturn => {
+	if (![r, g, b].every((v) => v <= 255 && v >= 0)) {
+		throw new Error("RGB's value is invalid.");
+	}
+
+	if (!(a <= 1 && a >= 0)) {
+		throw new Error("RGB's alpha value is invalid.");
+	}
+
 	r /= 255;
 	g /= 255;
 	b /= 255;
@@ -162,6 +173,70 @@ const hexToHsl = ({ hex }: HexToHSLProps): HexToHSLReturn => {
 	return rgbToHsl({ r, g, b, a });
 };
 
+const getHSLFormatFromColor = ({
+	color,
+}: GetHSLFormatFromColorProps): GetHSLFormatFromColorReturn => {
+	if (color.startsWith("hsl")) {
+		const regex = /([0-1]?(\.\d+)|\d+)/g;
+
+		const matchedColor = color.match(regex);
+
+		if (!matchedColor) {
+			throw new Error("HSL's format is invalid.");
+		}
+
+		const [hue, saturation, lightness, alpha = "1"] = matchedColor;
+
+		// w3c allows the hue to be 360 but it has to be normalized to 0
+		const fixedHue = hue === "360" ? "0" : hue;
+
+		const h = +fixedHue;
+		const s = +saturation;
+		const l = +lightness;
+		const a = +alpha;
+
+		if (
+			h > 359 ||
+			h < 0 ||
+			s > 100 ||
+			s < 0 ||
+			l > 100 ||
+			l < 0 ||
+			a > 1 ||
+			a < 0
+		) {
+			throw new Error("HSL's value is invalid.");
+		}
+
+		return { h, s, l, a };
+	}
+
+	if (color.startsWith("rgb")) {
+		const regex = /([0-1]?(\.\d+)|\d+)/g;
+
+		const matchedColor = color.match(regex);
+
+		if (!matchedColor) {
+			throw new Error("RGB's format is invalid.");
+		}
+
+		const [red, green, blue, alpha = "1"] = matchedColor;
+
+		const r = +red;
+		const g = +green;
+		const b = +blue;
+		const a = +alpha;
+
+		return rgbToHsl({ r, g, b, a });
+	}
+
+	if (color.startsWith("#")) {
+		return hexToHsl({ hex: color });
+	}
+
+	throw new Error("Color type couldn't be handled.");
+};
+
 export const Color = {
 	hsl(props: ColorHSLProps) {
 		return {
@@ -177,5 +252,9 @@ export const Color = {
 
 	hex(props: ColorHexProps) {
 		return { hexToHsl: () => hexToHsl(props) };
+	},
+
+	fromColor(props: FromColorProps) {
+		return { hslFormat: () => getHSLFormatFromColor(props) };
 	},
 };

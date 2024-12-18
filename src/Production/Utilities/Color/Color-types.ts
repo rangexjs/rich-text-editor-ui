@@ -13,7 +13,7 @@ export interface RGBFormat {
 }
 
 export interface HexFormat {
-	hex: `#${string}`;
+	hex: string;
 }
 
 export interface HSLToColorProps extends HSLFormat {}
@@ -39,8 +39,16 @@ export interface HexToHSLProps extends HexFormat {}
 
 export interface HexToHSLReturn extends HSLFormat {}
 
+export interface GetHSLFormatFromColorProps {
+	color: string;
+}
+
+export interface GetHSLFormatFromColorReturn extends HSLFormat {}
+
 export interface ColorHSLProps extends HSLFormat {}
 
 export interface ColorRGBProps extends RGBFormat {}
 
 export interface ColorHexProps extends HexFormat {}
+
+export interface FromColorProps extends GetHSLFormatFromColorProps {}
