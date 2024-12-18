@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
+import { Color, type HSLFormat } from "@utilities";
+
 import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { ColorIcon } from "../../../SVGs";
 import { ToolbarButton } from "../../../ToolbarButton";
 
-import { Color } from "@utilities";
 import type { CreateColorPropsProps } from "./ColorToolbarButton-types";
 
 export const ColorToolbarButton = ({
@@ -57,6 +58,18 @@ export const ColorToolbarButton = ({
 			popoverTargetElement.removeEventListener("toggle", onToggle);
 		};
 	}, []);
+
+	const activeColors: HSLFormat[] = [];
+
+	for (const color of state.values) {
+		try {
+			const hslFormat = Color.fromColor({ color }).hslFormat();
+
+			activeColors.push(hslFormat);
+		} catch {
+			console.warn("Color couldn't be processed.", { color });
+		}
+	}
 
 	return (
 		<>

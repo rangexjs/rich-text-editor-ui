@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { Color } from "@utilities";
+import { Color, type HSLFormat } from "@utilities";
 
 import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { BackgroundColorIcon } from "../../../SVGs";
@@ -59,6 +59,18 @@ export const BackgroundColorToolbarButton = ({
 		};
 	}, []);
 
+	const activeColors: HSLFormat[] = [];
+
+	for (const color of state.values) {
+		try {
+			const hslFormat = Color.fromColor({ color }).hslFormat();
+
+			activeColors.push(hslFormat);
+		} catch {
+			console.warn("Color couldn't be processed.", { color });
+		}
+	}
+
 	return (
 		<>
 			<ToolbarButton
@@ -81,7 +93,10 @@ export const BackgroundColorToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<ColorPanel activeColors={[]} onColorSelected={onColorSelected} />
+				<ColorPanel
+					activeColors={activeColors}
+					onColorSelected={onColorSelected}
+				/>
 			</div>
 		</>
 	);
