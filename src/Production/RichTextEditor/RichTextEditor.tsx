@@ -4,6 +4,7 @@ import { App } from "@components";
 import {
 	FormattableButtonsStore,
 	InsertionButtonsStore,
+	LineTagNameButtonsStore,
 	NavigationButtonsStore,
 } from "@externalStores";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
@@ -13,9 +14,11 @@ import inlineCss from "../global.css?inline";
 
 import type {
 	OnFormatStylesChangeProps,
+	OnLineTagNameChangeProps,
 	OnNavigationChangeProps,
 	RichTextEditorConstructorProps,
 	UpdateFormattableStylesProps,
+	UpdateLineTagNameProps,
 } from "./RichTextEditor-types";
 
 export class RichTextEditor {
@@ -23,6 +26,7 @@ export class RichTextEditor {
 	#toolbarStateManager = new ToolbarButtonsActionManager();
 	#formattableButtonsStore = new FormattableButtonsStore();
 	#insertionButtonsStore = new InsertionButtonsStore();
+	#lineTagNameButtonsStore = new LineTagNameButtonsStore();
 	#navigationButtonsStore = new NavigationButtonsStore();
 
 	constructor({
@@ -61,6 +65,7 @@ export class RichTextEditor {
 				toolbarButtonsActionManager={this.#toolbarStateManager}
 				formattableButtonsStore={this.#formattableButtonsStore}
 				insertionButtonsStore={this.#insertionButtonsStore}
+				lineTagNameButtonsStore={this.#lineTagNameButtonsStore}
 				navigationButtonsStore={this.#navigationButtonsStore}
 				richTextArea={richTextArea}
 			/>,
@@ -71,12 +76,20 @@ export class RichTextEditor {
 		this.#toolbarStateManager.onFormatStylesChange = callback;
 	}
 
+	onLineTagNameChange(callback: OnLineTagNameChangeProps) {
+		this.#toolbarStateManager.onLineTagNameChange = callback;
+	}
+
 	onNavigationChange(callback: OnNavigationChangeProps) {
 		this.#toolbarStateManager.onNavigationChange = callback;
 	}
 
 	updateFormattableStyles(props: UpdateFormattableStylesProps) {
 		this.#formattableButtonsStore.updateState(props);
+	}
+
+	updateLineTagName(props: UpdateLineTagNameProps) {
+		this.#lineTagNameButtonsStore.updateState(props);
 	}
 
 	unmount() {

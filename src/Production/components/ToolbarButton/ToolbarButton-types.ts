@@ -22,5 +22,6 @@ export interface ToolbarButtonProps {
 	disabled: boolean;
 	anchorName?: string;
 	popoverTargetElementRef?: RefObject<HTMLElement>;
+	className?: string;
 	onClick?: ToolbarButtonOnClickFn;
 }

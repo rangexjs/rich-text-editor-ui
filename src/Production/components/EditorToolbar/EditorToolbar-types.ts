@@ -2,6 +2,7 @@ import type { buttonsName } from "@constants";
 import type {
 	FormattableButtonsState,
 	InsertionButtonsState,
+	LineTagNameButtonsState,
 	NavigationButtonsState,
 } from "@externalStores";
 import type { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
@@ -21,5 +22,6 @@ export interface EditorToolbarProps {
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
 	formattableButtonsState: FormattableButtonsState;
 	insertionButtonsState: InsertionButtonsState;
+	lineTagNameButtonsState: LineTagNameButtonsState;
 	navigationButtonsState: NavigationButtonsState;
 }

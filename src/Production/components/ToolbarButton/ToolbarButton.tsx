@@ -10,6 +10,7 @@ export const ToolbarButton = ({
 	disabled,
 	anchorName,
 	popoverTargetElementRef,
+	className,
 	onClick,
 }: ToolbarButtonProps) => {
 	const [isChecked, setIsChecked] = useState(checked);
@@ -46,6 +47,12 @@ export const ToolbarButton = ({
 	return (
 		<button
 			ref={buttonRef}
+			type="button"
+			data-is-checked={isChecked}
+			data-is-disabled={disabled}
+			className={`toolbar-button ${className ?? ""}`}
+			// @ts-ignore
+			style={{ anchorName }}
 			onClick={(event) =>
 				onClick?.({
 					event,
@@ -54,12 +61,6 @@ export const ToolbarButton = ({
 					setIsChecked,
 				})
 			}
-			type="button"
-			data-is-checked={isChecked}
-			data-is-disabled={disabled}
-			className="toolbar-button"
-			// @ts-ignore
-			style={{ anchorName }}
 		>
 			<span className="inline-flex items-center">{children}</span>
 			{isChevron && <ChevronIcon />}

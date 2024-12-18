@@ -48,6 +48,15 @@ type OnInsertionChangeFnProps = InsertionState;
 
 export type OnInsertionChangeFn = (props: OnInsertionChangeFnProps) => void;
 
+// LineTagName
+export interface LineTagNameState {
+	tagName: "p" | `h${1 | 2 | 3 | 4 | 5 | 6}`;
+}
+
+interface OnLineTagnameChangeFnProps extends LineTagNameState {}
+
+export type OnLineTagNameChangeFn = (props: OnLineTagnameChangeFnProps) => void;
+
 // Navigation
 export interface NavigationState {
 	type: "history-back" | "history-forward";

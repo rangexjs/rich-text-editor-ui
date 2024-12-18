@@ -9,6 +9,7 @@ import {
 	HistoryBackToolbarButton,
 	HistoryForwardToolbarButton,
 	ItalicToolbarButton,
+	LineTagNameToolbarButton,
 	StrikethroughToolbarButton,
 	UnderlineToolbarButton,
 } from "./ToolbarButtons";
@@ -18,10 +19,13 @@ export const EditorToolbar = ({
 	toolbarButtonsActionManager,
 	formattableButtonsState,
 	insertionButtonsState: _,
+	lineTagNameButtonsState,
 	navigationButtonsState,
 }: EditorToolbarProps) => {
 	const { backgroundColor, bold, color, italic, strikethrough, underline } =
 		formattableButtonsState;
+
+	const { tagName } = lineTagNameButtonsState;
 
 	const { historyBack, historyForward } = navigationButtonsState;
 
@@ -78,6 +82,15 @@ export const EditorToolbar = ({
 						<ItalicToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={italic}
+						/>
+					);
+				}
+
+				if (buttonsName.lineTagName === name) {
+					return (
+						<LineTagNameToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={tagName}
 						/>
 					);
 				}

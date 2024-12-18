@@ -10,6 +10,3 @@ export interface NavigationButtonsState {
 	historyBack: HistoryBackState;
 	historyForward: HistoryForwardState;
 }
-
-export interface NavigationUpdateStateProps
-	extends Partial<NavigationButtonsState> {}

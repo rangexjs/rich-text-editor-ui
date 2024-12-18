@@ -20,6 +20,3 @@ export interface InsertionButtonsState {
 	codeBlock: CodeBlockState;
 	customComponent: CustomComponentState;
 }
-
-export interface InsertionUpdateStateProps
-	extends Partial<InsertionButtonsState> {}

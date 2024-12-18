@@ -36,6 +36,3 @@ export interface FormattableButtonsState {
 	strikethrough: StrikethroughState;
 	underline: UnderlineState;
 }
-
-export interface FormattableUpdateStateProps
-	extends Partial<FormattableButtonsState> {}

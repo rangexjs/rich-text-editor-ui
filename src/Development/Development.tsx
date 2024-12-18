@@ -24,6 +24,7 @@ export const simulateProductEnvironment = ({
 	const toolbarButtons: ToolbarButtons = [
 		[["history-back", "history-forward"]],
 		[
+			["line-tag-name"],
 			[
 				"bold",
 				"italic",
@@ -59,6 +60,10 @@ export const simulateProductEnvironment = ({
 			italic: { isChecked: false, isDisabled: false },
 			strikethrough: { isChecked: false, isDisabled: false },
 			underline: { isChecked: false, isDisabled: false },
+		});
+
+		richTextEditor.updateLineTagName({
+			tagName: { isDisabled: false, values: new Set(["p"]) },
 		});
 	}, 0e3);
 

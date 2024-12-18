@@ -20,6 +20,7 @@ export const buttonsName = {
 	strikethrough: "strikethrough",
 	symbol: "symbol",
 	table: "table",
+	lineTagName: "line-tag-name",
 	textAlignCenter: "text-align-center",
 	textAlignJustify: "text-align-justify",
 	textAlignLeft: "text-align-left",

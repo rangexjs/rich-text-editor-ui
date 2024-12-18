@@ -10,6 +10,7 @@ export const App = ({
 	formattableButtonsStore,
 	insertionButtonsStore,
 	navigationButtonsStore,
+	lineTagNameButtonsStore,
 	richTextArea,
 }: AppProps) => {
 	const richTextEditorRef = useRef<HTMLDivElement>(null);
@@ -27,6 +28,11 @@ export const App = ({
 	const navigationButtonsState = useSyncExternalStore(
 		navigationButtonsStore.subscribe.bind(navigationButtonsStore),
 		navigationButtonsStore.getSnapshot.bind(navigationButtonsStore),
+	);
+
+	const lineTagNameButtonsState = useSyncExternalStore(
+		lineTagNameButtonsStore.subscribe.bind(lineTagNameButtonsStore),
+		lineTagNameButtonsStore.getSnapshot.bind(lineTagNameButtonsStore),
 	);
 
 	useEffect(() => {
@@ -47,6 +53,7 @@ export const App = ({
 				toolbarButtonsActionManager={toolbarButtonsActionManager}
 				formattableButtonsState={formattableButtonsState}
 				insertionButtonsState={insertionButtonsState}
+				lineTagNameButtonsState={lineTagNameButtonsState}
 				navigationButtonsState={navigationButtonsState}
 			/>
 		</div>

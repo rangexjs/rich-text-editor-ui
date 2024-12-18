@@ -1,6 +1,7 @@
 import type {
 	FormattableButtonsStore,
 	InsertionButtonsStore,
+	LineTagNameButtonsStore,
 	NavigationButtonsStore,
 } from "@externalStores";
 import type { ToolbarButtonsActionManager } from "src/Production/ToolbarButtonsActionManager";
@@ -14,6 +15,7 @@ export interface AppProps {
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
 	formattableButtonsStore: FormattableButtonsStore;
 	insertionButtonsStore: InsertionButtonsStore;
+	lineTagNameButtonsStore: LineTagNameButtonsStore;
 	navigationButtonsStore: NavigationButtonsStore;
 	richTextArea: HTMLElement;
 }
