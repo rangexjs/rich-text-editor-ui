@@ -6,8 +6,14 @@
 		"newLine": "lf",
 		"baseUrl": ".",
 		"paths": {
-			"@components": ["src/Product/components"],
-			"@layouts": ["./src/layouts"]
+			"@public/*": ["src/Production/public/*"],
+			"@components": ["src/Production/components"],
+			"@constants": ["src/Production/Constants"],
+			"@externalStores": ["src/Production/ExternalStores"],
+			"@toolbarButtonsActionManager": [
+				"src/Production/ToolbarButtonsActionManager"
+			],
+			"@utilities": ["src/Production/Utilities"]
 		},
 		"esModuleInterop": true,
 		"module": "ESNext",
@@ -21,6 +27,6 @@
 		"plugins": [{ "name": "next" }],
 		"allowJs": true
 	},
-	"include": ["src/**/*", "index.ts"],
+	"include": ["src/**/*", "declaration.d.ts", "index.ts"],
 	"exclude": ["node_modules"]
 }

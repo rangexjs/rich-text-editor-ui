@@ -1,3 +1,22 @@
+@import "./components";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	:host {
+		/* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
+		interpolate-size: allow-keywords;
+		--primary-color: #f29100;
+	}
+
+	::-webkit-inner-spin-button {
+		display: none;
+	}
+
+	[popover] {
+		padding: 0;
+		margin: 0;
+	}
+}

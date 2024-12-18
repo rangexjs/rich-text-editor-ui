@@ -6,4 +6,4 @@ if (!domNode) {
 	throw new Error("DomNode can't be null.");
 }
 
-const _cleanup = simulateProductEnvironment({ domNode });
+simulateProductEnvironment({ domNode });
