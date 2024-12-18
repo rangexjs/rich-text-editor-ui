@@ -32,6 +32,7 @@ export const simulateProductEnvironment = ({
 				"strikethrough",
 				"color",
 				"background-color",
+				"remove-format",
 			],
 		],
 	];

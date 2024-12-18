@@ -5,5 +5,6 @@ export * from "./HistoryBackToolbarButton";
 export * from "./HistoryForwardToolbarButton";
 export * from "./ItalicToolbarButton";
 export * from "./LineTagNameToolbarButton";
+export * from "./RemoveFormatToolbarButton";
 export * from "./StrikethroughToolbarButton";
 export * from "./UnderlineToolbarButton";

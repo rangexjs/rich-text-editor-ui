@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 import { buttonsName } from "@constants";
-import type { EditorToolbarProps } from "./EditorToolbar-types";
+
 import {
 	BackgroundColorToolbarButton,
 	BoldToolbarButton,
@@ -10,9 +10,12 @@ import {
 	HistoryForwardToolbarButton,
 	ItalicToolbarButton,
 	LineTagNameToolbarButton,
+	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
 	UnderlineToolbarButton,
 } from "./ToolbarButtons";
+
+import type { EditorToolbarProps } from "./EditorToolbar-types";
 
 export const EditorToolbar = ({
 	toolbarRows,
@@ -91,6 +94,15 @@ export const EditorToolbar = ({
 						<LineTagNameToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={tagName}
+						/>
+					);
+				}
+
+				if (buttonsName.removeFormat === name) {
+					return (
+						<RemoveFormatToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							formattableButtonsState={formattableButtonsState}
 						/>
 					);
 				}
