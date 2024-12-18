@@ -4,6 +4,7 @@
 	"private": true,
 	"type": "module",
 	"repository": "git@github.com:rangexjs/rich-text-editor-ui.git",
+	"license": "SEE LICENSE IN LICENSE.md",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
