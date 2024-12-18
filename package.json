@@ -1,8 +1,9 @@
 {
-	"name": "@rangex/editor-toolbar",
+	"name": "@rangex/rich-text-editor-ui",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
+	"repository": "git@github.com:rangexjs/rich-text-editor-ui.git",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
