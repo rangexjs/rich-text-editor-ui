@@ -6,9 +6,12 @@ import {
 	BackgroundColorToolbarButton,
 	BoldToolbarButton,
 	ColorToolbarButton,
+	FontFamilyToolbarButton,
+	FontSizeToolbarButton,
 	HistoryBackToolbarButton,
 	HistoryForwardToolbarButton,
 	ItalicToolbarButton,
+	LetterSpacingToolbarButton,
 	LineTagNameToolbarButton,
 	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
@@ -25,8 +28,17 @@ export const EditorToolbar = ({
 	lineTagNameButtonsState,
 	navigationButtonsState,
 }: EditorToolbarProps) => {
-	const { backgroundColor, bold, color, italic, strikethrough, underline } =
-		formattableButtonsState;
+	const {
+		backgroundColor,
+		bold,
+		color,
+		fontFamily,
+		fontSize,
+		italic,
+		letterSpacing,
+		strikethrough,
+		underline,
+	} = formattableButtonsState;
 
 	const { tagName } = lineTagNameButtonsState;
 
@@ -62,6 +74,24 @@ export const EditorToolbar = ({
 					);
 				}
 
+				if (buttonsName.fontFamily === name) {
+					return (
+						<FontFamilyToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={fontFamily}
+						/>
+					);
+				}
+
+				if (buttonsName.fontSize === name) {
+					return (
+						<FontSizeToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={fontSize}
+						/>
+					);
+				}
+
 				if (buttonsName.historyBack === name) {
 					return (
 						<HistoryBackToolbarButton
@@ -85,6 +115,15 @@ export const EditorToolbar = ({
 						<ItalicToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={italic}
+						/>
+					);
+				}
+
+				if (buttonsName.letterSpacing === name) {
+					return (
+						<LetterSpacingToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={letterSpacing}
 						/>
 					);
 				}

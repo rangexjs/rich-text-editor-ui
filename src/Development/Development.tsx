@@ -32,6 +32,9 @@ export const simulateProductEnvironment = ({
 				"strikethrough",
 				"color",
 				"background-color",
+				"font-family",
+				"font-size",
+				"letter-spacing",
 				"remove-format",
 			],
 		],
@@ -58,7 +61,19 @@ export const simulateProductEnvironment = ({
 			},
 			bold: { isChecked: true, isDisabled: false },
 			color: { isDisabled: false, values: new Set() },
+			fontFamily: {
+				isDisabled: false,
+				values: new Set(["Arial", "Times New Roman"]),
+			},
+			fontSize: {
+				isDisabled: false,
+				values: new Set(["16px", "24px", "28px"]),
+			},
 			italic: { isChecked: false, isDisabled: false },
+			letterSpacing: {
+				isDisabled: false,
+				values: new Set(["-1px", "4px", "8.5px"]),
+			},
 			strikethrough: { isChecked: false, isDisabled: false },
 			underline: { isChecked: false, isDisabled: false },
 		});
