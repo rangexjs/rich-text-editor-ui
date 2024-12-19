@@ -5,9 +5,9 @@ import type { ToolbarButtonProps } from "./ToolbarButton-types";
 
 export const ToolbarButton = ({
 	children,
-	isChevron,
-	checked,
-	disabled,
+	checked = false,
+	disabled = false,
+	isChevron = false,
 	anchorName,
 	popoverTargetElementRef,
 	className,

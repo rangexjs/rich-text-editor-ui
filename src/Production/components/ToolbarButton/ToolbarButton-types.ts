@@ -17,9 +17,9 @@ export type ToolbarButtonOnClickFn = (props: OnClickFnProps) => void;
 
 export interface ToolbarButtonProps {
 	children: ReactNode;
-	isChevron: boolean;
-	checked: boolean;
-	disabled: boolean;
+	checked?: boolean;
+	disabled?: boolean;
+	isChevron?: boolean;
 	anchorName?: string;
 	popoverTargetElementRef?: RefObject<HTMLElement>;
 	className?: string;
