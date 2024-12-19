@@ -9,9 +9,9 @@ import {
 import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
-	TextAlignToolbarButtonProps,
 	OnTextAlignClickProps,
 	TextAlignList,
+	TextAlignToolbarButtonProps,
 } from "./TextAlignToolbarButton-types";
 
 const textAlignList: TextAlignList = ["left", "center", "right", "justify"];

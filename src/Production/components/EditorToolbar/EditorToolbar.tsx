@@ -10,8 +10,10 @@ import {
 	FontSizeToolbarButton,
 	HistoryBackToolbarButton,
 	HistoryForwardToolbarButton,
+	IndentationToolbarButton,
 	ItalicToolbarButton,
 	LetterSpacingToolbarButton,
+	LineHeightToolbarButton,
 	LineTagNameToolbarButton,
 	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
@@ -35,8 +37,10 @@ export const EditorToolbar = ({
 		color,
 		fontFamily,
 		fontSize,
+		indentation,
 		italic,
 		letterSpacing,
+		lineHeight,
 		strikethrough,
 		textAlign,
 		underline,
@@ -112,6 +116,15 @@ export const EditorToolbar = ({
 					);
 				}
 
+				if (buttonsName.indentation === name) {
+					return (
+						<IndentationToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={indentation}
+						/>
+					);
+				}
+
 				if (buttonsName.italic === name) {
 					return (
 						<ItalicToolbarButton
@@ -126,6 +139,15 @@ export const EditorToolbar = ({
 						<LetterSpacingToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={letterSpacing}
+						/>
+					);
+				}
+
+				if (buttonsName.lineHeight === name) {
+					return (
+						<LineHeightToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={lineHeight}
 						/>
 					);
 				}

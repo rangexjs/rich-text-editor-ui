@@ -37,7 +37,7 @@ export const simulateProductEnvironment = ({
 				"letter-spacing",
 				"remove-format",
 			],
-			["text-align"],
+			["text-align", "line-height", "indentation"],
 		],
 	];
 
@@ -70,10 +70,18 @@ export const simulateProductEnvironment = ({
 				isDisabled: false,
 				values: new Set(["16px", "24px", "28px"]),
 			},
+			indentation: {
+				isDisabled: false,
+				values: new Set(["10px, 3px"]),
+			},
 			italic: { isChecked: false, isDisabled: false },
 			letterSpacing: {
 				isDisabled: false,
 				values: new Set(["-1px", "4px", "8.5px"]),
+			},
+			lineHeight: {
+				isDisabled: false,
+				values: new Set([1, 1.2, 2, 4, -1, -3.1]),
 			},
 			strikethrough: { isChecked: false, isDisabled: false },
 			textAlign: { isDisabled: false, values: new Set(["left", "center"]) },

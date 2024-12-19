@@ -25,6 +25,11 @@ interface FontSizeState {
 	values: Set<`${string}px`>;
 }
 
+interface IndentationState {
+	isDisabled: boolean;
+	values: Set<`${string}px`>;
+}
+
 interface ItalicState {
 	isChecked: boolean;
 	isDisabled: boolean;
@@ -33,6 +38,11 @@ interface ItalicState {
 interface LetterSpacingState {
 	isDisabled: boolean;
 	values: Set<`${string}px`>;
+}
+
+interface LineHeightState {
+	isDisabled: boolean;
+	values: Set<number>;
 }
 
 interface StrikethroughState {
@@ -56,8 +66,10 @@ export interface FormattableButtonsState {
 	color: ColorState;
 	fontFamily: FontFamilyState;
 	fontSize: FontSizeState;
+	indentation: IndentationState;
 	italic: ItalicState;
 	letterSpacing: LetterSpacingState;
+	lineHeight: LineHeightState;
 	strikethrough: StrikethroughState;
 	textAlign: TextAlignState;
 	underline: UnderlineState;
