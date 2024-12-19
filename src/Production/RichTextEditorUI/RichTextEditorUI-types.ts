@@ -9,7 +9,7 @@ import type {
 	OnNavigationChangeFn,
 } from "@toolbarButtonsActionManager";
 
-export interface RichTextEditorConstructorProps
+export interface RichTextEditorUIConstructorProps
 	extends Pick<AppProps, "toolbarButtons" | "richTextArea"> {
 	domNode: Element;
 }

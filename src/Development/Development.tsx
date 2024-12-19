@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 
-import { RichTextEditor } from "src/Production";
+import { RichTextEditorUI } from "src/Production";
 import type { ToolbarButtons } from "src/Production/components";
 
 import { getFormattableButtonsState } from "./GetFormattableButtonsState";
@@ -40,7 +40,7 @@ export const simulateProductEnvironment = ({
 		],
 	];
 
-	const richTextEditor = new RichTextEditor({
+	const richTextEditorUI = new RichTextEditorUI({
 		domNode: innerRoot,
 		toolbarButtons,
 		richTextArea,
@@ -48,7 +48,7 @@ export const simulateProductEnvironment = ({
 
 	// Set initial state
 	setTimeout(() => {
-		richTextEditor.updateFormattableStyles({
+		richTextEditorUI.updateFormattableStyles({
 			backgroundColor: {
 				isDisabled: false,
 				values: new Set([
@@ -78,16 +78,16 @@ export const simulateProductEnvironment = ({
 			underline: { isChecked: false, isDisabled: false },
 		});
 
-		richTextEditor.updateLineTagName({
+		richTextEditorUI.updateLineTagName({
 			tagName: { isDisabled: false, values: new Set(["p"]) },
 		});
 	}, 0e3);
 
-	richTextEditor.onFormatStylesChange((formatStylesState) => {
+	richTextEditorUI.onFormatStylesChange((formatStylesState) => {
 		const { formattableButtonsState } = getFormattableButtonsState({
 			formatStylesState,
 		});
 
-		richTextEditor.updateFormattableStyles(formattableButtonsState);
+		richTextEditorUI.updateFormattableStyles(formattableButtonsState);
 	});
 };

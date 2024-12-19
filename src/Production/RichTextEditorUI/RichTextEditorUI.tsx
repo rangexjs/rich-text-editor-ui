@@ -16,12 +16,12 @@ import type {
 	OnFormatStylesChangeProps,
 	OnLineTagNameChangeProps,
 	OnNavigationChangeProps,
-	RichTextEditorConstructorProps,
+	RichTextEditorUIConstructorProps,
 	UpdateFormattableStylesProps,
 	UpdateLineTagNameProps,
-} from "./RichTextEditor-types";
+} from "./RichTextEditorUI-types";
 
-export class RichTextEditor {
+export class RichTextEditorUI {
 	#root;
 	#toolbarStateManager = new ToolbarButtonsActionManager();
 	#formattableButtonsStore = new FormattableButtonsStore();
@@ -33,7 +33,7 @@ export class RichTextEditor {
 		domNode,
 		toolbarButtons,
 		richTextArea,
-	}: RichTextEditorConstructorProps) {
+	}: RichTextEditorUIConstructorProps) {
 		const shadowRoot = domNode.attachShadow({ mode: "closed" });
 
 		const styleSheet = new CSSStyleSheet();
