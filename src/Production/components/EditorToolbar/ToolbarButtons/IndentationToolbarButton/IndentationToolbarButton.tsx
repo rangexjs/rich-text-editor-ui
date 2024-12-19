@@ -105,7 +105,7 @@ export const IndentationToolbarButton = ({
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
-				className="absolute mt-1 max-h-80 flex-col rounded-md bg-slate-100 py-1 text-sm shadow-sm [&:popover-open]:flex"
+				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-200 bg-white py-2 text-sm shadow-md [&:popover-open]:flex"
 				style={{
 					// @ts-ignore
 					positionAnchor: indentationToolbarButtonAnchor,
@@ -113,18 +113,16 @@ export const IndentationToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<button
-					type="button"
-					className="px-1 py-0.5 font-semibold transition-colors hover:bg-slate-200"
+				<ToolbarButton
+					className="justify-center rounded-none px-1 py-0.5 font-semibold"
 					onClick={() => onIndentationClick("remove")}
 				>
 					Remove
-				</button>
+				</ToolbarButton>
 				{sortedIndentations.map((indentation) => (
-					<button
+					<ToolbarButton
 						key={indentation}
-						type="button"
-						className="px-8 py-0.5 text-start font-semibold transition-colors hover:bg-slate-200"
+						className="rounded-none px-8 py-0.5 text-start font-semibold"
 						onClick={() => onIndentationClick(indentation)}
 					>
 						<span
@@ -149,7 +147,7 @@ export const IndentationToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</button>
+					</ToolbarButton>
 				))}
 			</div>
 		</>

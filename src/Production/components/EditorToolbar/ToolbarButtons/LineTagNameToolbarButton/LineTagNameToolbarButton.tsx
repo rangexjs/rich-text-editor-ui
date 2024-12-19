@@ -136,7 +136,7 @@ export const LineTagNameToolbarButton = ({
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
-				className="mt-1 w-32 flex-col rounded-md border border-slate-300 bg-slate-50 py-2 shadow-sm [&:popover-open]:flex"
+				className="mt-1 w-32 flex-col rounded-md border border-slate-200 bg-slate-white py-2 shadow-md [&:popover-open]:flex"
 				style={{
 					// @ts-ignore
 					positionAnchor: anchorName,
@@ -145,10 +145,9 @@ export const LineTagNameToolbarButton = ({
 				}}
 			>
 				{dropdownButtonList.map(({ tagName, name, isActive }) => (
-					<button
+					<ToolbarButton
 						key={tagName}
-						type="button"
-						className="p-1 text-sm transition-colors hover:bg-slate-200"
+						className="justify-center rounded-none p-1 text-sm"
 						onClick={() => onClick(tagName)}
 					>
 						<span
@@ -173,7 +172,7 @@ export const LineTagNameToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</button>
+					</ToolbarButton>
 				))}
 			</div>
 		</>

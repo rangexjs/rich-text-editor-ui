@@ -97,7 +97,7 @@ export const TextAlignToolbarButton = ({
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
-				className="absolute mt-1 gap-0.5 rounded-md bg-slate-50 p-1 text-sm shadow-sm [&:popover-open]:flex"
+				className="absolute mt-1 gap-0.5 rounded-md border border-slate-200 bg-white p-1 text-sm shadow-md [&:popover-open]:flex"
 				style={{
 					// @ts-ignore
 					positionAnchor: textAlignToolbarButtonAnchor,

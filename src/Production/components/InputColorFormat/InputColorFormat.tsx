@@ -384,7 +384,7 @@ export const InputColorFormat = ({
 				<button
 					ref={colorFormatButtonRef}
 					type="button"
-					className="inline-flex w-16 items-center gap-2 rounded-md border border-slate-200 bg-slate-200 px-2 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+					className="inline-flex w-16 items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
 					style={{
 						// @ts-ignore
 						anchorName: formatAnchor,
@@ -394,7 +394,7 @@ export const InputColorFormat = ({
 				</button>
 				<div
 					ref={colorFormatDropdownRef}
-					className="absolute z-20 mt-1 w-20 flex-col rounded-md bg-slate-300 py-1 font-semibold text-slate-700 text-sm shadow-md [&:popover-open]:flex"
+					className="absolute z-20 mt-1 w-20 flex-col rounded-md border border-slate-200 bg-white py-1 font-semibold text-slate-700 text-sm shadow-md [&:popover-open]:flex"
 					popover="auto"
 					style={{
 						// @ts-ignore
@@ -408,7 +408,7 @@ export const InputColorFormat = ({
 						<button
 							key={name}
 							type="button"
-							className="py-1 text-center transition-colors hover:bg-slate-200"
+							className="py-1 text-center transition-colors hover:bg-slate-100"
 							onClick={() => changeColorFormat(name)}
 						>
 							<span
@@ -434,7 +434,7 @@ export const InputColorFormat = ({
 					</span>
 				</div>
 			</span>
-			<span className="inline-flex overflow-clip rounded-md bg-white font-semibold text-slate-700 text-sm">
+			<span className="inline-flex overflow-clip rounded-md border border-slate-200 bg-white font-semibold text-slate-700 text-sm">
 				<span className="inline-flex h-full w-[120px] items-center ">
 					<span
 						className="h-full"
@@ -455,7 +455,7 @@ export const InputColorFormat = ({
 						{rgbInputList.map(({ name, value }) => (
 							<input
 								key={name}
-								className="h-full w-full border-slate-300 px-0.5 text-center outline-none [&:not(:last-child)]:border-r"
+								className="h-full w-full border-slate-200 px-0.5 text-center outline-none [&:not(:last-child)]:border-r"
 								type="number"
 								name={name}
 								value={value}
@@ -471,7 +471,7 @@ export const InputColorFormat = ({
 						{hslInputList.map(({ name, value }) => (
 							<input
 								key={name}
-								className="h-full w-full border-slate-300 px-0.5 text-center outline-none [&:not(:last-child)]:border-r"
+								className="h-full w-full border-slate-200 px-0.5 text-center outline-none [&:not(:last-child)]:border-r"
 								type="number"
 								name={name}
 								value={value}
@@ -481,7 +481,7 @@ export const InputColorFormat = ({
 						))}
 					</span>
 				</span>
-				<span className="inline-flex h-full items-center border-slate-300 border-l">
+				<span className="inline-flex h-full items-center border-slate-200 border-l">
 					<input
 						className="w-8 px-1 text-center outline-none"
 						type="number"

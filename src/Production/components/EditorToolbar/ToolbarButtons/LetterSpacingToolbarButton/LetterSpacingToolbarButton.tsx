@@ -105,7 +105,7 @@ export const LetterSpacingToolbarButton = ({
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
-				className="absolute mt-1 max-h-80 flex-col rounded-md bg-slate-100 py-1 text-sm shadow-sm [&:popover-open]:flex"
+				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-200 bg-white py-2 text-sm shadow-sm [&:popover-open]:flex"
 				style={{
 					// @ts-ignore
 					positionAnchor: letterSpacingToolbarButtonAnchor,
@@ -113,18 +113,16 @@ export const LetterSpacingToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<button
-					type="button"
-					className="px-1 py-0.5 font-semibold transition-colors hover:bg-slate-200"
+				<ToolbarButton
+					className="justify-center rounded-none px-1 py-0.5 font-semibold"
 					onClick={() => onLetterSpacingClick("default")}
 				>
 					Default
-				</button>
+				</ToolbarButton>
 				{sortedLetterSpacings.map((letterSpacing) => (
-					<button
+					<ToolbarButton
 						key={letterSpacing}
-						type="button"
-						className="px-8 py-0.5 text-start font-semibold transition-colors hover:bg-slate-200"
+						className="rounded-none px-8 py-0.5 text-start font-semibold"
 						onClick={() => onLetterSpacingClick(letterSpacing)}
 					>
 						<span
@@ -149,7 +147,7 @@ export const LetterSpacingToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</button>
+					</ToolbarButton>
 				))}
 			</div>
 		</>

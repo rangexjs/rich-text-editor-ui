@@ -107,7 +107,7 @@ export const FontFamilyToolbarButton = ({
 			</ToolbarButton>
 			<div
 				ref={popoverTargetElementRef}
-				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-300 bg-slate-50 py-2 shadow-sm [&:popover-open]:flex"
+				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-200 bg-white py-2 shadow-md [&:popover-open]:flex"
 				popover="auto"
 				style={{
 					// @ts-ignore
@@ -116,18 +116,16 @@ export const FontFamilyToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<button
-					type="button"
-					className="px-6 py-1 text-start font-semibold text-sm transition-colors hover:bg-slate-200"
+				<ToolbarButton
+					className="rounded-none px-6 py-1 font-semibold text-sm"
 					onClick={() => onFontFamilyClick("default")}
 				>
 					Default
-				</button>
+				</ToolbarButton>
 				{fontFamilyList.map((fontFamily) => (
-					<button
+					<ToolbarButton
 						key={fontFamily}
-						type="button"
-						className="px-6 py-1 text-start text-sm transition-colors hover:bg-slate-200"
+						className="rounded-none px-6 py-1 text-sm"
 						onClick={() => onFontFamilyClick(fontFamily)}
 					>
 						<span
@@ -152,7 +150,7 @@ export const FontFamilyToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</button>
+					</ToolbarButton>
 				))}
 			</div>
 		</>

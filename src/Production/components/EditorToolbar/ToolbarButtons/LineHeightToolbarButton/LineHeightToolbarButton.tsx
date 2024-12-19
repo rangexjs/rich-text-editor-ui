@@ -101,7 +101,7 @@ export const LineHeightToolbarButton = ({
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
-				className="absolute mt-1 max-h-80 flex-col rounded-md bg-slate-100 py-1 text-sm shadow-sm [&:popover-open]:flex"
+				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-200 bg-white py-2 text-sm shadow-md [&:popover-open]:flex"
 				style={{
 					// @ts-ignore
 					positionAnchor: lineHeightToolbarButtonAnchor,
@@ -109,18 +109,16 @@ export const LineHeightToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<button
-					type="button"
-					className="px-1 py-0.5 font-semibold transition-colors hover:bg-slate-200"
+				<ToolbarButton
+					className="justify-center rounded-none px-1 py-0.5 font-semibold"
 					onClick={() => onLineHeightClick("default")}
 				>
 					Default
-				</button>
+				</ToolbarButton>
 				{sortedLineHeights.map((lineHeight) => (
-					<button
+					<ToolbarButton
 						key={lineHeight}
-						type="button"
-						className="px-8 py-0.5 text-start font-semibold transition-colors hover:bg-slate-200"
+						className="rounded-none px-8 py-0.5 text-start font-semibold"
 						onClick={() => onLineHeightClick(lineHeight)}
 					>
 						<span
@@ -145,7 +143,7 @@ export const LineHeightToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</button>
+					</ToolbarButton>
 				))}
 			</div>
 		</>
