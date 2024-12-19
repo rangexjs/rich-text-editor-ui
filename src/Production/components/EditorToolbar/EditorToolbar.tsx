@@ -206,7 +206,7 @@ export const EditorToolbar = ({
 				<div key={rowIndex} className="flex flex-wrap gap-1.5">
 					{toolbarRow.map((groups, groupIndex, { length }) => (
 						<Fragment key={groupIndex}>
-							<div className="inline-flex flex-wrap items-center gap-1">
+							<div className="inline-flex flex-wrap items-center gap-0.5">
 								{groups.map((Button, buttonKey) => (
 									<span key={buttonKey}>{Button}</span>
 								))}
