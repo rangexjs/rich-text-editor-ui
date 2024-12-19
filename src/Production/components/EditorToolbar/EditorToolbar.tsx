@@ -15,6 +15,7 @@ import {
 	LineTagNameToolbarButton,
 	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
+	TextAlignToolbarButton,
 	UnderlineToolbarButton,
 } from "./ToolbarButtons";
 
@@ -37,6 +38,7 @@ export const EditorToolbar = ({
 		italic,
 		letterSpacing,
 		strikethrough,
+		textAlign,
 		underline,
 	} = formattableButtonsState;
 
@@ -151,6 +153,15 @@ export const EditorToolbar = ({
 						<StrikethroughToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							states={{ strikethrough, underline }}
+						/>
+					);
+				}
+
+				if (buttonsName.textAlign === name) {
+					return (
+						<TextAlignToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={textAlign}
 						/>
 					);
 				}

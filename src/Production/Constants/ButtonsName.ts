@@ -21,9 +21,6 @@ export const buttonsName = {
 	symbol: "symbol",
 	table: "table",
 	lineTagName: "line-tag-name",
-	textAlignCenter: "text-align-center",
-	textAlignJustify: "text-align-justify",
-	textAlignLeft: "text-align-left",
-	textAlignRight: "text-align-right",
+	textAlign: "text-align",
 	underline: "underline",
 } as const;

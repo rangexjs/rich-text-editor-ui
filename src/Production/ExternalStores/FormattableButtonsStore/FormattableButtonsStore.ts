@@ -11,6 +11,7 @@ const initialState: FormattableButtonsState = Object.seal({
 	italic: { isChecked: false, isDisabled: true },
 	letterSpacing: { isDisabled: true, values: new Set() },
 	strikethrough: { isChecked: false, isDisabled: true },
+	textAlign: { isDisabled: true, values: new Set() },
 	underline: { isChecked: false, isDisabled: true },
 });
 

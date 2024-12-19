@@ -37,6 +37,7 @@ export const simulateProductEnvironment = ({
 				"letter-spacing",
 				"remove-format",
 			],
+			["text-align"],
 		],
 	];
 
@@ -75,6 +76,7 @@ export const simulateProductEnvironment = ({
 				values: new Set(["-1px", "4px", "8.5px"]),
 			},
 			strikethrough: { isChecked: false, isDisabled: false },
+			textAlign: { isDisabled: false, values: new Set(["left", "center"]) },
 			underline: { isChecked: false, isDisabled: false },
 		});
 

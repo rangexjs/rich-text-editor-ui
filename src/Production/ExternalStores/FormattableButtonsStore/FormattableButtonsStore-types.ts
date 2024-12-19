@@ -1,4 +1,4 @@
-import type { FontFamilyValue } from "@components";
+import type { FontFamilyValue, TextAlignType } from "@components";
 
 interface BackgroundColorState {
 	isDisabled: boolean;
@@ -40,6 +40,11 @@ interface StrikethroughState {
 	isDisabled: boolean;
 }
 
+interface TextAlignState {
+	isDisabled: boolean;
+	values: Set<TextAlignType>;
+}
+
 interface UnderlineState {
 	isChecked: boolean;
 	isDisabled: boolean;
@@ -54,5 +59,6 @@ export interface FormattableButtonsState {
 	italic: ItalicState;
 	letterSpacing: LetterSpacingState;
 	strikethrough: StrikethroughState;
+	textAlign: TextAlignState;
 	underline: UnderlineState;
 }

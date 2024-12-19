@@ -10,4 +10,5 @@ export * from "./LetterSpacingToolbarButton";
 export * from "./LineTagNameToolbarButton";
 export * from "./RemoveFormatToolbarButton";
 export * from "./StrikethroughToolbarButton";
+export * from "./TextAlignToolbarButton";
 export * from "./UnderlineToolbarButton";
