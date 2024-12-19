@@ -19,4 +19,8 @@
 		padding: 0;
 		margin: 0;
 	}
+
+	input:focus-visible {
+		outline: none;
+	}
 }
