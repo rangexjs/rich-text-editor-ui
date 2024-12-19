@@ -1,7 +1,7 @@
 import {
-	ToolbarButton,
+	PrimaryButton,
 	type ToolbarButtonOnClickFn,
-} from "../../.././ToolbarButton";
+} from "../../../PrimaryButton";
 import { UnderlineIcon } from "../../../SVGs";
 
 import type { TextDecorationState } from "../Utilities";
@@ -24,13 +24,13 @@ export const UnderlineToolbarButton = ({
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={underline.isChecked}
 			disabled={underline.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<UnderlineIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

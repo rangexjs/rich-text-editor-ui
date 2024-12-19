@@ -1,5 +1,5 @@
+import { PrimaryButton } from "../../../PrimaryButton";
 import { RemoveFormatIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type { RemoveFormatToolbarButtonProps } from "./RemoveFormatToolbarButton-types";
 
@@ -35,13 +35,13 @@ export const RemoveFormatToolbarButton = ({
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={false}
 			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<RemoveFormatIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

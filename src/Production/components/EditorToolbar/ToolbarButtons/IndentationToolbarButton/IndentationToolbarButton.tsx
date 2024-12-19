@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, IndentationIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
 	IndentationToolbarButtonProps,
@@ -93,7 +93,7 @@ export const IndentationToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -101,7 +101,7 @@ export const IndentationToolbarButton = ({
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
 				<IndentationIcon />
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
@@ -113,14 +113,14 @@ export const IndentationToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<ToolbarButton
+				<PrimaryButton
 					className="justify-center rounded-none px-1 py-0.5 font-semibold"
 					onClick={() => onIndentationClick("remove")}
 				>
 					Remove
-				</ToolbarButton>
+				</PrimaryButton>
 				{sortedIndentations.map((indentation) => (
-					<ToolbarButton
+					<PrimaryButton
 						key={indentation}
 						className="rounded-none px-8 py-0.5 text-start font-semibold"
 						onClick={() => onIndentationClick(indentation)}
@@ -147,7 +147,7 @@ export const IndentationToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</ToolbarButton>
+					</PrimaryButton>
 				))}
 			</div>
 		</>

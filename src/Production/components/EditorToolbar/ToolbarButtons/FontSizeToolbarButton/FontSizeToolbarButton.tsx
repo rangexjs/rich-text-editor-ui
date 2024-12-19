@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontSizeIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
 	FontSizeToolbarButtonProps,
@@ -89,7 +89,7 @@ export const FontSizeToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -97,7 +97,7 @@ export const FontSizeToolbarButton = ({
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
 				<FontSizeIcon />
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
@@ -109,14 +109,14 @@ export const FontSizeToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<ToolbarButton
+				<PrimaryButton
 					className="justify-center rounded-none px-1 py-0.5 font-semibold"
 					onClick={() => onFontSizeClick("default")}
 				>
 					Default
-				</ToolbarButton>
+				</PrimaryButton>
 				{sortedFontSizes.map((fontSize) => (
-					<ToolbarButton
+					<PrimaryButton
 						key={fontSize}
 						className="rounded-none px-8 py-0.5 font-semibold"
 						onClick={() => onFontSizeClick(fontSize)}
@@ -143,7 +143,7 @@ export const FontSizeToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</ToolbarButton>
+					</PrimaryButton>
 				))}
 			</div>
 		</>

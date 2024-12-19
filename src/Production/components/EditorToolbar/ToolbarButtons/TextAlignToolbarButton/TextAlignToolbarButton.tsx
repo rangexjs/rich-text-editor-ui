@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
+import { PrimaryButton } from "../../../PrimaryButton";
 import {
 	TextAlignCenterIcon,
 	TextAlignJustifyIcon,
 	TextAlignLeftIcon,
 	TextAlignRightIcon,
 } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
 	OnTextAlignClickProps,
@@ -82,7 +82,7 @@ export const TextAlignToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -93,7 +93,7 @@ export const TextAlignToolbarButton = ({
 				{firstItem === "justify" && <TextAlignJustifyIcon />}
 				{firstItem === "left" && <TextAlignLeftIcon />}
 				{firstItem === "right" && <TextAlignRightIcon />}
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
@@ -106,7 +106,7 @@ export const TextAlignToolbarButton = ({
 				}}
 			>
 				{textAlignList.map((textAlign) => (
-					<ToolbarButton
+					<PrimaryButton
 						key={textAlign}
 						checked={textAlignValues.includes(textAlign)}
 						onClick={() => onTextAlignClick(textAlign)}
@@ -115,7 +115,7 @@ export const TextAlignToolbarButton = ({
 						{textAlign === "justify" && <TextAlignJustifyIcon />}
 						{textAlign === "left" && <TextAlignLeftIcon />}
 						{textAlign === "right" && <TextAlignRightIcon />}
-					</ToolbarButton>
+					</PrimaryButton>
 				))}
 			</div>
 		</>

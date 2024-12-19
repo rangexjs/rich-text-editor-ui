@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Color, type HSLFormat } from "@utilities";
 
 import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
+import { PrimaryButton } from "../../../PrimaryButton";
 import { BackgroundColorIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type { CreateBackgroundColorPropsProps } from "./BackgroundColorToolbarButton-types";
 
@@ -73,7 +73,7 @@ export const BackgroundColorToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -81,7 +81,7 @@ export const BackgroundColorToolbarButton = ({
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
 				<BackgroundColorIcon />
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				className="mt-1 rounded-lg border border-slate-200 shadow-md"

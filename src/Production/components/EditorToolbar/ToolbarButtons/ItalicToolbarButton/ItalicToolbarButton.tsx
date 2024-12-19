@@ -1,7 +1,7 @@
 import {
-	ToolbarButton,
+	PrimaryButton,
 	type ToolbarButtonOnClickFn,
-} from "../../.././ToolbarButton";
+} from "../../../PrimaryButton";
 import { ItalicIcon } from "../../../SVGs";
 
 import type { ItalicToolbarButtonProps } from "./ItalicToolbarButton-types";
@@ -17,13 +17,13 @@ export const ItalicToolbarButton = ({
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={state.isChecked}
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<ItalicIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

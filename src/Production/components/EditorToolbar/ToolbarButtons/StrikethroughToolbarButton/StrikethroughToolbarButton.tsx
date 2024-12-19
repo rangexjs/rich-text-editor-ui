@@ -1,7 +1,7 @@
 import {
-	ToolbarButton,
+	PrimaryButton,
 	type ToolbarButtonOnClickFn,
-} from "../../.././ToolbarButton";
+} from "../../../PrimaryButton";
 import { StrikethroughIcon } from "../../../SVGs";
 
 import type { TextDecorationState } from "../Utilities";
@@ -24,13 +24,13 @@ export const StrikethroughToolbarButton = ({
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={strikethrough.isChecked}
 			disabled={strikethrough.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<StrikethroughIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

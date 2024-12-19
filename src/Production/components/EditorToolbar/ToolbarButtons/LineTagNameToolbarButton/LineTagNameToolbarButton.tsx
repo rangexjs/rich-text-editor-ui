@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 import type { LineTagNameValue } from "@externalStores";
 
+import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
 	DropDownButtonList,
@@ -123,7 +123,7 @@ export const LineTagNameToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -132,7 +132,7 @@ export const LineTagNameToolbarButton = ({
 				className="min-w-28 justify-between text-sm"
 			>
 				{buttonText}
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
@@ -145,7 +145,7 @@ export const LineTagNameToolbarButton = ({
 				}}
 			>
 				{dropdownButtonList.map(({ tagName, name, isActive }) => (
-					<ToolbarButton
+					<PrimaryButton
 						key={tagName}
 						className="justify-center rounded-none p-1 text-sm"
 						onClick={() => onClick(tagName)}
@@ -172,7 +172,7 @@ export const LineTagNameToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</ToolbarButton>
+					</PrimaryButton>
 				))}
 			</div>
 		</>

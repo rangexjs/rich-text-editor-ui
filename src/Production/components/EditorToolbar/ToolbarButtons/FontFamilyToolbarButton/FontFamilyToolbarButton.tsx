@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontFamilyIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
 	FontFamilyToolbarButtonProps,
@@ -96,7 +96,7 @@ export const FontFamilyToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -104,7 +104,7 @@ export const FontFamilyToolbarButton = ({
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
 				<FontFamilyIcon />
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-200 bg-white py-2 shadow-md [&:popover-open]:flex"
@@ -116,14 +116,14 @@ export const FontFamilyToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<ToolbarButton
+				<PrimaryButton
 					className="rounded-none px-6 py-1 font-semibold text-sm"
 					onClick={() => onFontFamilyClick("default")}
 				>
 					Default
-				</ToolbarButton>
+				</PrimaryButton>
 				{fontFamilyList.map((fontFamily) => (
-					<ToolbarButton
+					<PrimaryButton
 						key={fontFamily}
 						className="rounded-none px-6 py-1 text-sm"
 						onClick={() => onFontFamilyClick(fontFamily)}
@@ -150,7 +150,7 @@ export const FontFamilyToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</ToolbarButton>
+					</PrimaryButton>
 				))}
 			</div>
 		</>

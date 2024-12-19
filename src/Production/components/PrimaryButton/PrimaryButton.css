@@ -1,6 +1,6 @@
-/* I'm sorry but writing it in tailwind would be a disaster. */
+/* I'm sorry but it would be a disaster in tailwind. */
 
-.toolbar-button {
+.primary-button {
 	display: inline flex;
 	align-items: center;
 	gap: 6px;

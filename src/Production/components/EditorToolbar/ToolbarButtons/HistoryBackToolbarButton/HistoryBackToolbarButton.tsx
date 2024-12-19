@@ -1,8 +1,8 @@
-import { HistoryBackIcon } from "../../../SVGs";
 import {
-	ToolbarButton,
+	PrimaryButton,
 	type ToolbarButtonOnClickFn,
-} from "../../../ToolbarButton";
+} from "../../../PrimaryButton";
+import { HistoryBackIcon } from "../../../SVGs";
 
 import type { HistoryBackToolbarButtonProps } from "./HistoryBackToolbarButton-types";
 
@@ -15,13 +15,13 @@ export const HistoryBackToolbarButton = ({
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={false}
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<HistoryBackIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

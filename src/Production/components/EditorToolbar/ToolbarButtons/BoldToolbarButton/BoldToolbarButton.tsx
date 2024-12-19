@@ -1,7 +1,7 @@
 import {
-	ToolbarButton,
+	PrimaryButton,
 	type ToolbarButtonOnClickFn,
-} from "../../.././ToolbarButton";
+} from "../../../PrimaryButton";
 import { BoldIcon } from "../../../SVGs";
 
 import type { BoldToolbarButtonProps } from "./BoldToolbarButton-types";
@@ -17,13 +17,13 @@ export const BoldToolbarButton = ({
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={state.isChecked}
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<BoldIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

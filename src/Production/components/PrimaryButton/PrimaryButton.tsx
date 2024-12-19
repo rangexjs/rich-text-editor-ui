@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronIcon } from "../SVGs";
 
-import type { ToolbarButtonProps } from "./ToolbarButton-types";
+import type { ToolbarButtonProps } from "./PrimaryButton-types";
 
-export const ToolbarButton = ({
+export const PrimaryButton = ({
 	children,
 	checked = false,
 	disabled = false,
@@ -50,7 +50,7 @@ export const ToolbarButton = ({
 			type="button"
 			data-is-checked={isChecked}
 			data-is-disabled={disabled}
-			className={`toolbar-button ${className ?? ""}`}
+			className={`primary-button ${className ?? ""}`}
 			// @ts-ignore
 			style={{ anchorName }}
 			onClick={(event) =>

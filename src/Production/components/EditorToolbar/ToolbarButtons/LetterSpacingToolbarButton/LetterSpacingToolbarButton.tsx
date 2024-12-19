@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, LetterSpacingIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type {
 	LetterSpacingToolbarButtonProps,
@@ -93,7 +93,7 @@ export const LetterSpacingToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -101,7 +101,7 @@ export const LetterSpacingToolbarButton = ({
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
 				<LetterSpacingIcon />
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				popover="auto"
@@ -113,14 +113,14 @@ export const LetterSpacingToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<ToolbarButton
+				<PrimaryButton
 					className="justify-center rounded-none px-1 py-0.5 font-semibold"
 					onClick={() => onLetterSpacingClick("default")}
 				>
 					Default
-				</ToolbarButton>
+				</PrimaryButton>
 				{sortedLetterSpacings.map((letterSpacing) => (
-					<ToolbarButton
+					<PrimaryButton
 						key={letterSpacing}
 						className="rounded-none px-8 py-0.5 text-start font-semibold"
 						onClick={() => onLetterSpacingClick(letterSpacing)}
@@ -147,7 +147,7 @@ export const LetterSpacingToolbarButton = ({
 								</span>
 							)}
 						</span>
-					</ToolbarButton>
+					</PrimaryButton>
 				))}
 			</div>
 		</>
