@@ -69,7 +69,7 @@ export const LineHeightToolbarButton = ({
 		popoverTargetElement.hidePopover();
 
 		if (value === "default") {
-			toolbarButtonsActionManager.onFormatStylesChange?.({ lineHeight: null });
+			toolbarButtonsActionManager.onFormatStyles?.({ lineHeight: null });
 
 			return;
 		}
@@ -77,14 +77,14 @@ export const LineHeightToolbarButton = ({
 		const isActive = activeLineHeights.includes(value);
 
 		if (!isActive || activeLineHeights.length > 1) {
-			toolbarButtonsActionManager.onFormatStylesChange?.({
+			toolbarButtonsActionManager.onFormatStyles?.({
 				lineHeight: `${value}`,
 			});
 
 			return;
 		}
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ lineHeight: null });
+		toolbarButtonsActionManager.onFormatStyles?.({ lineHeight: null });
 	};
 
 	return (

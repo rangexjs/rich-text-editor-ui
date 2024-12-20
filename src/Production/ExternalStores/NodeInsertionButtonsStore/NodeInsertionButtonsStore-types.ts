@@ -22,7 +22,7 @@ interface TableState {
 	isDisabled: boolean;
 }
 
-export interface InsertionButtonsState {
+export interface NodeInsertionButtonsState {
 	anchor: AnchorState;
 	blockQuote: BlockQuoteState;
 	codeBlock: CodeBlockState;

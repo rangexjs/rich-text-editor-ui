@@ -78,7 +78,7 @@ export const FontFamilyToolbarButton = ({
 		popoverTargetElement.hidePopover();
 
 		if (value === "default") {
-			toolbarButtonsActionManager.onFormatStylesChange?.({ fontFamily: null });
+			toolbarButtonsActionManager.onFormatStyles?.({ fontFamily: null });
 
 			return;
 		}
@@ -86,12 +86,12 @@ export const FontFamilyToolbarButton = ({
 		const isActive = activeFontFamilies.has(value);
 
 		if (!isActive || activeFontFamilies.size > 1) {
-			toolbarButtonsActionManager.onFormatStylesChange?.({ fontFamily: value });
+			toolbarButtonsActionManager.onFormatStyles?.({ fontFamily: value });
 
 			return;
 		}
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ fontFamily: null });
+		toolbarButtonsActionManager.onFormatStyles?.({ fontFamily: null });
 	};
 
 	return (

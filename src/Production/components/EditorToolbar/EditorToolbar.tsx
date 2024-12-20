@@ -28,11 +28,13 @@ import type { EditorToolbarProps } from "./EditorToolbar-types";
 export const EditorToolbar = ({
 	toolbarRows,
 	toolbarButtonsActionManager,
-	formattableButtonsState,
-	insertionButtonsState,
-	lineTagNameButtonsState,
-	navigationButtonsState,
+	formatLineTagNameButtonsState,
+	formatStylesButtonsState,
+	historyNavigationButtonsState,
+	nodeInsertionButtonsState,
 }: EditorToolbarProps) => {
+	const { tagName } = formatLineTagNameButtonsState;
+
 	const {
 		backgroundColor,
 		bold,
@@ -46,13 +48,11 @@ export const EditorToolbar = ({
 		strikethrough,
 		textAlign,
 		underline,
-	} = formattableButtonsState;
+	} = formatStylesButtonsState;
 
-	const { list, table } = insertionButtonsState;
+	const { historyBack, historyForward } = historyNavigationButtonsState;
 
-	const { tagName } = lineTagNameButtonsState;
-
-	const { historyBack, historyForward } = navigationButtonsState;
+	const { list, table } = nodeInsertionButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
@@ -178,7 +178,7 @@ export const EditorToolbar = ({
 					return (
 						<RemoveFormatToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							formattableButtonsState={formattableButtonsState}
+							formattableButtonsState={formatStylesButtonsState}
 						/>
 					);
 				}

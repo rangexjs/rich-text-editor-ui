@@ -60,7 +60,7 @@ interface UnderlineState {
 	isDisabled: boolean;
 }
 
-export interface FormattableButtonsState {
+export interface FormatStylesButtonsState {
 	backgroundColor: BackgroundColorState;
 	bold: BoldState;
 	color: ColorState;

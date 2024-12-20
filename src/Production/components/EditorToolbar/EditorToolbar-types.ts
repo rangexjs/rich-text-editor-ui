@@ -1,9 +1,9 @@
 import type { buttonsName } from "@constants";
 import type {
-	FormattableButtonsState,
-	InsertionButtonsState,
-	LineTagNameButtonsState,
-	NavigationButtonsState,
+	ForamtLineTagNameButtonsState,
+	FormatStylesButtonsState,
+	HistoryNavigationButtonsState,
+	NodeInsertionButtonsState,
 } from "@externalStores";
 import type { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
@@ -20,8 +20,8 @@ export type EditorToolbarRows = EditorToolbarRow[];
 export interface EditorToolbarProps {
 	toolbarRows: EditorToolbarRows;
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
-	formattableButtonsState: FormattableButtonsState;
-	insertionButtonsState: InsertionButtonsState;
-	lineTagNameButtonsState: LineTagNameButtonsState;
-	navigationButtonsState: NavigationButtonsState;
+	formatLineTagNameButtonsState: ForamtLineTagNameButtonsState;
+	formatStylesButtonsState: FormatStylesButtonsState;
+	historyNavigationButtonsState: HistoryNavigationButtonsState;
+	nodeInsertionButtonsState: NodeInsertionButtonsState;
 }

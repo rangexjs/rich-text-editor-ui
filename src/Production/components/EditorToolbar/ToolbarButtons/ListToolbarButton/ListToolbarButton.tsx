@@ -60,7 +60,7 @@ export const ListToolbarButton = ({
 
 		popoverTargetElement.hidePopover();
 
-		toolbarButtonsActionManager.onInsertionChange?.({ type: "list", listType });
+		toolbarButtonsActionManager.onNodeInsertion?.({ type: "list", listType });
 	};
 
 	return (

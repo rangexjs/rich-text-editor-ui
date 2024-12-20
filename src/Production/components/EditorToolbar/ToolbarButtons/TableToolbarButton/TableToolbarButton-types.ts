@@ -1,4 +1,4 @@
-import type { InsertionButtonsState } from "@externalStores";
+import type { NodeInsertionButtonsState } from "@externalStores";
 import type { PickType } from "@utilities";
 
 import type { ToolbarButtonsActionManagerObj } from "../Utilities";
@@ -16,5 +16,5 @@ export interface OnSquareButtonClickProps {
 
 export interface TableToolbarButtonProps
 	extends ToolbarButtonsActionManagerObj {
-	state: PickType<InsertionButtonsState, "table">;
+	state: PickType<NodeInsertionButtonsState, "table">;
 }

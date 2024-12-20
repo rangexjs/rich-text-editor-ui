@@ -1,8 +1,8 @@
 import { ButtonsStore } from "../ButtonsStore";
 
-import type { FormattableButtonsState } from "./FormattableButtonsStore-types";
+import type { FormatStylesButtonsState } from "./FormatStylesButtonsStore-types";
 
-const initialState: FormattableButtonsState = Object.seal({
+const initialState: FormatStylesButtonsState = Object.seal({
 	backgroundColor: { isDisabled: true, values: new Set() },
 	bold: { isChecked: false, isDisabled: true },
 	color: { isDisabled: true, values: new Set() },
@@ -17,7 +17,7 @@ const initialState: FormattableButtonsState = Object.seal({
 	underline: { isChecked: false, isDisabled: true },
 });
 
-export class FormattableButtonsStore extends ButtonsStore<FormattableButtonsState> {
+export class FormatStylesButtonsStore extends ButtonsStore<FormatStylesButtonsState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

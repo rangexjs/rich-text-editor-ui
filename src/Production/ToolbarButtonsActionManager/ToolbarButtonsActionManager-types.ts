@@ -1,7 +1,7 @@
 import type { buttonsName } from "@constants";
 
 // FormatStyles
-export interface FormatStylesState {
+export interface FormatStylesActionState {
 	backgroundColor?: string | null;
 	color?: string | null;
 	fontFamily?: string | null;
@@ -21,64 +21,62 @@ interface GetButtonType<Type extends ButtonsNameKey> {
 	type: Type;
 }
 
+// FormatLineTagName
+export interface LineTagNameActionState {
+	tagName: "p" | `h${1 | 2 | 3 | 4 | 5 | 6}`;
+}
+
+interface OnFormatLineTagNameFnProps extends LineTagNameActionState {}
+
+export type OnFormatLineTagNameFn = (props: OnFormatLineTagNameFnProps) => void;
+
 // FormatStyles
 
-interface OnFormatStylesChangeFnProps extends FormatStylesState {}
+interface OnFormatStylesFnProps extends FormatStylesActionState {}
 
-export type OnFormatStylesChangeFn = (
-	props: OnFormatStylesChangeFnProps,
-) => void;
+export type OnFormatStylesChangeFn = (props: OnFormatStylesFnProps) => void;
 
-// Insertion
+// HistoryNavigation
+export interface HistoryNavigationActionState {
+	type: "history-back" | "history-forward";
+}
 
-interface AnchorState extends GetButtonType<"anchor"> {
+interface OnHistoryNavigationFnProps extends HistoryNavigationActionState {}
+
+export type OnHistoryNavigationFn = (props: OnHistoryNavigationFnProps) => void;
+
+// NodeInsertion
+
+interface AnchorActionState extends GetButtonType<"anchor"> {
 	text: string;
 	href: string;
 	download: boolean;
 	target: "_blank";
 }
 
-interface BlockQuoteState extends GetButtonType<"blockQuote"> {}
+interface BlockQuoteActionState extends GetButtonType<"blockQuote"> {}
 
-interface CodeBlockState extends GetButtonType<"blockQuote"> {
+interface CodeBlockActionState extends GetButtonType<"blockQuote"> {
 	blockType: "plain-text" | "typescript" | "javascript";
 }
 
-export type ListStateListType = "disc" | "circle" | "square" | "decimal";
-interface ListState extends GetButtonType<"list"> {
-	listType: ListStateListType;
+export type ListActionStateListType = "disc" | "circle" | "square" | "decimal";
+interface ListActionState extends GetButtonType<"list"> {
+	listType: ListActionStateListType;
 }
 
-interface TableState extends GetButtonType<"table"> {
+interface TableActionState extends GetButtonType<"table"> {
 	column: number;
 	row: number;
 }
 
-export type InsertionState =
-	| AnchorState
-	| BlockQuoteState
-	| CodeBlockState
-	| ListState
-	| TableState;
+export type NodeInsertionActionState =
+	| AnchorActionState
+	| BlockQuoteActionState
+	| CodeBlockActionState
+	| ListActionState
+	| TableActionState;
 
-type OnInsertionChangeFnProps = InsertionState;
+type OnNodeInsertionFnProps = NodeInsertionActionState;
 
-export type OnInsertionChangeFn = (props: OnInsertionChangeFnProps) => void;
-
-// LineTagName
-export interface LineTagNameState {
-	tagName: "p" | `h${1 | 2 | 3 | 4 | 5 | 6}`;
-}
-
-interface OnLineTagnameChangeFnProps extends LineTagNameState {}
-
-export type OnLineTagNameChangeFn = (props: OnLineTagnameChangeFnProps) => void;
-
-// Navigation
-export interface NavigationState {
-	type: "history-back" | "history-forward";
-}
-
-interface OnNavigationChangeFnProps extends NavigationState {}
-
-export type OnNavigationChangeFn = (props: OnNavigationChangeFnProps) => void;
+export type OnNodeInsertionFn = (props: OnNodeInsertionFnProps) => void;

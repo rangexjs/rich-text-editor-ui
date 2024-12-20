@@ -19,7 +19,7 @@ export const RemoveFormatToolbarButton = ({
 		!underline.isChecked;
 
 	const onClick = () => {
-		toolbarButtonsActionManager.onFormatStylesChange?.({
+		toolbarButtonsActionManager.onFormatStyles?.({
 			backgroundColor: null,
 			color: null,
 			fontFamily: null,

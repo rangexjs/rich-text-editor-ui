@@ -2,10 +2,10 @@ import { createRoot } from "react-dom/client";
 
 import { App } from "@components";
 import {
-	FormattableButtonsStore,
-	InsertionButtonsStore,
-	LineTagNameButtonsStore,
-	NavigationButtonsStore,
+	FormatLineTagNameButtonsStore,
+	FormatStylesButtonsStore,
+	HistoryNavigationButtonsStore,
+	NodeInsertionButtonsStore,
 } from "@externalStores";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
@@ -13,23 +13,24 @@ import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 import inlineCss from "../global.css?inline";
 
 import type {
-	OnFormatStylesChangeProps,
-	OnLineTagNameChangeProps,
-	OnNavigationChangeProps,
+	OnFormatLineTagNameProps,
+	OnFormatStylesProps,
+	OnHistoryNavigationProps,
+	OnNodeInsertionProps,
 	RichTextEditorUIConstructorProps,
-	UpdateFormattableStylesProps,
-	UpdateInsertionProps,
-	UpdateLineTagNameProps,
-	UpdateNavigationProps,
+	UpdateFormatLineTagNameButtonsProps,
+	UpdateFormatStylesStylesButtonsProps,
+	UpdateHistoryNavigationButtonsProps,
+	UpdateNodeInsertionButtonsProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
 	#root;
-	#toolbarStateManager = new ToolbarButtonsActionManager();
-	#formattableButtonsStore = new FormattableButtonsStore();
-	#insertionButtonsStore = new InsertionButtonsStore();
-	#lineTagNameButtonsStore = new LineTagNameButtonsStore();
-	#navigationButtonsStore = new NavigationButtonsStore();
+	#toolbarButtonsActionManager = new ToolbarButtonsActionManager();
+	#formatLineTagNameButtonsStore = new FormatLineTagNameButtonsStore();
+	#formatStylesButtonsStore = new FormatStylesButtonsStore();
+	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
+	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
 
 	constructor({
 		domNode,
@@ -64,42 +65,46 @@ export class RichTextEditorUI {
 		this.#root.render(
 			<App
 				toolbarButtons={toolbarButtons}
-				toolbarButtonsActionManager={this.#toolbarStateManager}
-				formattableButtonsStore={this.#formattableButtonsStore}
-				insertionButtonsStore={this.#insertionButtonsStore}
-				lineTagNameButtonsStore={this.#lineTagNameButtonsStore}
-				navigationButtonsStore={this.#navigationButtonsStore}
+				toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
+				formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
+				formatStylesButtonsStore={this.#formatStylesButtonsStore}
+				historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
+				nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
 				richTextArea={richTextArea}
 			/>,
 		);
 	}
 
-	onFormatStylesChange(callback: OnFormatStylesChangeProps) {
-		this.#toolbarStateManager.onFormatStylesChange = callback;
+	onFormatLineTagName(callback: OnFormatLineTagNameProps) {
+		this.#toolbarButtonsActionManager.onFormatLineTagName = callback;
 	}
 
-	onLineTagNameChange(callback: OnLineTagNameChangeProps) {
-		this.#toolbarStateManager.onLineTagNameChange = callback;
+	onFormatStyles(callback: OnFormatStylesProps) {
+		this.#toolbarButtonsActionManager.onFormatStyles = callback;
 	}
 
-	onNavigationChange(callback: OnNavigationChangeProps) {
-		this.#toolbarStateManager.onNavigationChange = callback;
+	onHistoryNavigation(callback: OnHistoryNavigationProps) {
+		this.#toolbarButtonsActionManager.onHistoryNavigation = callback;
 	}
 
-	updateFormattableStyles(props: UpdateFormattableStylesProps) {
-		this.#formattableButtonsStore.updateState(props);
+	onNodeInsertion(callback: OnNodeInsertionProps) {
+		this.#toolbarButtonsActionManager.onNodeInsertion = callback;
 	}
 
-	updateInsertion(props: UpdateInsertionProps) {
-		this.#insertionButtonsStore.updateState(props);
+	updateFormatLineTagNameButtons(props: UpdateFormatLineTagNameButtonsProps) {
+		this.#formatLineTagNameButtonsStore.updateState(props);
 	}
 
-	updateLineTagName(props: UpdateLineTagNameProps) {
-		this.#lineTagNameButtonsStore.updateState(props);
+	updateFormatStylesButtons(props: UpdateFormatStylesStylesButtonsProps) {
+		this.#formatStylesButtonsStore.updateState(props);
 	}
 
-	updateNavigation(props: UpdateNavigationProps) {
-		this.#navigationButtonsStore.updateState(props);
+	updateHistoryNavigationButtons(props: UpdateHistoryNavigationButtonsProps) {
+		this.#historyNavigationButtonsStore.updateState(props);
+	}
+
+	updateNodeInsertionButtons(props: UpdateNodeInsertionButtonsProps) {
+		this.#nodeInsertionButtonsStore.updateState(props);
 	}
 
 	unmount() {

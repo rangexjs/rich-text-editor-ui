@@ -1,4 +1,4 @@
-import type { FormattableButtonsState } from "@externalStores";
+import type { FormatStylesButtonsState } from "@externalStores";
 import type { PickType } from "@utilities";
 
 import type { ToolbarButtonsActionManagerObj } from "../Utilities";
@@ -11,5 +11,5 @@ export type OnTextAlignClickProps = TextAlignType;
 
 export interface TextAlignToolbarButtonProps
 	extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormattableButtonsState, "textAlign">;
+	state: PickType<FormatStylesButtonsState, "textAlign">;
 }

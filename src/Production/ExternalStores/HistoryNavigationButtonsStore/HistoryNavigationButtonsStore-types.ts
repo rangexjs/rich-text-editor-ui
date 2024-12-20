@@ -6,7 +6,7 @@ interface HistoryForwardState {
 	isDisabled: boolean;
 }
 
-export interface NavigationButtonsState {
+export interface HistoryNavigationButtonsState {
 	historyBack: HistoryBackState;
 	historyForward: HistoryForwardState;
 }

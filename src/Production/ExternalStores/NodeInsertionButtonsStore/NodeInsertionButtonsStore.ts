@@ -1,8 +1,8 @@
 import { ButtonsStore } from "../ButtonsStore";
 
-import type { InsertionButtonsState } from "./InsertionButtonsStore-types";
+import type { NodeInsertionButtonsState } from "./NodeInsertionButtonsStore-types";
 
-const initialState: InsertionButtonsState = Object.seal({
+const initialState: NodeInsertionButtonsState = Object.seal({
 	anchor: { isDisabled: true },
 	blockQuote: { isDisabled: true },
 	codeBlock: { isDisabled: true },
@@ -11,7 +11,7 @@ const initialState: InsertionButtonsState = Object.seal({
 	table: { isDisabled: true },
 });
 
-export class InsertionButtonsStore extends ButtonsStore<InsertionButtonsState> {
+export class NodeInsertionButtonsStore extends ButtonsStore<NodeInsertionButtonsState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

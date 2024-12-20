@@ -1,4 +1,4 @@
-import type { FormattableButtonsState } from "@externalStores";
+import type { FormatStylesButtonsState } from "@externalStores";
 
 import type {
 	GetFormattableButtonsStateProps,
@@ -10,7 +10,7 @@ export const getFormattableButtonsState = ({
 }: GetFormattableButtonsStateProps): GetFormattableButtonsStateReturn => {
 	const { fontStyle, fontWeight } = formatStylesState;
 
-	const state: Partial<FormattableButtonsState> = {};
+	const state: Partial<FormatStylesButtonsState> = {};
 
 	if (fontStyle === "italic") {
 		state.italic = { isChecked: true, isDisabled: false };

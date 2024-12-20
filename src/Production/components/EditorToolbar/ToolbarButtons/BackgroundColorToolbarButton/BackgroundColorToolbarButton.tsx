@@ -28,7 +28,7 @@ export const BackgroundColorToolbarButton = ({
 
 		const backgroundColor = hsl && Color.hsl(hsl).hex().hex;
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ backgroundColor });
+		toolbarButtonsActionManager.onFormatStyles?.({ backgroundColor });
 	};
 
 	useEffect(() => {

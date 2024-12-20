@@ -78,7 +78,7 @@ export const LineTagNameToolbarButton = ({
 
 		popoverTargetElement.hidePopover();
 
-		toolbarButtonsActionManager.onLineTagNameChange?.({ tagName });
+		toolbarButtonsActionManager.onFormatLineTagName?.({ tagName });
 	};
 
 	const dropdownButtonList: DropDownButtonList = [

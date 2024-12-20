@@ -71,7 +71,7 @@ export const LetterSpacingToolbarButton = ({
 		popoverTargetElement.hidePopover();
 
 		if (value === "default") {
-			toolbarButtonsActionManager.onFormatStylesChange?.({
+			toolbarButtonsActionManager.onFormatStyles?.({
 				letterSpacing: null,
 			});
 
@@ -81,14 +81,14 @@ export const LetterSpacingToolbarButton = ({
 		const isActive = activeLetterSpacings.includes(value);
 
 		if (!isActive || activeLetterSpacings.length > 1) {
-			toolbarButtonsActionManager.onFormatStylesChange?.({
+			toolbarButtonsActionManager.onFormatStyles?.({
 				letterSpacing: `${value}px`,
 			});
 
 			return;
 		}
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ letterSpacing: null });
+		toolbarButtonsActionManager.onFormatStyles?.({ letterSpacing: null });
 	};
 
 	return (

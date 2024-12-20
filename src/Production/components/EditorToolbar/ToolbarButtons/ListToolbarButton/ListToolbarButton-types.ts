@@ -1,13 +1,13 @@
-import type { InsertionButtonsState } from "@externalStores";
-import type { ListStateListType } from "@toolbarButtonsActionManager";
+import type { NodeInsertionButtonsState } from "@externalStores";
+import type { ListActionStateListType } from "@toolbarButtonsActionManager";
 import type { PickType } from "@utilities";
 
 import type { ToolbarButtonsActionManagerObj } from "../Utilities";
 
-export type ListItemList = ListStateListType[];
+export type ListItemList = ListActionStateListType[];
 
-export type OnListButtonClickProps = ListStateListType;
+export type OnListButtonClickProps = ListActionStateListType;
 
 export interface ListToolbarButtonProps extends ToolbarButtonsActionManagerObj {
-	state: PickType<InsertionButtonsState, "list">;
+	state: PickType<NodeInsertionButtonsState, "list">;
 }

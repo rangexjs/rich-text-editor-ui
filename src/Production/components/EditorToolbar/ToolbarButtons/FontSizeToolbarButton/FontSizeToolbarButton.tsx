@@ -69,7 +69,7 @@ export const FontSizeToolbarButton = ({
 		popoverTargetElement.hidePopover();
 
 		if (value === "default") {
-			toolbarButtonsActionManager.onFormatStylesChange?.({ fontSize: null });
+			toolbarButtonsActionManager.onFormatStyles?.({ fontSize: null });
 
 			return;
 		}
@@ -77,14 +77,14 @@ export const FontSizeToolbarButton = ({
 		const isActive = activeFontSizes.includes(value);
 
 		if (!isActive || activeFontSizes.length > 1) {
-			toolbarButtonsActionManager.onFormatStylesChange?.({
+			toolbarButtonsActionManager.onFormatStyles?.({
 				fontSize: `${value}px`,
 			});
 
 			return;
 		}
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ fontSize: null });
+		toolbarButtonsActionManager.onFormatStyles?.({ fontSize: null });
 	};
 
 	return (

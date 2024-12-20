@@ -1,4 +1,4 @@
-import type { FormattableButtonsState } from "@externalStores";
+import type { FormatStylesButtonsState } from "@externalStores";
 import type { PickType } from "@utilities";
 
 import type { ToolbarButtonsActionManagerObj } from "../Utilities";
@@ -13,5 +13,5 @@ export type OnFontFamilyClickProps = "default" | FontFamilyValue;
 
 export interface FontFamilyToolbarButtonProps
 	extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormattableButtonsState, "fontFamily">;
+	state: PickType<FormatStylesButtonsState, "fontFamily">;
 }

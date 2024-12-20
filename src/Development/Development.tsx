@@ -52,7 +52,7 @@ export const simulateProductEnvironment = ({
 
 	// Set initial state
 	setTimeout(() => {
-		richTextEditorUI.updateFormattableStyles({
+		richTextEditorUI.updateFormatStylesButtons({
 			backgroundColor: {
 				isDisabled: false,
 				values: new Set([
@@ -91,26 +91,26 @@ export const simulateProductEnvironment = ({
 			underline: { isChecked: false, isDisabled: false },
 		});
 
-		richTextEditorUI.updateLineTagName({
+		richTextEditorUI.updateFormatLineTagNameButtons({
 			tagName: { isDisabled: false, values: new Set(["p"]) },
 		});
 	}, 0e3);
 
-	richTextEditorUI.updateInsertion({
+	richTextEditorUI.updateNodeInsertionButtons({
 		list: { isDisabled: false },
 		table: { isDisabled: false },
 	});
 
-	richTextEditorUI.updateNavigation({
+	richTextEditorUI.updateHistoryNavigationButtons({
 		historyBack: { isDisabled: false },
 		historyForward: { isDisabled: false },
 	});
 
-	richTextEditorUI.onFormatStylesChange((formatStylesState) => {
+	richTextEditorUI.onFormatStyles((formatStylesState) => {
 		const { formattableButtonsState } = getFormattableButtonsState({
 			formatStylesState,
 		});
 
-		richTextEditorUI.updateFormattableStyles(formattableButtonsState);
+		richTextEditorUI.updateFormatStylesButtons(formattableButtonsState);
 	});
 };

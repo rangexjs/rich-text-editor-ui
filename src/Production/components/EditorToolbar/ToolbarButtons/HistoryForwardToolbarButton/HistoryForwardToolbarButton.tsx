@@ -11,7 +11,7 @@ export const HistoryForwardToolbarButton = ({
 	state,
 }: HistoryForwardToolbarButtonProps) => {
 	const onClick: ToolbarButtonOnClickFn = () => {
-		toolbarButtonsActionManager.onNavigationChange?.({
+		toolbarButtonsActionManager.onHistoryNavigation?.({
 			type: "history-forward",
 		});
 	};

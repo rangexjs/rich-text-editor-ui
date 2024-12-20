@@ -28,7 +28,7 @@ export const ColorToolbarButton = ({
 
 		const color = hsl && Color.hsl(hsl).hex().hex;
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ color });
+		toolbarButtonsActionManager.onFormatStyles?.({ color });
 	};
 
 	useEffect(() => {

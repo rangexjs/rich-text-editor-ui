@@ -13,7 +13,7 @@ export const ItalicToolbarButton = ({
 	const onClick: ToolbarButtonOnClickFn = ({ isChecked }) => {
 		const fontStyle = isChecked ? null : "italic";
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ fontStyle });
+		toolbarButtonsActionManager.onFormatStyles?.({ fontStyle });
 	};
 
 	return (

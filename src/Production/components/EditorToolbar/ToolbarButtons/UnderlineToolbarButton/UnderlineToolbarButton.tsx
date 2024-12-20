@@ -20,7 +20,7 @@ export const UnderlineToolbarButton = ({
 		strikethrough.isChecked && textDecoration.add("line-through");
 		underline.isChecked || textDecoration.add("underline");
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ textDecoration });
+		toolbarButtonsActionManager.onFormatStyles?.({ textDecoration });
 	};
 
 	return (

@@ -1,14 +1,15 @@
 import type { AppProps } from "@components";
 import type {
-	FormattableButtonsState,
-	InsertionButtonsState,
-	LineTagNameButtonsState,
-	NavigationButtonsState,
+	ForamtLineTagNameButtonsState,
+	FormatStylesButtonsState,
+	HistoryNavigationButtonsState,
+	NodeInsertionButtonsState,
 } from "@externalStores";
 import type {
+	OnFormatLineTagNameFn,
 	OnFormatStylesChangeFn,
-	OnLineTagNameChangeFn,
-	OnNavigationChangeFn,
+	OnHistoryNavigationFn,
+	OnNodeInsertionFn,
 } from "@toolbarButtonsActionManager";
 
 export interface RichTextEditorUIConstructorProps
@@ -16,19 +17,22 @@ export interface RichTextEditorUIConstructorProps
 	domNode: Element;
 }
 
-export type OnFormatStylesChangeProps = OnFormatStylesChangeFn;
+export type OnFormatLineTagNameProps = OnFormatLineTagNameFn;
 
-export type OnLineTagNameChangeProps = OnLineTagNameChangeFn;
+export type OnFormatStylesProps = OnFormatStylesChangeFn;
 
-export type OnNavigationChangeProps = OnNavigationChangeFn;
+export type OnHistoryNavigationProps = OnHistoryNavigationFn;
 
-export interface UpdateFormattableStylesProps
-	extends Partial<FormattableButtonsState> {}
+export type OnNodeInsertionProps = OnNodeInsertionFn;
 
-export interface UpdateInsertionProps extends Partial<InsertionButtonsState> {}
+export interface UpdateFormatStylesStylesButtonsProps
+	extends Partial<FormatStylesButtonsState> {}
 
-export interface UpdateLineTagNameProps
-	extends Partial<LineTagNameButtonsState> {}
+export interface UpdateNodeInsertionButtonsProps
+	extends Partial<NodeInsertionButtonsState> {}
 
-export interface UpdateNavigationProps
-	extends Partial<NavigationButtonsState> {}
+export interface UpdateFormatLineTagNameButtonsProps
+	extends Partial<ForamtLineTagNameButtonsState> {}
+
+export interface UpdateHistoryNavigationButtonsProps
+	extends Partial<HistoryNavigationButtonsState> {}

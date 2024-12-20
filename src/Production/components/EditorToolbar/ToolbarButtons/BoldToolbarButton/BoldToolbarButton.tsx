@@ -13,7 +13,7 @@ export const BoldToolbarButton = ({
 	const onClick: ToolbarButtonOnClickFn = ({ isChecked }) => {
 		const fontWeight = isChecked ? null : "bold";
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ fontWeight });
+		toolbarButtonsActionManager.onFormatStyles?.({ fontWeight });
 	};
 
 	return (

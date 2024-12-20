@@ -69,7 +69,7 @@ export const IndentationToolbarButton = ({
 		popoverTargetElement.hidePopover();
 
 		if (value === "remove") {
-			toolbarButtonsActionManager.onFormatStylesChange?.({
+			toolbarButtonsActionManager.onFormatStyles?.({
 				paddingInlineStart: null,
 			});
 
@@ -79,14 +79,14 @@ export const IndentationToolbarButton = ({
 		const isActive = activeIndentations.includes(value);
 
 		if (!isActive || activeIndentations.length > 1) {
-			toolbarButtonsActionManager.onFormatStylesChange?.({
+			toolbarButtonsActionManager.onFormatStyles?.({
 				paddingInlineStart: `${value}px`,
 			});
 
 			return;
 		}
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({
+		toolbarButtonsActionManager.onFormatStyles?.({
 			paddingInlineStart: null,
 		});
 	};

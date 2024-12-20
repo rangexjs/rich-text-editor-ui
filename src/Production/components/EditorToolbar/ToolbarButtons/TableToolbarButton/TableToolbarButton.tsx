@@ -123,7 +123,7 @@ export const TableToolbarButton = ({
 		const column = selectedColIndex + 1;
 		const row = selectedRowIndex + 1;
 
-		toolbarButtonsActionManager.onInsertionChange?.({
+		toolbarButtonsActionManager.onNodeInsertion?.({
 			type: "table",
 			column,
 			row,
