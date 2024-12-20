@@ -1,10 +1,10 @@
 import {
 	type ChangeEvent,
 	type FocusEvent,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
-	useCallback,
 } from "react";
 
 import { Color, type HSLFormat } from "@utilities";
