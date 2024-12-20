@@ -15,6 +15,14 @@ export interface FormatStylesState {
 	textDecoration?: Set<"line-through" | "underline">;
 }
 
+type ButtonsNameKey = keyof typeof buttonsName;
+
+interface GetButtonType<Type extends ButtonsNameKey> {
+	type: Type;
+}
+
+// FormatStyles
+
 interface OnFormatStylesChangeFnProps extends FormatStylesState {}
 
 export type OnFormatStylesChangeFn = (
@@ -22,12 +30,6 @@ export type OnFormatStylesChangeFn = (
 ) => void;
 
 // Insertion
-
-type ButtonsNameKey = keyof typeof buttonsName;
-
-interface GetButtonType<Type extends ButtonsNameKey> {
-	type: Type;
-}
 
 interface AnchorState extends GetButtonType<"anchor"> {
 	text: string;
@@ -42,7 +44,16 @@ interface CodeBlockState extends GetButtonType<"blockQuote"> {
 	blockType: "plain-text" | "typescript" | "javascript";
 }
 
-export type InsertionState = AnchorState | BlockQuoteState | CodeBlockState;
+interface TableState extends GetButtonType<"table"> {
+	column: number;
+	row: number;
+}
+
+export type InsertionState =
+	| AnchorState
+	| BlockQuoteState
+	| CodeBlockState
+	| TableState;
 
 type OnInsertionChangeFnProps = InsertionState;
 

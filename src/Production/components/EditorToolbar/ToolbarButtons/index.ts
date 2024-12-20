@@ -12,5 +12,6 @@ export * from "./LineHeightToolbarButton";
 export * from "./LineTagNameToolbarButton";
 export * from "./RemoveFormatToolbarButton";
 export * from "./StrikethroughToolbarButton";
+export * from "./TableToolbarButton";
 export * from "./TextAlignToolbarButton";
 export * from "./UnderlineToolbarButton";

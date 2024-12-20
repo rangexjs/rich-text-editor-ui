@@ -18,6 +18,7 @@ import type {
 	OnNavigationChangeProps,
 	RichTextEditorUIConstructorProps,
 	UpdateFormattableStylesProps,
+	UpdateInsertionProps,
 	UpdateLineTagNameProps,
 } from "./RichTextEditorUI-types";
 
@@ -86,6 +87,10 @@ export class RichTextEditorUI {
 
 	updateFormattableStyles(props: UpdateFormattableStylesProps) {
 		this.#formattableButtonsStore.updateState(props);
+	}
+
+	updateInsertion(props: UpdateInsertionProps) {
+		this.#insertionButtonsStore.updateState(props);
 	}
 
 	updateLineTagName(props: UpdateLineTagNameProps) {

@@ -7,6 +7,7 @@ const initialState: InsertionButtonsState = Object.seal({
 	blockQuote: { isDisabled: true },
 	codeBlock: { isDisabled: true },
 	customComponent: { isDisabled: true },
+	table: { isDisabled: true },
 });
 
 export class InsertionButtonsStore extends ButtonsStore<InsertionButtonsState> {

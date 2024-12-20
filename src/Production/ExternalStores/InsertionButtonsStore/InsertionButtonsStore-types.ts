@@ -14,9 +14,14 @@ interface CustomComponentState {
 	isDisabled: boolean;
 }
 
+interface TableState {
+	isDisabled: boolean;
+}
+
 export interface InsertionButtonsState {
 	anchor: AnchorState;
 	blockQuote: BlockQuoteState;
 	codeBlock: CodeBlockState;
 	customComponent: CustomComponentState;
+	table: TableState;
 }

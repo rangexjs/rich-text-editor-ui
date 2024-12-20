@@ -1,6 +1,7 @@
 import type { AppProps } from "@components";
 import type {
 	FormattableButtonsState,
+	InsertionButtonsState,
 	LineTagNameButtonsState,
 } from "@externalStores";
 import type {
@@ -22,6 +23,8 @@ export type OnNavigationChangeProps = OnNavigationChangeFn;
 
 export interface UpdateFormattableStylesProps
 	extends Partial<FormattableButtonsState> {}
+
+export interface UpdateInsertionProps extends Partial<InsertionButtonsState> {}
 
 export interface UpdateLineTagNameProps
 	extends Partial<LineTagNameButtonsState> {}
