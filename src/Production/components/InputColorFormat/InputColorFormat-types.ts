@@ -18,6 +18,11 @@ export type InputHexFormat = string;
 
 export type InputAlphaFormat = string;
 
+export interface SyncInputFormatsProps {
+	hsl: HSLFormat;
+	skip?: ColorFormat;
+}
+
 export interface ManageColorUpdateProps {
 	hsl: HSLFormat;
 }

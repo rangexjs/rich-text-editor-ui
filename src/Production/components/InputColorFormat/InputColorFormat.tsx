@@ -4,6 +4,7 @@ import {
 	useEffect,
 	useRef,
 	useState,
+	useCallback,
 } from "react";
 
 import { Color, type HSLFormat } from "@utilities";
@@ -19,6 +20,7 @@ import type {
 	InputHexFormat,
 	InputRGBFormat,
 	ManageColorUpdateProps,
+	SyncInputFormatsProps,
 } from "./InputColorFormat-types";
 
 export const InputColorFormat = ({
@@ -70,6 +72,39 @@ export const InputColorFormat = ({
 		colorFormatButton.popoverTargetElement = colorFormatDropdown;
 	}, []);
 
+	const syncInputFormats = useCallback(
+		({ hsl, skip }: SyncInputFormatsProps) => {
+			if (skip !== "Hex") {
+				const { hex } = Color.hsl(hsl).hex();
+
+				const slicedHex = hex.slice(1, 7);
+
+				setInputHex(slicedHex);
+			}
+
+			if (skip !== "RGB") {
+				const { r, g, b } = Color.hsl(hsl).rgb();
+
+				setInputRGB({ r: `${r}`, g: `${g}`, b: `${b}` });
+			}
+
+			if (skip !== "HSL") {
+				const { h, s, l } = hsl;
+
+				setInputHSL({ h: `${h}`, s: `${s}`, l: `${l}` });
+			}
+
+			const alpha = `${Math.round(hsl.a * 100)}`;
+
+			setInputAlpha(alpha);
+		},
+		[],
+	);
+
+	useEffect(() => {
+		syncInputFormats({ hsl: scopedHSL, skip: colorFormat });
+	}, [scopedHSL, colorFormat, syncInputFormats]);
+
 	useEffect(() => {
 		if (
 			hsl.h === scopedHSL.h &&
@@ -82,24 +117,8 @@ export const InputColorFormat = ({
 
 		setScopedHSL(hsl);
 
-		const { hex } = Color.hsl(hsl).hex();
-
-		const slicedHex = hex.slice(1, 7);
-
-		setInputHex(slicedHex);
-
-		const { r, g, b } = Color.hsl(hsl).rgb();
-
-		setInputRGB({ r: `${r}`, g: `${g}`, b: `${b}` });
-
-		const { h, s, l } = hsl;
-
-		setInputHSL({ h: `${h}`, s: `${s}`, l: `${l}` });
-
-		const alpha = `${Math.round(hsl.a * 100)}`;
-
-		setInputAlpha(alpha);
-	}, [hsl, scopedHSL]);
+		syncInputFormats({ hsl });
+	}, [hsl, scopedHSL, syncInputFormats]);
 
 	const manageColorUpdate = ({ hsl }: ManageColorUpdateProps) => {
 		setScopedHSL(hsl);
