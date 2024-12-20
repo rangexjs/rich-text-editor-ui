@@ -10,6 +10,7 @@ export * from "./ItalicToolbarButton";
 export * from "./LetterSpacingToolbarButton";
 export * from "./LineHeightToolbarButton";
 export * from "./LineTagNameToolbarButton";
+export * from "./ListToolbarButton";
 export * from "./RemoveFormatToolbarButton";
 export * from "./StrikethroughToolbarButton";
 export * from "./TableToolbarButton";

@@ -22,7 +22,10 @@ export const simulateProductEnvironment = ({
 	richTextArea.textContent = "Text of the Rich Text Area.";
 
 	const toolbarButtons: ToolbarButtons = [
-		[["history-back", "history-forward"], ["table"]],
+		[
+			["history-back", "history-forward"],
+			["table", "list"],
+		],
 		[
 			["line-tag-name"],
 			[
@@ -93,7 +96,15 @@ export const simulateProductEnvironment = ({
 		});
 	}, 0e3);
 
-	richTextEditorUI.updateInsertion({ table: { isDisabled: false } });
+	richTextEditorUI.updateInsertion({
+		list: { isDisabled: false },
+		table: { isDisabled: false },
+	});
+
+	richTextEditorUI.updateNavigation({
+		historyBack: { isDisabled: false },
+		historyForward: { isDisabled: false },
+	});
 
 	richTextEditorUI.onFormatStylesChange((formatStylesState) => {
 		const { formattableButtonsState } = getFormattableButtonsState({

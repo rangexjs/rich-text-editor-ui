@@ -20,6 +20,7 @@ import type {
 	UpdateFormattableStylesProps,
 	UpdateInsertionProps,
 	UpdateLineTagNameProps,
+	UpdateNavigationProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
@@ -95,6 +96,10 @@ export class RichTextEditorUI {
 
 	updateLineTagName(props: UpdateLineTagNameProps) {
 		this.#lineTagNameButtonsStore.updateState(props);
+	}
+
+	updateNavigation(props: UpdateNavigationProps) {
+		this.#navigationButtonsStore.updateState(props);
 	}
 
 	unmount() {

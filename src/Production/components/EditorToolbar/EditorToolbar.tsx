@@ -15,6 +15,7 @@ import {
 	LetterSpacingToolbarButton,
 	LineHeightToolbarButton,
 	LineTagNameToolbarButton,
+	ListToolbarButton,
 	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
 	TableToolbarButton,
@@ -47,7 +48,7 @@ export const EditorToolbar = ({
 		underline,
 	} = formattableButtonsState;
 
-	const { table } = insertionButtonsState;
+	const { list, table } = insertionButtonsState;
 
 	const { tagName } = lineTagNameButtonsState;
 
@@ -160,6 +161,15 @@ export const EditorToolbar = ({
 						<LineTagNameToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={tagName}
+						/>
+					);
+				}
+
+				if (buttonsName.list === name) {
+					return (
+						<ListToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={list}
 						/>
 					);
 				}

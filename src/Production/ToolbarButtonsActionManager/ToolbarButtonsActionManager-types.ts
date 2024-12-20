@@ -44,6 +44,11 @@ interface CodeBlockState extends GetButtonType<"blockQuote"> {
 	blockType: "plain-text" | "typescript" | "javascript";
 }
 
+export type ListStateListType = "disc" | "circle" | "square" | "decimal";
+interface ListState extends GetButtonType<"list"> {
+	listType: ListStateListType;
+}
+
 interface TableState extends GetButtonType<"table"> {
 	column: number;
 	row: number;
@@ -53,6 +58,7 @@ export type InsertionState =
 	| AnchorState
 	| BlockQuoteState
 	| CodeBlockState
+	| ListState
 	| TableState;
 
 type OnInsertionChangeFnProps = InsertionState;

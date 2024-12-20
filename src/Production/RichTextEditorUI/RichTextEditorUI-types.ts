@@ -3,6 +3,7 @@ import type {
 	FormattableButtonsState,
 	InsertionButtonsState,
 	LineTagNameButtonsState,
+	NavigationButtonsState,
 } from "@externalStores";
 import type {
 	OnFormatStylesChangeFn,
@@ -28,3 +29,6 @@ export interface UpdateInsertionProps extends Partial<InsertionButtonsState> {}
 
 export interface UpdateLineTagNameProps
 	extends Partial<LineTagNameButtonsState> {}
+
+export interface UpdateNavigationProps
+	extends Partial<NavigationButtonsState> {}
