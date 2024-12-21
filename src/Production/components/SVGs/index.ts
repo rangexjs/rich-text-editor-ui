@@ -26,4 +26,5 @@ export * from "./TextAlignCenterIcon";
 export * from "./TextAlignJustifyIcon";
 export * from "./TextAlignLeftIcon";
 export * from "./TextAlignRightIcon";
+export * from "./TodoListIcon";
 export * from "./UnderlineIcon";
