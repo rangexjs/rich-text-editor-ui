@@ -24,7 +24,7 @@ export const simulateProductEnvironment = ({
 	const toolbarButtons: ToolbarButtons = [
 		[
 			["history-back", "history-forward"],
-			["table", "list"],
+			["table", "list", "todo-list", "block-quote", "code-block"],
 		],
 		[
 			["line-tag-name"],
@@ -97,8 +97,11 @@ export const simulateProductEnvironment = ({
 	}, 0e3);
 
 	richTextEditorUI.updateNodeInsertionButtons({
+		blockQuote: { isDisabled: false },
+		codeBlock: { isDisabled: false },
 		list: { isDisabled: false },
 		table: { isDisabled: false },
+		todoList: { isDisabled: false },
 	});
 
 	richTextEditorUI.updateHistoryNavigationButtons({

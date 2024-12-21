@@ -4,7 +4,9 @@ import { buttonsName } from "@constants";
 
 import {
 	BackgroundColorToolbarButton,
+	BlockQuoteToolbarButton,
 	BoldToolbarButton,
+	CodeBlockToolbarButton,
 	ColorToolbarButton,
 	FontFamilyToolbarButton,
 	FontSizeToolbarButton,
@@ -20,6 +22,7 @@ import {
 	StrikethroughToolbarButton,
 	TableToolbarButton,
 	TextAlignToolbarButton,
+	TodoListToolbarButton,
 	UnderlineToolbarButton,
 } from "./ToolbarButtons";
 
@@ -52,7 +55,8 @@ export const EditorToolbar = ({
 
 	const { historyBack, historyForward } = historyNavigationButtonsState;
 
-	const { list, table } = nodeInsertionButtonsState;
+	const { blockQuote, codeBlock, list, table, todoList } =
+		nodeInsertionButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
@@ -66,11 +70,29 @@ export const EditorToolbar = ({
 					);
 				}
 
+				if (buttonsName.blockQuote === name) {
+					return (
+						<BlockQuoteToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={blockQuote}
+						/>
+					);
+				}
+
 				if (buttonsName.bold === name) {
 					return (
 						<BoldToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={bold}
+						/>
+					);
+				}
+
+				if (buttonsName.codeBlock === name) {
+					return (
+						<CodeBlockToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={codeBlock}
 						/>
 					);
 				}
@@ -206,6 +228,15 @@ export const EditorToolbar = ({
 						<TextAlignToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={textAlign}
+						/>
+					);
+				}
+
+				if (buttonsName.todoList === name) {
+					return (
+						<TodoListToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={todoList}
 						/>
 					);
 				}

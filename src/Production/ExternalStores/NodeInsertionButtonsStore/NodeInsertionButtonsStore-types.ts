@@ -22,6 +22,10 @@ interface TableState {
 	isDisabled: boolean;
 }
 
+interface TodoListState {
+	isDisabled: boolean;
+}
+
 export interface NodeInsertionButtonsState {
 	anchor: AnchorState;
 	blockQuote: BlockQuoteState;
@@ -29,4 +33,5 @@ export interface NodeInsertionButtonsState {
 	customComponent: CustomComponentState;
 	list: ListState;
 	table: TableState;
+	todoList: TodoListState;
 }

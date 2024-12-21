@@ -1,3 +1,4 @@
+import type { CodeBlockLanguage } from "@components";
 import type { buttonsName } from "@constants";
 
 // FormatStyles
@@ -56,8 +57,8 @@ interface AnchorActionState extends GetButtonType<"anchor"> {
 
 interface BlockQuoteActionState extends GetButtonType<"blockQuote"> {}
 
-interface CodeBlockActionState extends GetButtonType<"blockQuote"> {
-	blockType: "plain-text" | "typescript" | "javascript";
+interface CodeBlockActionState extends GetButtonType<"codeBlock"> {
+	language: CodeBlockLanguage;
 }
 
 export type ListActionStateListType = "disc" | "circle" | "square" | "decimal";
@@ -70,12 +71,15 @@ interface TableActionState extends GetButtonType<"table"> {
 	row: number;
 }
 
+interface TodoListActionState extends GetButtonType<"todoList"> {}
+
 export type NodeInsertionActionState =
 	| AnchorActionState
 	| BlockQuoteActionState
 	| CodeBlockActionState
 	| ListActionState
-	| TableActionState;
+	| TableActionState
+	| TodoListActionState;
 
 type OnNodeInsertionFnProps = NodeInsertionActionState;
 

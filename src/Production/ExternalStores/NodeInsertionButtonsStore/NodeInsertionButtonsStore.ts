@@ -9,6 +9,7 @@ const initialState: NodeInsertionButtonsState = Object.seal({
 	customComponent: { isDisabled: true },
 	list: { isDisabled: true },
 	table: { isDisabled: true },
+	todoList: { isDisabled: true },
 });
 
 export class NodeInsertionButtonsStore extends ButtonsStore<NodeInsertionButtonsState> {
