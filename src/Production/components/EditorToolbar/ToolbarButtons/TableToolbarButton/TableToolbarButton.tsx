@@ -139,7 +139,7 @@ export const TableToolbarButton = ({
 				anchorName={tableToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
-				<TableIcon />
+				<TableIcon size={1.1} />
 			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
