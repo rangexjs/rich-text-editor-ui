@@ -120,10 +120,16 @@ export const simulateProductEnvironment = ({
 	});
 
 	richTextEditorUI.onFormatStyles((formatStylesState) => {
+		console.log(formatStylesState);
+
 		const { formattableButtonsState } = getFormattableButtonsState({
 			formatStylesState,
 		});
 
 		richTextEditorUI.updateFormatStylesButtons(formattableButtonsState);
+	});
+
+	richTextEditorUI.onNodeInsertion((props) => {
+		console.log(props);
 	});
 };

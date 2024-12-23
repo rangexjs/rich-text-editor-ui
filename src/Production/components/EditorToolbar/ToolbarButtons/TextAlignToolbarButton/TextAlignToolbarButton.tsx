@@ -75,7 +75,9 @@ export const TextAlignToolbarButton = ({
 
 		const isActive = textAlignValues.includes(value);
 
-		const textAlign = isActive ? null : value;
+		const textAlign = isActive && textAlignValues.length === 1 ? null : value;
+
+		console.log(textAlign);
 
 		toolbarButtonsActionManager.onFormatStyles?.({ textAlign });
 	};
