@@ -7,6 +7,7 @@ const initialState: NodeInsertionButtonsState = Object.seal({
 	blockQuote: { isDisabled: true },
 	codeBlock: { isDisabled: true },
 	customComponent: { isDisabled: true },
+	image: { isDisabled: true },
 	list: { isDisabled: true },
 	table: { isDisabled: true },
 	todoList: { isDisabled: true },

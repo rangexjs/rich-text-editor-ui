@@ -61,6 +61,18 @@ interface CodeBlockActionState extends GetButtonType<"codeBlock"> {
 	language: CodeBlockLanguage;
 }
 
+interface ImageFileUpload {
+	insertionType: "file-upload";
+	files: FileList;
+}
+
+interface ImageURL {
+	insertionType: "url";
+	url: string;
+}
+
+type ImageActionState = GetButtonType<"image"> & (ImageFileUpload | ImageURL);
+
 export type ListActionStateListType = "disc" | "circle" | "square" | "decimal";
 interface ListActionState extends GetButtonType<"list"> {
 	listType: ListActionStateListType;
@@ -77,6 +89,7 @@ export type NodeInsertionActionState =
 	| AnchorActionState
 	| BlockQuoteActionState
 	| CodeBlockActionState
+	| ImageActionState
 	| ListActionState
 	| TableActionState
 	| TodoListActionState;

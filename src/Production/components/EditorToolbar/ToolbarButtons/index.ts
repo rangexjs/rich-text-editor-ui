@@ -7,6 +7,7 @@ export * from "./FontFamilyToolbarButton";
 export * from "./FontSizeToolbarButton";
 export * from "./HistoryBackToolbarButton";
 export * from "./HistoryForwardToolbarButton";
+export * from "./ImageToolbarButton";
 export * from "./IndentationToolbarButton";
 export * from "./ItalicToolbarButton";
 export * from "./LetterSpacingToolbarButton";

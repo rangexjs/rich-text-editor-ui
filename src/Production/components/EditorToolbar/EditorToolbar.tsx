@@ -12,6 +12,7 @@ import {
 	FontSizeToolbarButton,
 	HistoryBackToolbarButton,
 	HistoryForwardToolbarButton,
+	ImageToolbarButton,
 	IndentationToolbarButton,
 	ItalicToolbarButton,
 	LetterSpacingToolbarButton,
@@ -55,7 +56,7 @@ export const EditorToolbar = ({
 
 	const { historyBack, historyForward } = historyNavigationButtonsState;
 
-	const { blockQuote, codeBlock, list, table, todoList } =
+	const { blockQuote, codeBlock, image, list, table, todoList } =
 		nodeInsertionButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
@@ -138,6 +139,15 @@ export const EditorToolbar = ({
 						<HistoryForwardToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={historyForward}
+						/>
+					);
+				}
+
+				if (buttonsName.image === name) {
+					return (
+						<ImageToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={image}
 						/>
 					);
 				}

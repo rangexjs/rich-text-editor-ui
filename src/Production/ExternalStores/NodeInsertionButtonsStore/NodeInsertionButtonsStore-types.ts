@@ -14,6 +14,10 @@ interface CustomComponentState {
 	isDisabled: boolean;
 }
 
+interface ImageState {
+	isDisabled: boolean;
+}
+
 interface ListState {
 	isDisabled: boolean;
 }
@@ -31,6 +35,7 @@ export interface NodeInsertionButtonsState {
 	blockQuote: BlockQuoteState;
 	codeBlock: CodeBlockState;
 	customComponent: CustomComponentState;
+	image: ImageState;
 	list: ListState;
 	table: TableState;
 	todoList: TodoListState;
