@@ -48,12 +48,7 @@ export type OnHistoryNavigationFn = (props: OnHistoryNavigationFnProps) => void;
 
 // NodeInsertion
 
-interface AnchorActionState extends GetButtonType<"anchor"> {
-	text: string;
-	href: string;
-	download: boolean;
-	target: "_blank";
-}
+interface AnchorActionState extends GetButtonType<"anchor"> {}
 
 interface BlockQuoteActionState extends GetButtonType<"blockQuote"> {}
 

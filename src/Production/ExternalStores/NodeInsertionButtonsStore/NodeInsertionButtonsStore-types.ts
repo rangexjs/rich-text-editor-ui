@@ -1,4 +1,5 @@
 interface AnchorState {
+	isChecked: boolean;
 	isDisabled: boolean;
 }
 

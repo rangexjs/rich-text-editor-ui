@@ -3,7 +3,7 @@ import { ButtonsStore } from "../ButtonsStore";
 import type { NodeInsertionButtonsState } from "./NodeInsertionButtonsStore-types";
 
 const initialState: NodeInsertionButtonsState = Object.seal({
-	anchor: { isDisabled: true },
+	anchor: { isChecked: false, isDisabled: true },
 	blockQuote: { isDisabled: true },
 	codeBlock: { isDisabled: true },
 	customComponent: { isDisabled: true },

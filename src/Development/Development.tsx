@@ -24,7 +24,15 @@ export const simulateProductEnvironment = ({
 	const toolbarButtons: ToolbarButtons = [
 		[
 			["history-back", "history-forward"],
-			["table", "list", "todo-list", "block-quote", "code-block", "image"],
+			[
+				"table",
+				"list",
+				"todo-list",
+				"block-quote",
+				"code-block",
+				"image",
+				"anchor",
+			],
 		],
 		[
 			["line-tag-name"],
@@ -97,6 +105,7 @@ export const simulateProductEnvironment = ({
 	}, 0e3);
 
 	richTextEditorUI.updateNodeInsertionButtons({
+		anchor: { isChecked: false, isDisabled: false },
 		blockQuote: { isDisabled: false },
 		codeBlock: { isDisabled: false },
 		image: { isDisabled: false },

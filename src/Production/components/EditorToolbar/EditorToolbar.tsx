@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { buttonsName } from "@constants";
 
 import {
+	AnchorToolbarButton,
 	BackgroundColorToolbarButton,
 	BlockQuoteToolbarButton,
 	BoldToolbarButton,
@@ -56,12 +57,21 @@ export const EditorToolbar = ({
 
 	const { historyBack, historyForward } = historyNavigationButtonsState;
 
-	const { blockQuote, codeBlock, image, list, table, todoList } =
+	const { anchor, blockQuote, codeBlock, image, list, table, todoList } =
 		nodeInsertionButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
 			groups.map((name) => {
+				if (buttonsName.anchor === name) {
+					return (
+						<AnchorToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={anchor}
+						/>
+					);
+				}
+
 				if (buttonsName.backgroundColor === name) {
 					return (
 						<BackgroundColorToolbarButton
