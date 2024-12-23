@@ -5,6 +5,6 @@ interface TagNameState {
 	values: Set<LineTagNameValue>;
 }
 
-export interface ForamtLineTagNameButtonsState {
+export interface FormatLineTagNameButtonsState {
 	tagName: TagNameState;
 }

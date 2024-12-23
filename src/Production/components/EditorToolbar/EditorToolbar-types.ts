@@ -1,6 +1,6 @@
 import type { buttonsName } from "@constants";
 import type {
-	ForamtLineTagNameButtonsState,
+	FormatLineTagNameButtonsState,
 	FormatStylesButtonsState,
 	HistoryNavigationButtonsState,
 	NodeInsertionButtonsState,
@@ -20,7 +20,7 @@ export type EditorToolbarRows = EditorToolbarRow[];
 export interface EditorToolbarProps {
 	toolbarRows: EditorToolbarRows;
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
-	formatLineTagNameButtonsState: ForamtLineTagNameButtonsState;
+	formatLineTagNameButtonsState: FormatLineTagNameButtonsState;
 	formatStylesButtonsState: FormatStylesButtonsState;
 	historyNavigationButtonsState: HistoryNavigationButtonsState;
 	nodeInsertionButtonsState: NodeInsertionButtonsState;

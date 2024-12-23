@@ -1,5 +1,5 @@
 import type {
-	ForamtLineTagNameButtonsState,
+	FormatLineTagNameButtonsState,
 	LineTagNameValue,
 } from "@externalStores";
 import type { PickType } from "@utilities";
@@ -16,5 +16,5 @@ export type DropDownButtonList = DropDownButton[];
 
 export interface LineTagNameToolbarButtonProps
 	extends ToolbarButtonsActionManagerObj {
-	state: PickType<ForamtLineTagNameButtonsState, "tagName">;
+	state: PickType<FormatLineTagNameButtonsState, "tagName">;
 }

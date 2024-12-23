@@ -1,6 +1,6 @@
 import type { AppProps } from "@components";
 import type {
-	ForamtLineTagNameButtonsState,
+	FormatLineTagNameButtonsState,
 	FormatStylesButtonsState,
 	HistoryNavigationButtonsState,
 	NodeInsertionButtonsState,
@@ -32,7 +32,7 @@ export interface UpdateNodeInsertionButtonsProps
 	extends Partial<NodeInsertionButtonsState> {}
 
 export interface UpdateFormatLineTagNameButtonsProps
-	extends Partial<ForamtLineTagNameButtonsState> {}
+	extends Partial<FormatLineTagNameButtonsState> {}
 
 export interface UpdateHistoryNavigationButtonsProps
 	extends Partial<HistoryNavigationButtonsState> {}
