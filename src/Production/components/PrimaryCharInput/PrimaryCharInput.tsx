@@ -103,7 +103,7 @@ export const PrimaryCharInput = ({
 				value={inputValue}
 				onChange={onInputChange}
 				placeholder={inputProps.placeholder}
-				className="primary-char-input bg-inherit p-2 text-sm"
+				className="primary-char-input w-full bg-inherit p-2 text-sm"
 				style={{ ...inputProps.style }}
 				onFocus={() => setIsFocus(true)}
 				onBlur={() => {
