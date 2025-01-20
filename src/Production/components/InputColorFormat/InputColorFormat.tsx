@@ -403,7 +403,7 @@ export const InputColorFormat = ({
 				<button
 					ref={colorFormatButtonRef}
 					type="button"
-					className="inline-flex w-16 items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+					className="default-btn inline-flex w-16 items-center gap-2 px-2 py-1"
 					style={{
 						// @ts-ignore
 						anchorName: formatAnchor,

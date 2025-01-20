@@ -225,14 +225,14 @@ export const ImageToolbarButton = ({
 				<div className="mt-3 flex justify-end gap-3">
 					<button
 						type="button"
-						className="rounded-md border border-slate-200 bg-slate-50 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+						className="default-btn px-3 py-1"
 						onClick={closeImageUrlDialog}
 					>
 						Cancel
 					</button>
 					<button
 						type="button"
-						className="rounded-md border border-primary border-opacity-40 bg-primary bg-opacity-10 px-3 py-1 font-semibold text-primary text-sm transition-colors hover:border-opacity-100"
+						className="highlighted-btn px-3 py-1"
 						onClick={insertImageViaURL}
 					>
 						Insert

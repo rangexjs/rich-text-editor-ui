@@ -158,7 +158,7 @@ export const ColorPanel = ({
 			</div>
 			<button
 				type="button"
-				className="mb-2 inline-flex items-center gap-2 self-start rounded-md border border-slate-200 bg-slate-50 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+				className="default-btn mb-2 inline-flex items-center gap-2 self-start px-3 py-1"
 				onClick={() => onColorSelected({ hsl: null })}
 			>
 				<RemoveColorIcon /> Remove color
@@ -181,7 +181,7 @@ export const ColorPanel = ({
 						<InputColorFormat hsl={hsl} onColorChange={onColorFormatChange} />
 						<button
 							type="button"
-							className="mt-1 inline-flex items-center gap-1 self-start rounded-md border border-slate-200 bg-slate-50 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+							className="default-btn mt-1 inline-flex items-center gap-1 self-start px-3 py-1"
 							onClick={() => onColorSelected({ hsl })}
 						>
 							<CheckIcon size={0.8} /> Apply color

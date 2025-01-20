@@ -82,12 +82,16 @@ export const EditAnchorOverlay = ({
 				<ToggleButton isChecked={isDownloadable} />
 			</div>
 			<div className="mt-3 flex justify-between gap-3">
-				<button type="button" className="default-btn w-full" onClick={onCancel}>
+				<button
+					type="button"
+					className="default-btn w-full py-1"
+					onClick={onCancel}
+				>
 					Cancel
 				</button>
 				<button
 					type="button"
-					className="highlighted-btn w-full"
+					className="highlighted-btn w-full py-1"
 					onClick={onApply}
 				>
 					Apply
