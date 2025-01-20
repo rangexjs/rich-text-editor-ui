@@ -7,38 +7,36 @@ import {
 import { EditIcon, TrashIcon } from "../../SVGs";
 import { ToggleButton } from "../../ToggleButton";
 
-import type { AnchorPopoverProps } from "./EditAnchorOverlay-types";
+import type { AnchorPopoverProps } from "./AnchorOverlay-types";
 
-export const EditAnchorOverlay = ({
-	editAnchorOverlayStore,
-}: AnchorPopoverProps) => {
-	const editAnchorOverlayState = useSyncExternalStore(
-		editAnchorOverlayStore.subscribe.bind(editAnchorOverlayStore),
-		editAnchorOverlayStore.getSnapshot.bind(editAnchorOverlayStore),
+export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
+	const anchorOverlayState = useSyncExternalStore(
+		anchorOverlayStore.subscribe.bind(anchorOverlayStore),
+		anchorOverlayStore.getSnapshot.bind(anchorOverlayStore),
 	);
 
-	const [layout, setLayout] = useState(editAnchorOverlayState.layout);
-	const [url, setUrl] = useState(editAnchorOverlayState.url);
+	const [layout, setLayout] = useState(anchorOverlayState.layout);
+	const [url, setUrl] = useState(anchorOverlayState.url);
 	const [isOpenNewTab, setIsOpenNewTab] = useState(
-		editAnchorOverlayState.isOpenNewTab,
+		anchorOverlayState.isOpenNewTab,
 	);
 	const [isDownloadable, setIsDownloadable] = useState(
-		editAnchorOverlayState.isDownloadable,
+		anchorOverlayState.isDownloadable,
 	);
 
 	useLayoutEffect(() => {
-		setLayout(editAnchorOverlayState.layout);
-		setUrl(editAnchorOverlayState.url);
-		setIsOpenNewTab(editAnchorOverlayState.isOpenNewTab);
-		setIsDownloadable(editAnchorOverlayState.isDownloadable);
-	}, [editAnchorOverlayState]);
+		setLayout(anchorOverlayState.layout);
+		setUrl(anchorOverlayState.url);
+		setIsOpenNewTab(anchorOverlayState.isOpenNewTab);
+		setIsDownloadable(anchorOverlayState.isDownloadable);
+	}, [anchorOverlayState]);
 
 	const onEdit = () => {
 		setLayout("edit");
 	};
 
 	const onUnlink = () => {
-		editAnchorOverlayState.onAction({ type: "unlink" });
+		anchorOverlayState.onAction({ type: "unlink" });
 	};
 
 	const onChange: OnPrimaryCharInputChangeFn = ({ value }) => {
@@ -54,11 +52,11 @@ export const EditAnchorOverlay = ({
 	// };
 
 	const onCancel = () => {
-		editAnchorOverlayState.onAction({ type: "cancel" });
+		anchorOverlayState.onAction({ type: "cancel" });
 	};
 
 	const onApply = () => {
-		editAnchorOverlayState.onAction({
+		anchorOverlayState.onAction({
 			type: "apply",
 			url,
 			isOpenNewTab,

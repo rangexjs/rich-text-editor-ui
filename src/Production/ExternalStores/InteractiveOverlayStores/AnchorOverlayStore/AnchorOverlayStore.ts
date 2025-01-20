@@ -1,8 +1,8 @@
 import { ButtonsStore } from "../../ButtonsStore";
 
-import type { EditAnchorOverlayState } from "./EditAnchorOverlayStore-types";
+import type { AnchorOverlayState } from "./AnchorOverlayStore-types";
 
-const initialState: EditAnchorOverlayState = Object.seal({
+const initialState: AnchorOverlayState = Object.seal({
 	layout: "default",
 	url: "",
 	isOpenNewTab: true,
@@ -11,7 +11,7 @@ const initialState: EditAnchorOverlayState = Object.seal({
 	onAction: () => {},
 });
 
-export class EditAnchorOverlayStore extends ButtonsStore<EditAnchorOverlayState> {
+export class AnchorOverlayStore extends ButtonsStore<AnchorOverlayState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

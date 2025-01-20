@@ -1,22 +1,22 @@
 import type { ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { EditAnchorOverlay } from "@components";
+import { AnchorOverlay } from "@components";
 import { interactiveOverlayName } from "@constants";
-import { EditAnchorOverlayStore } from "@externalStores";
+import { AnchorOverlayStore } from "@externalStores";
 
 import type {
 	CreateRootElementReturn,
 	ExistingOverlays,
-	GetEditAnchorElementReturn,
+	GetAnchorElementReturn,
 	GetOverlayElementProps,
 	GetOverlayElementReturn,
 	InteractiveOverlayReturn,
-	UpdateEditAnchorStateProps,
+	UpdateAnchorStateProps,
 } from "./InteractiveOverlayManager-types";
 
 export class InteractiveOverlayManager {
-	#editAnchorOverlayStore = new EditAnchorOverlayStore();
+	#anchorOverlayStore = new AnchorOverlayStore();
 	#existingOverlays: ExistingOverlays = new Map();
 
 	#getOverlayElement(key: GetOverlayElementProps): GetOverlayElementReturn {
@@ -33,37 +33,35 @@ export class InteractiveOverlayManager {
 		return domNode;
 	}
 
-	#createEditAnchorElement(): GetEditAnchorElementReturn {
-		const isEditAnchorExist = this.#existingOverlays.has(
-			interactiveOverlayName.editAnchor,
+	#createAnchorElement(): GetAnchorElementReturn {
+		const isAnchorExist = this.#existingOverlays.has(
+			interactiveOverlayName.anchor,
 		);
 
-		if (isEditAnchorExist) {
-			throw new Error("EditAnchor has already created.");
+		if (isAnchorExist) {
+			throw new Error("Anchor has already created.");
 		}
 
 		const root = this.#createRootElement(
-			<EditAnchorOverlay
-				editAnchorOverlayStore={this.#editAnchorOverlayStore}
-			/>,
+			<AnchorOverlay anchorOverlayStore={this.#anchorOverlayStore} />,
 		);
 
-		this.#existingOverlays.set(interactiveOverlayName.editAnchor, root);
+		this.#existingOverlays.set(interactiveOverlayName.anchor, root);
 
 		return root;
 	}
 
-	#updateAnchorState(props: UpdateEditAnchorStateProps) {
-		this.#editAnchorOverlayStore.updateState(props);
+	#updateAnchorState(props: UpdateAnchorStateProps) {
+		this.#anchorOverlayStore.updateState(props);
 	}
 
 	get interactiveOverlay(): InteractiveOverlayReturn {
 		return {
 			getOverlayElement: (props: GetOverlayElementProps) =>
 				this.#getOverlayElement(props),
-			// EditAnchor
-			createEditAnchorElement: () => this.#createEditAnchorElement(),
-			updateEditAnchorState: (props: UpdateEditAnchorStateProps) =>
+			// Anchor
+			createAnchorElement: () => this.#createAnchorElement(),
+			updateAnchorState: (props: UpdateAnchorStateProps) =>
 				this.#updateAnchorState(props),
 		};
 	}

@@ -1,17 +1,17 @@
-export interface EditAnchorProps {
+export interface AnchorProps {
 	url: string;
 	isOpenNewTab: boolean;
 	isDownloadable: boolean;
 }
 
 export type OnActionProps =
-	| ({ type: "apply" } & EditAnchorProps)
+	| ({ type: "apply" } & AnchorProps)
 	| { type: "cancel" }
 	| { type: "unlink" };
 
 export type OnActionFn = (props: OnActionProps) => void;
 
-export interface EditAnchorOverlayState extends EditAnchorProps {
+export interface AnchorOverlayState extends AnchorProps {
 	layout: "default" | "edit";
 	onAction: OnActionFn;
 }

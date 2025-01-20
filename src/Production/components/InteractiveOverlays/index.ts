@@ -1,1 +1,1 @@
-export * from "./EditAnchorOverlay";
+export * from "./AnchorOverlay";

@@ -1,5 +1,5 @@
 import type { interactiveOverlayName } from "@constants";
-import type { EditAnchorOverlayState } from "@externalStores";
+import type { AnchorOverlayState } from "@externalStores";
 
 type InteractiveOverlayName = typeof interactiveOverlayName;
 
@@ -16,13 +16,12 @@ export type GetOverlayElementReturn = OverlayElement | undefined;
 
 export type CreateRootElementReturn = OverlayElement;
 
-export type GetEditAnchorElementReturn = HTMLDivElement;
+export type GetAnchorElementReturn = HTMLDivElement;
 
-export interface UpdateEditAnchorStateProps
-	extends Partial<EditAnchorOverlayState> {}
+export interface UpdateAnchorStateProps extends Partial<AnchorOverlayState> {}
 
 export interface InteractiveOverlayReturn {
 	getOverlayElement: (props: GetOverlayElementProps) => GetOverlayElementReturn;
-	createEditAnchorElement: () => GetEditAnchorElementReturn;
-	updateEditAnchorState: (props: UpdateEditAnchorStateProps) => void;
+	createAnchorElement: () => GetAnchorElementReturn;
+	updateAnchorState: (props: UpdateAnchorStateProps) => void;
 }

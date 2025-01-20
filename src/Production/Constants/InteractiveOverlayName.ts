@@ -1,3 +1,3 @@
 export const interactiveOverlayName = {
-	editAnchor: "edit-anchor",
+	anchor: "anchor",
 } as const;
