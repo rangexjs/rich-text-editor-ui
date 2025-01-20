@@ -1,0 +1,38 @@
+.toggle-button {
+	display: inline-block;
+	width: 28px;
+	height: 16px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #e2e8f0;
+	border-radius: 8px;
+	background-color: white;
+	transition: background-color, border;
+	transition-duration: 300ms;
+
+	& > span {
+		position: absolute;
+		display: inline-block;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #e2e8f0;
+		border-radius: 100%;
+		background-color: white;
+		box-shadow: 0px 0px 10px 0px #0002;
+		transition-property: left, border, scale;
+		transition-duration: 300ms;
+	}
+
+	&[data-is-checked="true"] {
+		background-color: color(from var(--primary-color) srgb r g b / 0.4);
+		border-color: var(--primary-color);
+
+		& > span {
+			border-color: var(--primary-color);
+		}
+	}
+
+	&:active > span {
+		scale: 0.9;
+	}
+}
