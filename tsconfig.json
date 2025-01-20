@@ -10,6 +10,9 @@
 			"@components": ["src/Production/components"],
 			"@constants": ["src/Production/Constants"],
 			"@externalStores": ["src/Production/ExternalStores"],
+			"@interactiveOverlayManager": [
+				"src/Production/InteractiveOverlayManager"
+			],
 			"@toolbarButtonsActionManager": [
 				"src/Production/ToolbarButtonsActionManager"
 			],

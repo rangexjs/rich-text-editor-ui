@@ -7,6 +7,7 @@ import {
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
 } from "@externalStores";
+import { InteractiveOverlayManager } from "@interactiveOverlayManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
 // @ts-ignore
@@ -31,6 +32,7 @@ export class RichTextEditorUI {
 	#formatStylesButtonsStore = new FormatStylesButtonsStore();
 	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
 	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
+	#interactiveOverlayManager = new InteractiveOverlayManager();
 
 	constructor({
 		domNode,
@@ -105,6 +107,10 @@ export class RichTextEditorUI {
 
 	updateNodeInsertionButtons(props: UpdateNodeInsertionButtonsProps) {
 		this.#nodeInsertionButtonsStore.updateState(props);
+	}
+
+	get interactiveOverlay() {
+		return this.#interactiveOverlayManager.interactiveOverlay;
 	}
 
 	unmount() {
