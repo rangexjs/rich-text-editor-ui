@@ -285,7 +285,7 @@ export const EditorToolbar = ({
 								))}
 							</div>
 							{groupIndex < length - 1 && (
-								<span className="inline-block w-px shrink-0 bg-gray-300" />
+								<span className="w-px shrink-0 bg-gray-300" />
 							)}
 						</Fragment>
 					))}
