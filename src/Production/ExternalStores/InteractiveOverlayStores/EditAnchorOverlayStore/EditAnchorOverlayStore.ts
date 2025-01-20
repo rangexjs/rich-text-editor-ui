@@ -3,6 +3,7 @@ import { ButtonsStore } from "../../ButtonsStore";
 import type { EditAnchorOverlayState } from "./EditAnchorOverlayStore-types";
 
 const initialState: EditAnchorOverlayState = Object.seal({
+	layout: "default",
 	url: "",
 	isOpenNewTab: true,
 	isDownloadable: false,
