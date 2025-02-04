@@ -49,8 +49,12 @@ export const Slider = ({
 	const [xPosition, setXPosition] = useState(position);
 
 	useEffect(() => {
+		if (position === xPosition) {
+			return;
+		}
+
 		setXPosition(position);
-	}, [position]);
+	}, [position, xPosition]);
 
 	const manageThumbUpdate = ({
 		clientX,

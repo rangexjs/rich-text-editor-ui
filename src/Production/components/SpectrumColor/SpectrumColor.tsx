@@ -305,12 +305,16 @@ export const SpectrumColor = ({
 		const hue = Math.round(359 * (value / 100));
 
 		manageColorUpdate({ hsl: { ...hsl, h: hue } });
+
+		setHueThumbPosition(value);
 	};
 
 	const onAlphaThumbChange: OnThumbChangeFn = ({ position: value }) => {
 		const alpha = +(value / 100).toFixed(2);
 
 		manageColorUpdate({ hsl: { ...hsl, a: alpha } });
+
+		setAlphaThumbPosition(value);
 	};
 
 	const renderAlphaSliderChildren: RenderChildrenFn = ({ sliderAnchor }) => (
