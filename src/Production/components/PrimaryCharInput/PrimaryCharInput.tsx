@@ -103,6 +103,7 @@ export const PrimaryCharInput = ({
 				value={inputValue}
 				onChange={onInputChange}
 				placeholder={inputProps.placeholder}
+				readOnly={inputProps.readOnly}
 				className="primary-char-input w-full bg-inherit p-2 text-sm"
 				style={{ ...inputProps.style }}
 				onFocus={() => setIsFocus(true)}

@@ -12,6 +12,7 @@ export interface InputProps {
 	type: "text" | "number";
 	value?: string;
 	placeholder?: string;
+	readOnly?: boolean;
 	style?: CSSProperties;
 	onChange?: OnPrimaryCharInputChangeFn;
 }
