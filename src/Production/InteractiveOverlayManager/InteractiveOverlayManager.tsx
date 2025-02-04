@@ -1,22 +1,25 @@
 import type { ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { AnchorOverlay } from "@components";
+import { AnchorOverlay, TableSettingsOverlay } from "@components";
 import { interactiveOverlayName } from "@constants";
-import { AnchorOverlayStore } from "@externalStores";
+import { AnchorOverlayStore, TableSettingsOverlayStore } from "@externalStores";
 
 import type {
+	CreateAnchorElementReturn,
 	CreateRootElementReturn,
+	CreateTableSettingsElementReturn,
 	ExistingOverlays,
-	GetAnchorElementReturn,
 	GetOverlayElementProps,
 	GetOverlayElementReturn,
 	InteractiveOverlayReturn,
 	UpdateAnchorStateProps,
+	UpdateTableSettingsStateProps,
 } from "./InteractiveOverlayManager-types";
 
 export class InteractiveOverlayManager {
 	#anchorOverlayStore = new AnchorOverlayStore();
+	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
 	#existingOverlays: ExistingOverlays = new Map();
 
 	#getOverlayElement(key: GetOverlayElementProps): GetOverlayElementReturn {
@@ -33,7 +36,7 @@ export class InteractiveOverlayManager {
 		return domNode;
 	}
 
-	#createAnchorElement(): GetAnchorElementReturn {
+	#createAnchorElement(): CreateAnchorElementReturn {
 		const isAnchorExist = this.#existingOverlays.has(
 			interactiveOverlayName.anchor,
 		);
@@ -55,6 +58,30 @@ export class InteractiveOverlayManager {
 		this.#anchorOverlayStore.updateState(props);
 	}
 
+	#createTableSettingsElement(): CreateTableSettingsElementReturn {
+		const isTableSettingsExist = this.#existingOverlays.has(
+			interactiveOverlayName.tableSettings,
+		);
+
+		if (isTableSettingsExist) {
+			throw new Error("TableSettings has already created.");
+		}
+
+		const root = this.#createRootElement(
+			<TableSettingsOverlay
+				tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
+			/>,
+		);
+
+		this.#existingOverlays.set(interactiveOverlayName.tableSettings, root);
+
+		return root;
+	}
+
+	#updateTableSettingsState(props: UpdateTableSettingsStateProps) {
+		this.#tableSettingsOverlayStore.updateState(props);
+	}
+
 	get interactiveOverlay(): InteractiveOverlayReturn {
 		return {
 			getOverlayElement: (props: GetOverlayElementProps) =>
@@ -63,6 +90,10 @@ export class InteractiveOverlayManager {
 			createAnchorElement: () => this.#createAnchorElement(),
 			updateAnchorState: (props: UpdateAnchorStateProps) =>
 				this.#updateAnchorState(props),
+			// TableSettings
+			createTableSettingsElement: () => this.#createTableSettingsElement(),
+			updateTableSettingsState: (props: UpdateTableSettingsStateProps) =>
+				this.#updateTableSettingsState(props),
 		};
 	}
 }
