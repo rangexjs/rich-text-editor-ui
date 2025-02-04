@@ -38,6 +38,7 @@ interface OnSelectedColorFnProps {
 export type OnColorSelected = (props: OnSelectedColorFnProps) => void;
 
 export interface ColorPanelProps {
+	hsl?: HSLFormat;
 	activeColors: HSLFormat[];
 	onColorSelected: OnColorSelected;
 }
