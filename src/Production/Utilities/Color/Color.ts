@@ -5,6 +5,7 @@ import type {
 	FromColorProps,
 	GetHSLFormatFromColorProps,
 	GetHSLFormatFromColorReturn,
+	HSLFormat,
 	HSLToColorProps,
 	HSLToHexProps,
 	HSLToHexReturn,
@@ -12,9 +13,57 @@ import type {
 	HSLToRGBReturn,
 	HexToHSLProps,
 	HexToHSLReturn,
+	IsValidHSLProps,
+	IsValidHexProps,
+	IsValidRGBProps,
 	RGBToHSLProps,
 	RGBToHSLReturn,
 } from "./Color-types";
+
+const isValidHSL = ({ h, s, l, a }: IsValidHSLProps) => {
+	return (
+		h <= 359 &&
+		h >= 0 &&
+		s <= 100 &&
+		s >= 0 &&
+		l <= 100 &&
+		l >= 0 &&
+		a <= 1 &&
+		a >= 0
+	);
+};
+
+const isValidRGB = ({ r, g, b, a }: IsValidRGBProps) => {
+	if (![r, g, b].every((v) => v <= 255 && v >= 0)) {
+		return false;
+	}
+
+	if (!(a <= 1 && a >= 0)) {
+		return false;
+	}
+
+	return true;
+};
+
+const isValidHex = ({ hex }: IsValidHexProps) => {
+	const replacedHex = hex.replace(/^#/, "");
+
+	if (/[^0-9a-f]/.test(replacedHex)) {
+		return false;
+	}
+
+	const { length } = replacedHex;
+
+	if (![3, 4, 6, 8].some((validLength) => length === validLength)) {
+		return false;
+	}
+
+	if (!(length === 3 || length === 6 || length === 8)) {
+		return false;
+	}
+
+	return true;
+};
 
 const hslToColor = ({ h, s, l, a }: HSLToColorProps) =>
 	`hsl(${h}deg, ${s}%, ${l}%, ${a})` as const;
@@ -91,12 +140,8 @@ const hslToHex = ({ h, s, l, a }: HSLToHexProps): HSLToHexReturn => {
  * Converts RGBA to HSLA.
  */
 const rgbToHsl = ({ r, g, b, a = 1 }: RGBToHSLProps): RGBToHSLReturn => {
-	if (![r, g, b].every((v) => v <= 255 && v >= 0)) {
+	if (!isValidRGB({ r, g, b, a })) {
 		throw new Error("RGB's value is invalid.");
-	}
-
-	if (!(a <= 1 && a >= 0)) {
-		throw new Error("RGB's alpha value is invalid.");
 	}
 
 	r /= 255;
@@ -137,11 +182,11 @@ const rgbToHsl = ({ r, g, b, a = 1 }: RGBToHSLProps): RGBToHSLReturn => {
  * Converts Hex to HSLA.
  */
 const hexToHsl = ({ hex }: HexToHSLProps): HexToHSLReturn => {
-	const replacedHex = hex.replace(/^#/, "");
-
-	if (/[^0-9a-f]/.test(replacedHex)) {
-		throw new Error("Hex contains invalid character.");
+	if (!isValidHex({ hex })) {
+		throw new Error("Hex's value is invalid.");
 	}
+
+	const replacedHex = hex.replace(/^#/, "");
 
 	const fullHex = (() => {
 		if (replacedHex.length === 3 || replacedHex.length === 4) {
@@ -195,20 +240,13 @@ const getHSLFormatFromColor = ({
 		const l = +lightness;
 		const a = +alpha;
 
-		if (
-			h > 359 ||
-			h < 0 ||
-			s > 100 ||
-			s < 0 ||
-			l > 100 ||
-			l < 0 ||
-			a > 1 ||
-			a < 0
-		) {
+		const hslFormat: HSLFormat = { h, s, l, a };
+
+		if (!isValidHSL(hslFormat)) {
 			throw new Error("HSL's value is invalid.");
 		}
 
-		return { h, s, l, a };
+		return hslFormat;
 	}
 
 	if (color.startsWith("rgb")) {
@@ -240,6 +278,7 @@ const getHSLFormatFromColor = ({
 export const Color = {
 	hsl(props: ColorHSLProps) {
 		return {
+			isValid: () => isValidHSL(props),
 			color: () => hslToColor(props),
 			rgb: () => hslToRgb(props),
 			hex: () => hslToHex(props),
@@ -247,11 +286,17 @@ export const Color = {
 	},
 
 	rgb(props: ColorRGBProps) {
-		return { rgbToHsl: () => rgbToHsl(props) };
+		return {
+			isValid: () => isValidRGB(props),
+			rgbToHsl: () => rgbToHsl(props),
+		};
 	},
 
 	hex(props: ColorHexProps) {
-		return { hexToHsl: () => hexToHsl(props) };
+		return {
+			isValid: () => isValidHex(props),
+			hexToHsl: () => hexToHsl(props),
+		};
 	},
 
 	fromColor(props: FromColorProps) {
