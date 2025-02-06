@@ -16,13 +16,13 @@ import {
 } from "@utilities";
 
 import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
+import { ComboBox, type ComboBoxList } from "../../../ComboBox";
 import { PrimaryButton } from "../../../PrimaryButton";
 import {
 	type OnPrimaryCharInputChangeFn,
 	PrimaryCharInput,
 } from "../../../PrimaryCharInput";
 import {
-	ChevronIcon,
 	ContentAlignCenterIcon,
 	ContentAlignLeftIcon,
 	ContentAlignRightIcon,
@@ -33,7 +33,6 @@ import type {
 	AlignmentButtons,
 	GetValidHSLFromHexProps,
 	GetValidHSLFromHexReturn,
-	TableBorderPropsList,
 	TablePropertiesProps,
 } from "./TableProperties-types";
 
@@ -55,9 +54,6 @@ export const TableProperties = ({
 	tableProps,
 	onTablePropertiesAction,
 }: TablePropertiesProps) => {
-	const borderStyleButtonRef = useRef<HTMLButtonElement>(null);
-	const borderStyleDropdownRef = useRef<HTMLDivElement>(null);
-
 	const borderColorButtonRef = useRef<HTMLButtonElement>(null);
 	const borderColorDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -89,24 +85,13 @@ export const TableProperties = ({
 	}, [tableProps]);
 
 	useEffect(() => {
-		const borderStyleButton = borderStyleButtonRef.current;
-		const borderStyleDropdown = borderStyleDropdownRef.current;
-
 		const borderColorButton = borderColorButtonRef.current;
 		const borderColorDropdown = borderColorDropdownRef.current;
 
-		if (
-			!(
-				borderStyleButton &&
-				borderStyleDropdown &&
-				borderColorButton &&
-				borderColorDropdown
-			)
-		) {
+		if (!(borderColorButton && borderColorDropdown)) {
 			return;
 		}
 
-		borderStyleButton.popoverTargetElement = borderStyleDropdown;
 		borderColorButton.popoverTargetElement = borderColorDropdown;
 	}, []);
 
@@ -135,26 +120,16 @@ export const TableProperties = ({
 		},
 	];
 
-	const tableBorderStyleAnchor = "--table-border-style";
-
-	const tableBorderProps: TableBorderPropsList = tableBorderStyles.map(
+	const tableBorderPropsList: ComboBoxList = tableBorderStyles.map(
 		(borderStyle) => {
 			const capitalizedBorderStyle =
 				borderStyle[0].toUpperCase() + borderStyle.slice(1);
 
 			const onClick = () => {
-				const tableBorderDropdown = borderStyleDropdownRef.current;
-
-				if (!tableBorderDropdown) {
-					throw new Error("TableBorderDropdown can't be null.");
-				}
-
-				tableBorderDropdown.hidePopover();
-
 				setSelectedBorderStyle(borderStyle);
 			};
 
-			return { borderStyle, capitalizedBorderStyle, onClick };
+			return { id: borderStyle, children: capitalizedBorderStyle, onClick };
 		},
 	);
 
@@ -302,54 +277,12 @@ export const TableProperties = ({
 						Border
 					</span>
 					<div className="flex h-8 items-center gap-1">
-						<span
+						<ComboBox
+							buttonChildren={capitalizedSelectedTableBorderStyle}
+							list={tableBorderPropsList}
 							className="h-full"
-							style={{
-								// @ts-ignore
-								anchorScope: tableBorderStyleAnchor,
-							}}
-						>
-							<button
-								ref={borderStyleButtonRef}
-								type="button"
-								className="default-btn inline-flex h-full min-w-20 items-center justify-between px-2"
-								style={{
-									// @ts-ignore
-									anchorName: tableBorderStyleAnchor,
-								}}
-							>
-								{capitalizedSelectedTableBorderStyle}
-								<ChevronIcon />
-							</button>
-							<div
-								ref={borderStyleDropdownRef}
-								className="absolute w-20 flex-col rounded-sm shadow-md [&:popover-open]:flex"
-								popover="auto"
-								style={{
-									// @ts-ignore
-									positionAnchor: tableBorderStyleAnchor,
-									top: "anchor(bottom)",
-									left: "anchor(left)",
-								}}
-							>
-								{tableBorderProps.map(
-									({ borderStyle, capitalizedBorderStyle, onClick }) => {
-										return (
-											<button
-												key={borderStyle}
-												type="button"
-												className="px-2 py-1 text-sm transition-colors hover:bg-slate-100"
-												onClick={onClick}
-											>
-												<span className="inline-block w-full text-start">
-													{capitalizedBorderStyle}
-												</span>
-											</button>
-										);
-									},
-								)}
-							</div>
-						</span>
+							buttonStyles={{ minWidth: "80px" }}
+						/>
 						<span
 							className="inline-flex h-full"
 							style={{

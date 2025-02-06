@@ -3,16 +3,14 @@ import {
 	type FocusEvent,
 	useCallback,
 	useEffect,
-	useRef,
 	useState,
 } from "react";
 
 import { Color, type HSLFormat } from "@utilities";
 
-import { CheckIcon, ChevronIcon } from "../SVGs";
+import { ComboBox, type ComboBoxList } from "../ComboBox";
 
 import type {
-	ChangeColorFormatProps,
 	ColorFormat,
 	InputAlphaFormat,
 	InputColorFormatProps,
@@ -57,20 +55,6 @@ export const InputColorFormat = ({
 	const [inputAlpha, setInputAlpha] = useState<InputAlphaFormat>(
 		`${Math.round(hsl.a * 100)}`,
 	);
-
-	const colorFormatButtonRef = useRef<HTMLButtonElement>(null);
-	const colorFormatDropdownRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		const colorFormatButton = colorFormatButtonRef.current;
-		const colorFormatDropdown = colorFormatDropdownRef.current;
-
-		if (!(colorFormatButton && colorFormatDropdown)) {
-			return;
-		}
-
-		colorFormatButton.popoverTargetElement = colorFormatDropdown;
-	}, []);
 
 	const syncInputFormats = useCallback(
 		({ hsl, skip }: SyncInputFormatsProps) => {
@@ -128,21 +112,13 @@ export const InputColorFormat = ({
 
 	const colorFormats: ColorFormat[] = ["Hex", "RGB", "HSL"];
 
-	const formatAnchor = "--format-anchor";
+	const colorFormatList: ComboBoxList = colorFormats.map((name) => {
+		const onClick = () => {
+			setColorFormat(name);
+		};
 
-	const checkAnchor = "--check-anchor";
-
-	const changeColorFormat = (colorFormat: ChangeColorFormatProps) => {
-		setColorFormat(colorFormat);
-
-		const colorFormatDropdown = colorFormatDropdownRef.current;
-
-		if (!colorFormatDropdown) {
-			throw new Error("ColorFormatDropdown can't be null.");
-		}
-
-		colorFormatDropdown.hidePopover();
-	};
+		return { id: name, children: name, onClick };
+	});
 
 	const onHexChange = (event: ChangeEvent) => {
 		const { currentTarget } = event;
@@ -394,65 +370,12 @@ export const InputColorFormat = ({
 
 	return (
 		<div className="flex justify-between py-2">
-			<span
-				style={{
-					// @ts-ignore
-					anchorScope: formatAnchor,
-				}}
-			>
-				<button
-					ref={colorFormatButtonRef}
-					type="button"
-					className="default-btn inline-flex w-16 items-center gap-2 px-2 py-1"
-					style={{
-						// @ts-ignore
-						anchorName: formatAnchor,
-					}}
-				>
-					{colorFormat} <ChevronIcon />
-				</button>
-				<div
-					ref={colorFormatDropdownRef}
-					className="absolute z-20 mt-1 w-20 flex-col rounded-md border border-slate-200 bg-white py-1 font-semibold text-slate-700 text-sm shadow-md [&:popover-open]:flex"
-					popover="auto"
-					style={{
-						// @ts-ignore
-						positionAnchor: formatAnchor,
-						anchorScope: checkAnchor,
-						top: "anchor(bottom)",
-						left: "anchor(left)",
-					}}
-				>
-					{colorFormats.map((name) => (
-						<button
-							key={name}
-							type="button"
-							className="py-1 text-center transition-colors hover:bg-slate-100"
-							onClick={() => changeColorFormat(name)}
-						>
-							<span
-								style={{
-									// @ts-ignore
-									anchorName: colorFormat === name ? checkAnchor : "",
-								}}
-							>
-								{name}
-							</span>
-						</button>
-					))}
-					<span
-						className="absolute"
-						style={{
-							// @ts-ignore
-							positionAnchor: checkAnchor,
-							right: "calc(anchor(left) + 6px)",
-							alignSelf: "anchor-center",
-						}}
-					>
-						<CheckIcon size={0.7} />
-					</span>
-				</div>
-			</span>
+			<ComboBox
+				buttonChildren={colorFormat}
+				list={colorFormatList}
+				className=""
+				buttonStyles={{ width: "64px", padding: "4px 8px" }}
+			/>
 			<span className="inline-flex overflow-clip rounded-md border border-slate-200 bg-white font-semibold text-slate-700 text-sm">
 				<span className="inline-flex h-full w-[120px] items-center ">
 					<span

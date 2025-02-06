@@ -2,7 +2,6 @@ import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import type {
 	OnTablePropertiesActionFn,
-	TableBorderStyle,
 	TableLayoutViewOptionsValue,
 	TableProps,
 } from "@externalStores";
@@ -20,14 +19,6 @@ interface AlignmentButton {
 }
 
 export type AlignmentButtons = AlignmentButton[];
-
-interface TableBorderProps {
-	borderStyle: TableBorderStyle;
-	capitalizedBorderStyle: string;
-	onClick: () => void;
-}
-
-export type TableBorderPropsList = TableBorderProps[];
 
 export interface TablePropertiesProps {
 	layoutView: TableLayoutViewOptionsValue;

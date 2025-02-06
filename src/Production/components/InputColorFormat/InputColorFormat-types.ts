@@ -27,8 +27,6 @@ export interface ManageColorUpdateProps {
 	hsl: HSLFormat;
 }
 
-export type ChangeColorFormatProps = ColorFormat;
-
 export interface OnColorFormatChangeFnProps {
 	hsl: HSLFormat;
 }
