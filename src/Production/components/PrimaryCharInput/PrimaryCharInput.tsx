@@ -63,6 +63,16 @@ export const PrimaryCharInput = ({
 		inputProps.onChange?.({ value });
 	};
 
+	const onClick = (event: React.MouseEvent) => {
+		inputProps.onClick?.({ event });
+	};
+
+	const onFocus = (event: React.FocusEvent) => {
+		setIsFocus(true);
+
+		inputProps.onFocus?.({ event });
+	};
+
 	const isTitleOnInput = isFocus || inputValue || inputProps.placeholder;
 
 	const titleTop = (() => {
@@ -101,12 +111,13 @@ export const PrimaryCharInput = ({
 			<input
 				type={inputProps.type}
 				value={inputValue}
-				onChange={onInputChange}
 				placeholder={inputProps.placeholder}
 				readOnly={inputProps.readOnly}
 				className="primary-char-input w-full bg-inherit p-2 text-sm"
 				style={{ ...inputProps.style }}
-				onFocus={() => setIsFocus(true)}
+				onChange={onInputChange}
+				onClick={onClick}
+				onFocus={onFocus}
 				onBlur={() => {
 					setIsFocus(false);
 				}}
