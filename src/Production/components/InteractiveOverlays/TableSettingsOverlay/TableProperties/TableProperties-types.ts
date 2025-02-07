@@ -5,13 +5,10 @@ import type {
 	TableLayoutViewOptionsValue,
 	TableProps,
 } from "@externalStores";
-import type { HSLFormat } from "@utilities";
-
-export type GetValidHSLFromHexProps = string;
-
-export interface GetValidHSLFromHexReturn extends HSLFormat {}
 
 export type Alignment = "left" | "center" | "right";
+
+export type SelectedBorderColor = string | null;
 
 interface AlignmentButton {
 	alignment: Alignment;
@@ -20,9 +17,14 @@ interface AlignmentButton {
 
 export type AlignmentButtons = AlignmentButton[];
 
+interface SetTablePropsProps extends Partial<TableProps> {}
+
+export type SetTablePropsFn = (props: SetTablePropsProps) => void;
+
 export interface TablePropertiesProps {
 	layoutView: TableLayoutViewOptionsValue;
 	setLayoutView: Dispatch<SetStateAction<TableLayoutViewOptionsValue>>;
 	tableProps: TableProps;
+	setTableProps: SetTablePropsFn;
 	onTablePropertiesAction: OnTablePropertiesActionFn;
 }

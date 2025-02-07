@@ -1,7 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-
 import {
-	type TableBorderStyle,
 	type TableBorderWidth,
 	type TableHeight,
 	type TableWidth,
@@ -15,7 +12,8 @@ import {
 	getPixelFromInput,
 } from "@utilities";
 
-import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
+import { ColorInput } from "../../../ColorInput";
+import type { OnColorSelected } from "../../../ColorPanel";
 import { ComboBox, type ComboBoxList } from "../../../ComboBox";
 import { PrimaryButton } from "../../../PrimaryButton";
 import {
@@ -29,80 +27,23 @@ import {
 } from "../../../SVGs";
 
 import type {
-	Alignment,
 	AlignmentButtons,
-	GetValidHSLFromHexProps,
-	GetValidHSLFromHexReturn,
 	TablePropertiesProps,
 } from "./TableProperties-types";
-
-const getValidHSLFormatFromHex = (
-	hex: GetValidHSLFromHexProps,
-): GetValidHSLFromHexReturn => {
-	const hexColor = Color.hex({ hex });
-
-	if (hexColor.isValid()) {
-		return hexColor.hexToHsl();
-	}
-
-	return { h: 0, s: 0, l: 0, a: 1 };
-};
 
 export const TableProperties = ({
 	layoutView,
 	setLayoutView,
 	tableProps,
+	setTableProps,
 	onTablePropertiesAction,
 }: TablePropertiesProps) => {
-	const borderColorButtonRef = useRef<HTMLButtonElement>(null);
-	const borderColorDropdownRef = useRef<HTMLDivElement>(null);
-
-	const [tableWidth, setTableWidth] = useState<string>(tableProps.width);
-	const [tableHeight, setTableHeight] = useState<string>(tableProps.height);
-
-	const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(
-		tableProps.alignment,
-	);
-
-	const [selectedBorderStyle, setSelectedBorderStyle] =
-		useState<TableBorderStyle>(tableProps.borderStyle);
-
-	const [selectedBorderColor, setSelectedBorderColor] = useState(
-		tableProps.borderColor,
-	);
-
-	const [borderWidth, setBorderWidth] = useState<string>(
-		tableProps.borderWidth,
-	);
-
-	useEffect(() => {
-		setTableHeight(tableProps.width);
-		setTableHeight(tableProps.height);
-		setSelectedAlignment(tableProps.alignment);
-		setSelectedBorderStyle(tableProps.borderStyle);
-		setSelectedBorderColor(tableProps.borderColor);
-		setBorderWidth(tableProps.borderWidth);
-	}, [tableProps]);
-
-	useEffect(() => {
-		const borderColorButton = borderColorButtonRef.current;
-		const borderColorDropdown = borderColorDropdownRef.current;
-
-		if (!(borderColorButton && borderColorDropdown)) {
-			return;
-		}
-
-		borderColorButton.popoverTargetElement = borderColorDropdown;
-	}, []);
-
-	const selectedBorderColorHSL = getValidHSLFormatFromHex(selectedBorderColor);
-
 	const onTableWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
-		setTableWidth(value);
+		setTableProps({ width: value });
 	};
 
 	const onTableHeightChange: OnPrimaryCharInputChangeFn = ({ value }) => {
-		setTableHeight(value);
+		setTableProps({ height: value });
 	};
 
 	const alignmentButtons: AlignmentButtons = [
@@ -126,32 +67,26 @@ export const TableProperties = ({
 				borderStyle[0].toUpperCase() + borderStyle.slice(1);
 
 			const onClick = () => {
-				setSelectedBorderStyle(borderStyle);
+				setTableProps({ borderStyle });
 			};
 
 			return { id: borderStyle, children: capitalizedBorderStyle, onClick };
 		},
 	);
 
-	const capitalizedSelectedTableBorderStyle =
-		selectedBorderStyle[0].toUpperCase() + selectedBorderStyle.slice(1);
-
-	const tableBorderColorAnchor = "--table-border-color";
+	const tableBorderStyleComboBoxTitle =
+		tableProps.borderStyle[0].toUpperCase() + tableProps.borderStyle.slice(1);
 
 	const onBorderColorSelected: OnColorSelected = ({ hsl }) => {
-		const borderColorDropdown = borderColorDropdownRef.current;
-
-		if (!borderColorDropdown) {
-			throw new Error("BorderColorDropdown can't be null.");
-		}
-
-		borderColorDropdown.hidePopover();
-
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
+
+		if (hsl === null) {
+			setTableProps({ borderColor: "transparent" });
+		}
 
 		const { hex } = Color.hsl(definedHSL).hex();
 
-		setSelectedBorderColor(hex);
+		setTableProps({ borderColor: hex });
 	};
 
 	const onCancel = () => {
@@ -162,14 +97,16 @@ export const TableProperties = ({
 
 	const onApply = () => {
 		const widthProp = ((): TableWidth => {
-			const pixelValue = getPixelFromInput({ input: tableWidth });
+			const pixelValue = getPixelFromInput({ input: tableProps.width });
 
 			if (pixelValue !== null) {
 				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
 				return `${adjustedPixel}px`;
 			}
 
-			const percentageValue = getPercentageFromInput({ input: tableWidth });
+			const percentageValue = getPercentageFromInput({
+				input: tableProps.width,
+			});
 
 			if (percentageValue !== null) {
 				return `${percentageValue}%`;
@@ -180,7 +117,7 @@ export const TableProperties = ({
 		})();
 
 		const heightProp = ((): TableHeight => {
-			const pixelValue = getPixelFromInput({ input: tableWidth });
+			const pixelValue = getPixelFromInput({ input: tableProps.height });
 
 			if (pixelValue !== null) {
 				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
@@ -192,7 +129,11 @@ export const TableProperties = ({
 		})();
 
 		const borderWidthProp = ((): TableBorderWidth => {
-			const pixelValue = getPixelFromInput({ input: borderWidth });
+			if (!tableProps.borderWidth) {
+				return "0px";
+			}
+
+			const pixelValue = getPixelFromInput({ input: tableProps.borderWidth });
 
 			if (pixelValue !== null) {
 				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
@@ -200,16 +141,16 @@ export const TableProperties = ({
 			}
 
 			// If the input value is invalid
-			return "1px";
+			return "0px";
 		})();
 
 		onTablePropertiesAction({
 			type: "apply",
 			width: widthProp,
 			height: heightProp,
-			alignment: selectedAlignment,
-			borderStyle: selectedBorderStyle,
-			borderColor: selectedBorderColor,
+			alignment: tableProps.alignment,
+			borderStyle: tableProps.borderStyle,
+			borderColor: tableProps.borderColor,
 			borderWidth: borderWidthProp,
 		});
 
@@ -234,7 +175,7 @@ export const TableProperties = ({
 							<PrimaryCharInput
 								inputProps={{
 									type: "text",
-									value: tableWidth,
+									value: tableProps.width,
 									onChange: onTableWidthChange,
 									placeholder: "500px",
 									style: { height: "100%" },
@@ -246,7 +187,7 @@ export const TableProperties = ({
 							<PrimaryCharInput
 								inputProps={{
 									type: "text",
-									value: tableHeight,
+									value: tableProps.height,
 									onChange: onTableHeightChange,
 									placeholder: "500px",
 									style: { height: "100%" },
@@ -262,9 +203,9 @@ export const TableProperties = ({
 							{alignmentButtons.map(({ alignment, children }) => (
 								<PrimaryButton
 									key={alignment}
-									checked={alignment === selectedAlignment}
+									checked={alignment === tableProps.alignment}
 									className="flex-grow justify-center"
-									onClick={() => setSelectedAlignment(alignment)}
+									onClick={() => setTableProps({ alignment })}
 								>
 									{children}
 								</PrimaryButton>
@@ -278,66 +219,20 @@ export const TableProperties = ({
 					</span>
 					<div className="flex h-8 items-center gap-1">
 						<ComboBox
-							buttonChildren={capitalizedSelectedTableBorderStyle}
+							buttonChildren={tableBorderStyleComboBoxTitle}
 							list={tableBorderPropsList}
 							className="h-full"
 							buttonStyles={{ minWidth: "80px" }}
 						/>
-						<span
-							className="inline-flex h-full"
-							style={{
-								// @ts-ignore
-								anchorScope: tableBorderColorAnchor,
-							}}
-						>
-							<PrimaryCharInput
-								inputProps={{
-									type: "text",
-									value: selectedBorderColor,
-									readOnly: true,
-									style: { height: "100%" },
-								}}
-								title="Color"
-								className="h-full"
-							/>
-							<button
-								ref={borderColorButtonRef}
-								type="button"
-								className="inline-flex items-center rounded-sm border border-slate-300 p-1"
-								style={{
-									// @ts-ignore
-									anchorName: tableBorderColorAnchor,
-								}}
-							>
-								<span
-									className="inline-block size-5 rounded-sm"
-									style={{
-										backgroundColor: selectedBorderColor,
-									}}
-								/>
-							</button>
-							<div
-								ref={borderColorDropdownRef}
-								className="mt-1 rounded-lg border border-slate-200 shadow-md"
-								popover="auto"
-								style={{
-									// @ts-ignore
-									positionAnchor: tableBorderColorAnchor,
-									top: "anchor(bottom)",
-									justifySelf: "anchor-center",
-								}}
-							>
-								<ColorPanel
-									hsl={selectedBorderColorHSL}
-									activeColors={[]}
-									onColorSelected={onBorderColorSelected}
-								/>
-							</div>
-						</span>
+						<ColorInput
+							hex={tableProps.borderColor}
+							className="h-full"
+							onColorSelected={onBorderColorSelected}
+						/>
 						<PrimaryCharInput
 							inputProps={{
 								type: "text",
-								value: borderWidth,
+								value: tableProps.borderWidth,
 								style: { height: "100%" },
 							}}
 							title="Width"

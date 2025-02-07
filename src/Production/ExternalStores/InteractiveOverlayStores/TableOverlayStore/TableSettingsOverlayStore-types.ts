@@ -8,24 +8,26 @@ export type TableLayoutViewOptions = typeof tableLayoutViewOptions;
 export type TableLayoutViewOptionsValue =
 	TableLayoutViewOptions[keyof TableLayoutViewOptions];
 
+export type TableWidth = string;
+
+export type TableHeight = string;
+
 export type TableAlignment = "left" | "center" | "right";
 
 export type TableBorderStyles = typeof tableBorderStyles;
 
 export type TableBorderStyle = TableBorderStyles[number];
 
-export type TableWidth = `${number}px` | `${number}%`;
+export type TableBorderColor = string;
 
-export type TableHeight = `${number}px`;
-
-export type TableBorderWidth = `${number}px`;
+export type TableBorderWidth = string;
 
 export interface TableProps {
 	width: TableWidth;
 	height: TableHeight;
 	alignment: TableAlignment;
 	borderStyle: TableBorderStyle;
-	borderColor: string;
+	borderColor: TableBorderColor;
 	borderWidth: TableBorderWidth;
 }
 

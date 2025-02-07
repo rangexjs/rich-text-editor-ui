@@ -13,7 +13,7 @@ import {
 	TableRowPropertiesIcon,
 } from "../../SVGs";
 
-import { TableProperties } from "./TableProperties";
+import { type SetTablePropsFn, TableProperties } from "./TableProperties";
 
 import type {
 	TableButtonsList,
@@ -71,6 +71,12 @@ export const TableSettingsOverlay = ({
 		},
 	];
 
+	const setTableProps: SetTablePropsFn = (tableProps) => {
+		tableSettingsOverlayStore.updateState({
+			tableProps: { ...tableSettingsOverlayState.tableProps, ...tableProps },
+		});
+	};
+
 	return (
 		<div>
 			<div
@@ -90,6 +96,7 @@ export const TableSettingsOverlay = ({
 				layoutView={layoutView}
 				setLayoutView={setLayoutView}
 				tableProps={tableSettingsOverlayState.tableProps}
+				setTableProps={setTableProps}
 				onTablePropertiesAction={
 					tableSettingsOverlayState.onTablePropertiesAction
 				}
