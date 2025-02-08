@@ -1,6 +1,6 @@
 import {
 	PrimaryButton,
-	type ToolbarButtonOnClickFn,
+	type PrimaryButtonOnClickFn,
 } from "../../../PrimaryButton";
 import { HistoryBackIcon } from "../../../SVGs";
 
@@ -10,7 +10,7 @@ export const HistoryBackToolbarButton = ({
 	toolbarButtonsActionManager,
 	state,
 }: HistoryBackToolbarButtonProps) => {
-	const onClick: ToolbarButtonOnClickFn = () => {
+	const onClick: PrimaryButtonOnClickFn = () => {
 		toolbarButtonsActionManager.onHistoryNavigation?.({ type: "history-back" });
 	};
 

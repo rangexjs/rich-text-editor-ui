@@ -1,6 +1,6 @@
 import {
 	PrimaryButton,
-	type ToolbarButtonOnClickFn,
+	type PrimaryButtonOnClickFn,
 } from "../../../PrimaryButton";
 import { UnderlineIcon } from "../../../SVGs";
 
@@ -14,7 +14,7 @@ export const UnderlineToolbarButton = ({
 }: UnderlineToolbarButtonProps) => {
 	const { strikethrough, underline } = states;
 
-	const onClick: ToolbarButtonOnClickFn = () => {
+	const onClick: PrimaryButtonOnClickFn = () => {
 		const textDecoration: TextDecorationState = new Set();
 
 		strikethrough.isChecked && textDecoration.add("line-through");

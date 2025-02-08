@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronIcon } from "../SVGs";
 
-import type { ToolbarButtonProps } from "./PrimaryButton-types";
+import type { PrimaryButtonProps } from "./PrimaryButton-types";
 
 export const PrimaryButton = ({
 	children,
@@ -12,7 +12,7 @@ export const PrimaryButton = ({
 	popoverTargetElementRef,
 	className,
 	onClick,
-}: ToolbarButtonProps) => {
+}: PrimaryButtonProps) => {
 	const [isChecked, setIsChecked] = useState(checked);
 	const buttonRef = useRef<HTMLButtonElement>(null);
 

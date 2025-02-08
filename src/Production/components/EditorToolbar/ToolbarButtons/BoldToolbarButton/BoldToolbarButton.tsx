@@ -1,6 +1,6 @@
 import {
 	PrimaryButton,
-	type ToolbarButtonOnClickFn,
+	type PrimaryButtonOnClickFn,
 } from "../../../PrimaryButton";
 import { BoldIcon } from "../../../SVGs";
 
@@ -10,7 +10,7 @@ export const BoldToolbarButton = ({
 	toolbarButtonsActionManager,
 	state,
 }: BoldToolbarButtonProps) => {
-	const onClick: ToolbarButtonOnClickFn = ({ isChecked }) => {
+	const onClick: PrimaryButtonOnClickFn = ({ isChecked }) => {
 		const fontWeight = isChecked ? null : "bold";
 
 		toolbarButtonsActionManager.onFormatStyles?.({ fontWeight });

@@ -1,8 +1,8 @@
 import type { TableSettingsOverlayStore } from "@externalStores";
 
-import type { ToolbarButtonProps } from "../../PrimaryButton";
+import type { PrimaryButtonProps } from "../../PrimaryButton";
 
-interface TableIconButton extends ToolbarButtonProps {}
+interface TableIconButton extends PrimaryButtonProps {}
 
 export type TableButtonsList = TableIconButton[];
 

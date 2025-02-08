@@ -1,6 +1,6 @@
 import {
 	PrimaryButton,
-	type ToolbarButtonOnClickFn,
+	type PrimaryButtonOnClickFn,
 } from "../../../PrimaryButton";
 import { ItalicIcon } from "../../../SVGs";
 
@@ -10,7 +10,7 @@ export const ItalicToolbarButton = ({
 	toolbarButtonsActionManager,
 	state,
 }: ItalicToolbarButtonProps) => {
-	const onClick: ToolbarButtonOnClickFn = ({ isChecked }) => {
+	const onClick: PrimaryButtonOnClickFn = ({ isChecked }) => {
 		const fontStyle = isChecked ? null : "italic";
 
 		toolbarButtonsActionManager.onFormatStyles?.({ fontStyle });

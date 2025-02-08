@@ -13,9 +13,9 @@ interface OnClickFnProps {
 	setIsChecked: Dispatch<SetStateAction<boolean>>;
 }
 
-export type ToolbarButtonOnClickFn = (props: OnClickFnProps) => void;
+export type PrimaryButtonOnClickFn = (props: OnClickFnProps) => void;
 
-export interface ToolbarButtonProps {
+export interface PrimaryButtonProps {
 	children: ReactNode;
 	checked?: boolean;
 	disabled?: boolean;
@@ -23,5 +23,5 @@ export interface ToolbarButtonProps {
 	anchorName?: string;
 	popoverTargetElementRef?: RefObject<HTMLElement>;
 	className?: string;
-	onClick?: ToolbarButtonOnClickFn;
+	onClick?: PrimaryButtonOnClickFn;
 }
