@@ -1,4 +1,4 @@
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 import type {
 	OnTablePropertiesActionFn,
@@ -6,16 +6,7 @@ import type {
 	TableProps,
 } from "@externalStores";
 
-export type Alignment = "left" | "center" | "right";
-
 export type SelectedBorderColor = string | null;
-
-interface AlignmentButton {
-	alignment: Alignment;
-	children: ReactNode;
-}
-
-export type AlignmentButtons = AlignmentButton[];
 
 interface SetTablePropsProps extends Partial<TableProps> {}
 

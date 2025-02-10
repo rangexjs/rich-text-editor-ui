@@ -1,4 +1,5 @@
 import type {
+	cellBorderStyles,
 	tableBorderStyles,
 	tableLayoutViewOptions,
 } from "./TableSettingsOverlayStore";
@@ -39,8 +40,36 @@ export type OnTablePropertiesActionFn = (
 	props: OnTablePropertiesActionProps,
 ) => void;
 
+export type CellBorderStyles = typeof cellBorderStyles;
+
+export type CellBorderStyle = CellBorderStyles[number];
+
+export type CellBorderColor = string;
+
+export type CellBorderWidth = string;
+
+export type CellAlignment = "top" | "middle" | "bottom";
+
+export interface CellProps {
+	borderStyle: TableBorderStyle;
+	borderColor: TableBorderColor;
+	borderWidth: TableBorderWidth;
+	background: string;
+	alignment: CellAlignment;
+}
+
+export type OnCellPropertiesActionProps =
+	| ({ type: "apply" } & CellProps)
+	| { type: "cancel" };
+
+export type OnCellPropertiesActionFn = (
+	props: OnCellPropertiesActionProps,
+) => void;
+
 export interface TableSettingsOverlayState {
 	layoutView: TableLayoutViewOptionsValue;
 	tableProps: TableProps;
 	onTablePropertiesAction: OnTablePropertiesActionFn;
+	cellProps: CellProps;
+	onCellPropertiesAction: OnCellPropertiesActionFn;
 }

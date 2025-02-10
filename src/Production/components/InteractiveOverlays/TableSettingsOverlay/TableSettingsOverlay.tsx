@@ -13,6 +13,7 @@ import {
 	TableRowPropertiesIcon,
 } from "../../SVGs";
 
+import { CellProperties, type SetCellPropsFn } from "./CellProperties";
 import { type SetTablePropsFn, TableProperties } from "./TableProperties";
 
 import type {
@@ -77,6 +78,12 @@ export const TableSettingsOverlay = ({
 		});
 	};
 
+	const setCellProps: SetCellPropsFn = (cellProps) => {
+		tableSettingsOverlayStore.updateState({
+			cellProps: { ...tableSettingsOverlayState.cellProps, ...cellProps },
+		});
+	};
+
 	return (
 		<div>
 			<div
@@ -99,6 +106,15 @@ export const TableSettingsOverlay = ({
 				setTableProps={setTableProps}
 				onTablePropertiesAction={
 					tableSettingsOverlayState.onTablePropertiesAction
+				}
+			/>
+			<CellProperties
+				layoutView={layoutView}
+				setLayoutView={setLayoutView}
+				cellProps={tableSettingsOverlayState.cellProps}
+				setCellProps={setCellProps}
+				onCellPropertiesAction={
+					tableSettingsOverlayState.onCellPropertiesAction
 				}
 			/>
 		</div>

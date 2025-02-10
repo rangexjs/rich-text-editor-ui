@@ -15,21 +15,18 @@ import {
 import { ColorInput } from "../../../ColorInput";
 import type { OnColorSelected } from "../../../ColorPanel";
 import { ComboBox, type ComboBoxList } from "../../../ComboBox";
-import { PrimaryButton } from "../../../PrimaryButton";
 import {
 	type OnPrimaryCharInputChangeFn,
 	PrimaryCharInput,
 } from "../../../PrimaryCharInput";
+import { RadioButtons, type RadioButtonsList } from "../../../RadioButtons";
 import {
 	ContentAlignCenterIcon,
 	ContentAlignLeftIcon,
 	ContentAlignRightIcon,
 } from "../../../SVGs";
 
-import type {
-	AlignmentButtons,
-	TablePropertiesProps,
-} from "./TableProperties-types";
+import type { TablePropertiesProps } from "./TableProperties-types";
 
 export const TableProperties = ({
 	layoutView,
@@ -46,18 +43,21 @@ export const TableProperties = ({
 		setTableProps({ height: value });
 	};
 
-	const alignmentButtons: AlignmentButtons = [
+	const alignmentButtons: RadioButtonsList = [
 		{
-			alignment: "left",
+			checked: tableProps.alignment === "left",
 			children: <ContentAlignLeftIcon />,
+			onClick: () => setTableProps({ alignment: "left" }),
 		},
 		{
-			alignment: "center",
+			checked: tableProps.alignment === "center",
 			children: <ContentAlignCenterIcon />,
+			onClick: () => setTableProps({ alignment: "center" }),
 		},
 		{
-			alignment: "right",
+			checked: tableProps.alignment === "right",
 			children: <ContentAlignRightIcon />,
+			onClick: () => setTableProps({ alignment: "right" }),
 		},
 	];
 
@@ -199,18 +199,7 @@ export const TableProperties = ({
 					</div>
 					<div className="flex basis-5/12 flex-col gap-2">
 						<span className="font font-semibold text-sm">Alignment</span>
-						<div className="flex h-full rounded-md border">
-							{alignmentButtons.map(({ alignment, children }) => (
-								<PrimaryButton
-									key={alignment}
-									checked={alignment === tableProps.alignment}
-									className="flex-grow justify-center"
-									onClick={() => setTableProps({ alignment })}
-								>
-									{children}
-								</PrimaryButton>
-							))}
-						</div>
+						<RadioButtons buttons={alignmentButtons} />
 					</div>
 				</div>
 				<div>

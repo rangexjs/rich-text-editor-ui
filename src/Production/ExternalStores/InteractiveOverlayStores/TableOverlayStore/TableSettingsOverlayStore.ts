@@ -21,8 +21,21 @@ export const tableBorderStyles = [
 	"hidden",
 ] as const;
 
+export const cellBorderStyles = [
+	"solid",
+	"dotted",
+	"dashed",
+	"double",
+	"groove",
+	"ridge",
+	"inset",
+	"outset",
+	"none",
+	"hidden",
+] as const;
+
 const initialState: TableSettingsOverlayState = Object.seal({
-	layoutView: tableLayoutViewOptions.tableProperties,
+	layoutView: tableLayoutViewOptions.tableCellProperties,
 	tableProps: {
 		width: "0px",
 		height: "0px",
@@ -33,6 +46,15 @@ const initialState: TableSettingsOverlayState = Object.seal({
 	},
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
 	onTablePropertiesAction: () => {},
+	cellProps: {
+		borderStyle: "solid",
+		borderColor: "#000000ff",
+		borderWidth: "0px",
+		background: "#000000ff",
+		alignment: "top",
+	},
+	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+	onCellPropertiesAction: () => {},
 });
 
 export class TableSettingsOverlayStore extends ButtonsStore<TableSettingsOverlayState> {
