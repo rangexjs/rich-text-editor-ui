@@ -1,3 +1,6 @@
+export * from "./AlignBottomIcon";
+export * from "./AlignMiddleIcon";
+export * from "./AlignTopIcon";
 export * from "./AnchorIcon";
 export * from "./BackgroundColorIcon";
 export * from "./BlockQuoteIcon";
