@@ -1,11 +1,17 @@
-export const AlignMiddleIcon = () => {
+import type { AlignMiddleIconProps } from "./AlignMiddleIcon-types";
+
+export const AlignMiddleIcon = ({
+	size = 1,
+	className,
+}: AlignMiddleIconProps) => {
 	return (
 		<svg
-			width="15"
-			height="16"
+			width={size * 15}
+			height={size * 16}
 			viewBox="0 0 15 16"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			className={className}
 		>
 			<title>Align Middle</title>
 			<path

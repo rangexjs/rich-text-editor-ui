@@ -1,11 +1,17 @@
-export const AlignBottomIcon = () => {
+import type { AlignBottomIconsProps } from "./AlignBottomIcon-types";
+
+export const AlignBottomIcon = ({
+	size = 1,
+	className,
+}: AlignBottomIconsProps) => {
 	return (
 		<svg
-			width="21"
-			height="16"
+			width={size * 21}
+			height={size * 16}
 			viewBox="0 0 21 16"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			className={className}
 		>
 			<title>Align Bottom</title>
 			<path

@@ -33,6 +33,7 @@ export * from "./SymbolIcon";
 export * from "./TableCellPropertiesIcon";
 export * from "./TableColumnPropertiesIcon";
 export * from "./TableIcon";
+export * from "./TableMergeCellsIcon";
 export * from "./TablePropertiesIcon";
 export * from "./TableRemoveIcon";
 export * from "./TableRowPropertiesIcon";
