@@ -66,10 +66,63 @@ export type OnCellPropertiesActionFn = (
 	props: OnCellPropertiesActionProps,
 ) => void;
 
+interface CellButtonProps {
+	disabled: boolean;
+}
+
+export interface ColumnButtons {
+	insertColumnLeft: CellButtonProps;
+	insertColumnRight: CellButtonProps;
+	deleteColumn: CellButtonProps;
+}
+
+export interface RowButtons {
+	insertRowAbove: CellButtonProps;
+	insertRowBelow: CellButtonProps;
+	deleteRow: CellButtonProps;
+}
+
+export interface CellSpanModifier {
+	mergeCellUp: CellButtonProps;
+	mergeCellRight: CellButtonProps;
+	mergeCellDown: CellButtonProps;
+	mergeCellLeft: CellButtonProps;
+	splitCellHorizontally: CellButtonProps;
+	splitCellVertically: CellButtonProps;
+}
+
+type CellColActionType = "insert-col-left" | "insert-col-right" | "delete-col";
+
+type CellRowActionType = "insert-row-above" | "insert-row-below" | "delete-row";
+
+type CellSpanModifierType =
+	| "merge-cell-up"
+	| "merge-cell-down"
+	| "merge-cell-left"
+	| "merge-cell-right"
+	| "split-cell-horizontally"
+	| "split-cell-vertically";
+
+export type TableCellActionType =
+	| CellColActionType
+	| CellRowActionType
+	| CellSpanModifierType;
+
+interface OnTableCellActionProps {
+	type: TableCellActionType;
+}
+
+export type OnTableCellActionFn = (props: OnTableCellActionProps) => void;
+
 export interface TableSettingsOverlayState {
 	layoutView: TableLayoutViewOptionsValue;
 	tableProps: TableProps;
 	onTablePropertiesAction: OnTablePropertiesActionFn;
 	cellProps: CellProps;
 	onCellPropertiesAction: OnCellPropertiesActionFn;
+	columnButtons: ColumnButtons;
+	rowButtons: RowButtons;
+	cellSpanModifier: CellSpanModifier;
+	onTableCellAction: OnTableCellActionFn;
+	onTableRemove: () => void;
 }

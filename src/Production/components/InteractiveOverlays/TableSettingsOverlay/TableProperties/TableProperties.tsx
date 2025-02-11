@@ -30,7 +30,7 @@ import type { TablePropertiesProps } from "./TableProperties-types";
 
 export const TableProperties = ({
 	layoutView,
-	setLayoutView,
+	updateLayoutView,
 	tableProps,
 	setTableProps,
 	onTablePropertiesAction,
@@ -92,7 +92,7 @@ export const TableProperties = ({
 	const onCancel = () => {
 		onTablePropertiesAction({ type: "cancel" });
 
-		setLayoutView(tableLayoutViewOptions.tableIcons);
+		updateLayoutView();
 	};
 
 	const onApply = () => {
@@ -154,7 +154,7 @@ export const TableProperties = ({
 			borderWidth: borderWidthProp,
 		});
 
-		setLayoutView(tableLayoutViewOptions.tableIcons);
+		updateLayoutView();
 	};
 
 	return (

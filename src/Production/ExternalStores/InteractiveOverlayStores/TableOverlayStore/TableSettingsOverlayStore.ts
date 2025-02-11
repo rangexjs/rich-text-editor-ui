@@ -35,7 +35,7 @@ export const cellBorderStyles = [
 ] as const;
 
 const initialState: TableSettingsOverlayState = Object.seal({
-	layoutView: tableLayoutViewOptions.tableCellProperties,
+	layoutView: tableLayoutViewOptions.tableIcons,
 	tableProps: {
 		width: "0px",
 		height: "0px",
@@ -55,6 +55,28 @@ const initialState: TableSettingsOverlayState = Object.seal({
 	},
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
 	onCellPropertiesAction: () => {},
+	columnButtons: {
+		insertColumnLeft: { disabled: false },
+		insertColumnRight: { disabled: false },
+		deleteColumn: { disabled: false },
+	},
+	rowButtons: {
+		insertRowAbove: { disabled: false },
+		insertRowBelow: { disabled: false },
+		deleteRow: { disabled: false },
+	},
+	cellSpanModifier: {
+		mergeCellUp: { disabled: false },
+		mergeCellDown: { disabled: false },
+		mergeCellRight: { disabled: false },
+		mergeCellLeft: { disabled: false },
+		splitCellHorizontally: { disabled: false },
+		splitCellVertically: { disabled: false },
+	},
+	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+	onTableCellAction: () => {},
+	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+	onTableRemove: () => {},
 });
 
 export class TableSettingsOverlayStore extends ButtonsStore<TableSettingsOverlayState> {

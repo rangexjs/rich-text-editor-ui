@@ -1,5 +1,3 @@
-import type { Dispatch, SetStateAction } from "react";
-
 import type {
 	CellProps,
 	OnCellPropertiesActionFn,
@@ -12,7 +10,7 @@ export type SetCellPropsFn = (props: SetCellPropsProps) => void;
 
 export interface CellPropertiesProps {
 	layoutView: TableLayoutViewOptionsValue;
-	setLayoutView: Dispatch<SetStateAction<TableLayoutViewOptionsValue>>;
+	updateLayoutView: () => void;
 	cellProps: CellProps;
 	setCellProps: SetCellPropsFn;
 	onCellPropertiesAction: OnCellPropertiesActionFn;

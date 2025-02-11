@@ -1,22 +1,27 @@
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
 import {
 	type TableLayoutViewOptionsValue,
 	tableLayoutViewOptions,
 } from "@externalStores";
-import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { PrimaryButton } from "../../PrimaryButton";
 import {
 	TableCellPropertiesIcon,
 	TableColumnPropertiesIcon,
+	TableMergeCellsIcon,
 	TablePropertiesIcon,
 	TableRemoveIcon,
 	TableRowPropertiesIcon,
 } from "../../SVGs";
 
 import { CellProperties, type SetCellPropsFn } from "./CellProperties";
+import { type TableButtonsGroup, TableCellDropdown } from "./TableCellDropdown";
 import { type SetTablePropsFn, TableProperties } from "./TableProperties";
 
 import type {
+	DropdownIconState,
+	OnTableActionButtonClickProps,
 	TableButtonsList,
 	TableSettingsOverlayProps,
 } from "./TableSettingsOverlay-types";
@@ -29,46 +34,272 @@ export const TableSettingsOverlay = ({
 		tableSettingsOverlayStore.getSnapshot.bind(tableSettingsOverlayStore),
 	);
 
-	const [layoutView, setLayoutView] = useState<TableLayoutViewOptionsValue>(
-		tableSettingsOverlayState.layoutView,
-	);
+	const columnDropdownRef = useRef<HTMLDivElement>(null);
+	const rowDropdownRef = useRef<HTMLDivElement>(null);
+	const cellSpanModifierDropdownRef = useRef<HTMLDivElement>(null);
+
+	const [dropdownIconState, setDropdownIconState] =
+		useState<DropdownIconState>(null);
 
 	useEffect(() => {
-		setLayoutView(tableSettingsOverlayState.layoutView);
-	}, [tableSettingsOverlayState]);
+		const columnDropdown = columnDropdownRef.current;
+		const rowDropdown = rowDropdownRef.current;
+		const cellSpanModifierDropdown = cellSpanModifierDropdownRef.current;
 
-	const onTablePropertiesClick = () => {
-		setLayoutView(tableLayoutViewOptions.tableProperties);
-	};
+		if (!(columnDropdown && rowDropdown && cellSpanModifierDropdown)) {
+			return;
+		}
 
-	const onTableCellPropertiesClick = () => {
-		setLayoutView(tableLayoutViewOptions.tableCellProperties);
+		const toggleIconState = (event: ToggleEvent) => {
+			const { currentTarget, newState } = event;
+
+			if (newState === "closed") {
+				setDropdownIconState(null);
+				return;
+			}
+
+			if (currentTarget === columnDropdown) {
+				setDropdownIconState("col");
+			}
+
+			if (currentTarget === rowDropdown) {
+				setDropdownIconState("row");
+			}
+
+			if (currentTarget === cellSpanModifierDropdown) {
+				setDropdownIconState("cell-modifier");
+			}
+		};
+
+		const abortCtrl = new AbortController();
+
+		const dropdowns = [columnDropdown, rowDropdown, cellSpanModifierDropdown];
+
+		for (const dropdown of dropdowns) {
+			// @ts-ignore toggle event has a ToggleEvent interface, ts implemented wrongly
+			dropdown.addEventListener("toggle", toggleIconState, {
+				signal: abortCtrl.signal,
+			});
+		}
+
+		return () => {
+			abortCtrl.abort();
+		};
+	}, []);
+
+	const updateLayoutView = (layoutView: TableLayoutViewOptionsValue) => {
+		tableSettingsOverlayStore.updateState({ layoutView });
 	};
 
 	const iconSize = 1.2;
 
+	const {
+		layoutView,
+		columnButtons,
+		rowButtons,
+		cellSpanModifier,
+		onTableCellAction,
+		onTableRemove,
+	} = tableSettingsOverlayState;
+
+	const onTableActionButtonClick = ({
+		dropdownRef,
+		type,
+	}: OnTableActionButtonClickProps) => {
+		const dropdown = dropdownRef.current;
+
+		if (!dropdown) {
+			throw new Error("Dropdown can't be null.");
+		}
+
+		dropdown.hidePopover();
+
+		onTableCellAction({ type });
+	};
+
+	const tableColumnAnchor = "--table-column-anchor";
+
+	const columnButtonsGroup: TableButtonsGroup = [
+		[
+			{
+				name: "Insert column left",
+				disabled: columnButtons.insertColumnLeft.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: columnDropdownRef,
+						type: "insert-col-left",
+					}),
+			},
+			{
+				name: "Insert column right",
+				disabled: columnButtons.insertColumnRight.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: columnDropdownRef,
+						type: "insert-col-right",
+					}),
+			},
+			{
+				name: "Delete column",
+				disabled: columnButtons.deleteColumn.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: columnDropdownRef,
+						type: "delete-col",
+					}),
+			},
+		],
+	];
+
+	const tableRowAnchor = "--table-row-anchor";
+
+	const rowButtonsGroup: TableButtonsGroup = [
+		[
+			{
+				name: "Insert row above",
+				disabled: rowButtons.insertRowAbove.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: rowDropdownRef,
+						type: "insert-row-above",
+					}),
+			},
+			{
+				name: "Insert row below",
+				disabled: rowButtons.insertRowBelow.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: rowDropdownRef,
+						type: "insert-row-below",
+					}),
+			},
+			{
+				name: "Delete row",
+				disabled: rowButtons.deleteRow.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: rowDropdownRef,
+						type: "delete-row",
+					}),
+			},
+		],
+	];
+
+	const tableCellSpanModifierAnchor = "--table-cell-span-modifier-anchor";
+
+	const cellSpanModifierButtonsGroup: TableButtonsGroup = [
+		[
+			{
+				name: "Merge cell up",
+				disabled: cellSpanModifier.mergeCellUp.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "merge-cell-up",
+					}),
+			},
+			{
+				name: "Merge cell down",
+				disabled: cellSpanModifier.mergeCellDown.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "merge-cell-down",
+					}),
+			},
+			{
+				name: "Merge cell left",
+				disabled: cellSpanModifier.mergeCellLeft.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "merge-cell-left",
+					}),
+			},
+			{
+				name: "Merge cell right",
+				disabled: cellSpanModifier.mergeCellRight.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "merge-cell-right",
+					}),
+			},
+		],
+		[
+			{
+				name: "Split cell horizontally",
+				disabled: cellSpanModifier.splitCellHorizontally.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "split-cell-horizontally",
+					}),
+			},
+			{
+				name: "Split cell vertically",
+				disabled: cellSpanModifier.splitCellVertically.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "split-cell-vertically",
+					}),
+			},
+		],
+	];
+
 	const tableButtonsList: TableButtonsList = [
 		{
 			children: <TablePropertiesIcon size={iconSize} />,
-			onClick: onTablePropertiesClick,
+			onClick: () => updateLayoutView(tableLayoutViewOptions.tableProperties),
 		},
 		{
 			children: <TableCellPropertiesIcon size={iconSize} />,
-			onClick: onTableCellPropertiesClick,
+			onClick: () =>
+				updateLayoutView(tableLayoutViewOptions.tableCellProperties),
 		},
 		{
+			checked: dropdownIconState === "col",
 			children: <TableColumnPropertiesIcon size={iconSize} />,
 			isChevron: true,
-			// onClick: () => {},
+			dropdownRef: columnDropdownRef,
+			popover: (
+				<TableCellDropdown
+					anchorName={tableColumnAnchor}
+					popoverTargetElementRef={columnDropdownRef}
+					buttonsGroup={columnButtonsGroup}
+				/>
+			),
 		},
 		{
+			checked: dropdownIconState === "row",
 			children: <TableRowPropertiesIcon size={iconSize} />,
 			isChevron: true,
-			// onClick: () => {},
+			dropdownRef: rowDropdownRef,
+			popover: (
+				<TableCellDropdown
+					anchorName={tableRowAnchor}
+					popoverTargetElementRef={rowDropdownRef}
+					buttonsGroup={rowButtonsGroup}
+				/>
+			),
+		},
+		{
+			checked: dropdownIconState === "cell-modifier",
+			children: <TableMergeCellsIcon size={iconSize} />,
+			isChevron: true,
+			dropdownRef: cellSpanModifierDropdownRef,
+			popover: (
+				<TableCellDropdown
+					anchorName={tableCellSpanModifierAnchor}
+					popoverTargetElementRef={cellSpanModifierDropdownRef}
+					buttonsGroup={cellSpanModifierButtonsGroup}
+				/>
+			),
 		},
 		{
 			children: <TableRemoveIcon size={iconSize} />,
-			// onClick: () => {},
+			onClick: onTableRemove,
 		},
 	];
 
@@ -93,15 +324,31 @@ export const TableSettingsOverlay = ({
 						layoutView === tableLayoutViewOptions.tableIcons ? "" : "none",
 				}}
 			>
-				{tableButtonsList.map(({ children, isChevron, onClick }, index) => (
-					<PrimaryButton key={index} isChevron={isChevron} onClick={onClick}>
-						{children}
-					</PrimaryButton>
-				))}
+				{tableButtonsList.map(
+					(
+						{ checked, children, isChevron, dropdownRef, popover, onClick },
+						index,
+					) => (
+						<span key={index}>
+							<PrimaryButton
+								checked={checked}
+								isChevron={isChevron}
+								popoverTargetElementRef={dropdownRef}
+								className="text-slate-700"
+								onClick={onClick}
+							>
+								{children}
+							</PrimaryButton>
+							{popover}
+						</span>
+					),
+				)}
 			</div>
 			<TableProperties
 				layoutView={layoutView}
-				setLayoutView={setLayoutView}
+				updateLayoutView={() =>
+					updateLayoutView(tableLayoutViewOptions.tableIcons)
+				}
 				tableProps={tableSettingsOverlayState.tableProps}
 				setTableProps={setTableProps}
 				onTablePropertiesAction={
@@ -110,7 +357,9 @@ export const TableSettingsOverlay = ({
 			/>
 			<CellProperties
 				layoutView={layoutView}
-				setLayoutView={setLayoutView}
+				updateLayoutView={() =>
+					updateLayoutView(tableLayoutViewOptions.tableIcons)
+				}
 				cellProps={tableSettingsOverlayState.cellProps}
 				setCellProps={setCellProps}
 				onCellPropertiesAction={

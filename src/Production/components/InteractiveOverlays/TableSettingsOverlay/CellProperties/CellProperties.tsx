@@ -16,7 +16,7 @@ import type { CellPropertiesProps } from "./CellProperties-types";
 
 export const CellProperties = ({
 	layoutView,
-	setLayoutView,
+	updateLayoutView,
 	cellProps,
 	setCellProps,
 	onCellPropertiesAction,
@@ -24,17 +24,17 @@ export const CellProperties = ({
 	const alignmentButtons: RadioButtonsList = [
 		{
 			checked: cellProps.alignment === "top",
-			children: <AlignTopIcon />,
+			children: <AlignTopIcon className="w-6" />,
 			onClick: () => setCellProps({ alignment: "top" }),
 		},
 		{
 			checked: cellProps.alignment === "middle",
-			children: <AlignMiddleIcon />,
+			children: <AlignMiddleIcon className="w-6" />,
 			onClick: () => setCellProps({ alignment: "middle" }),
 		},
 		{
 			checked: cellProps.alignment === "bottom",
-			children: <AlignBottomIcon />,
+			children: <AlignBottomIcon className="w-6" />,
 			onClick: () => setCellProps({ alignment: "bottom" }),
 		},
 	];
@@ -82,7 +82,7 @@ export const CellProperties = ({
 	const onCancel = () => {
 		onCellPropertiesAction({ type: "cancel" });
 
-		setLayoutView(tableLayoutViewOptions.tableIcons);
+		updateLayoutView();
 	};
 
 	const onApply = () => {
@@ -111,7 +111,7 @@ export const CellProperties = ({
 			alignment: cellProps.alignment,
 		});
 
-		setLayoutView(tableLayoutViewOptions.tableIcons);
+		updateLayoutView();
 	};
 	return (
 		<div
@@ -159,6 +159,7 @@ export const CellProperties = ({
 						<div className="flex h-8 items-center gap-1">
 							<ColorInput
 								hex={cellProps.background}
+								className="h-full"
 								onColorSelected={onBackgroundSelected}
 							/>
 						</div>
