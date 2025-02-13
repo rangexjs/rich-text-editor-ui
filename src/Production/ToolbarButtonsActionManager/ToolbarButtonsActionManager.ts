@@ -1,11 +1,13 @@
 import type {
+	OnFormatLineTagNameFn,
 	OnFormatStylesChangeFn,
-	OnInsertionChangeFn,
-	OnNavigationChangeFn,
+	OnHistoryNavigationFn,
+	OnNodeInsertionFn,
 } from "./ToolbarButtonsActionManager-types";
 
 export class ToolbarButtonsActionManager {
-	onFormatStylesChange: OnFormatStylesChangeFn | null = null;
-	onInsertionChange: OnInsertionChangeFn | null = null;
-	onNavigationChange: OnNavigationChangeFn | null = null;
+	onFormatLineTagName: OnFormatLineTagNameFn | null = null;
+	onFormatStyles: OnFormatStylesChangeFn | null = null;
+	onHistoryNavigation: OnHistoryNavigationFn | null = null;
+	onNodeInsertion: OnNodeInsertionFn | null = null;
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Color, type HSLFormat } from "@utilities";
 
@@ -56,12 +56,19 @@ const ColorPalette = ({
 };
 
 export const ColorPanel = ({
+	hsl,
 	activeColors,
 	onColorSelected,
 }: ColorPanelProps) => {
-	const [hsl, setHSL] = useState<HSLFormat>({ h: 0, s: 0, l: 0, a: 1 });
+	const [scopedHSL, setScopedHSL] = useState<HSLFormat>(
+		hsl || { h: 0, s: 0, l: 0, a: 1 },
+	);
 
 	const [activeTabName, setActiveTabName] = useState<TabName>("Grid");
+
+	useEffect(() => {
+		hsl && setScopedHSL(hsl);
+	}, [hsl]);
 
 	const tabList: TabList = [
 		{ name: "Grid", anchorName: "--grid-anchor" },
@@ -114,16 +121,16 @@ export const ColorPanel = ({
 	};
 
 	const onSpectrumColorChange: OnSpectrumColorChangeFn = ({ hsl }) => {
-		setHSL(hsl);
+		setScopedHSL(hsl);
 	};
 
 	const onColorFormatChange: OnColorFormatChangeFn = ({ hsl }) => {
-		setHSL(hsl);
+		setScopedHSL(hsl);
 	};
 
 	return (
-		<div className="flex w-[264px] flex-col bg-slate-50 p-1">
-			<div className="mb-2 flex justify-around rounded-lg bg-slate-100 ">
+		<div className="flex w-[264px] flex-col bg-white p-1">
+			<div className="mb-2 flex justify-around rounded-lg bg-slate-50 ">
 				{tabList.map(({ name, anchorName }) => (
 					<button
 						key={name}
@@ -158,7 +165,7 @@ export const ColorPanel = ({
 			</div>
 			<button
 				type="button"
-				className="mb-2 inline-flex items-center gap-2 self-start rounded-md border border-slate-200 bg-slate-200 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
+				className="default-btn mb-2 inline-flex items-center gap-2 self-start px-3 py-1"
 				onClick={() => onColorSelected({ hsl: null })}
 			>
 				<RemoveColorIcon /> Remove color
@@ -173,16 +180,19 @@ export const ColorPanel = ({
 					/>
 					<div style={{ display: activeTabName === "Spectrum" ? "" : "none" }}>
 						<SpectrumColor
-							hsl={hsl}
+							hsl={scopedHSL}
 							panelWidth={240}
 							panelHeight={120}
 							onColorChange={onSpectrumColorChange}
 						/>
-						<InputColorFormat hsl={hsl} onColorChange={onColorFormatChange} />
+						<InputColorFormat
+							hsl={scopedHSL}
+							onColorChange={onColorFormatChange}
+						/>
 						<button
 							type="button"
-							className="mt-1 inline-flex items-center gap-1 self-start rounded-md border border-slate-200 bg-slate-200 px-3 py-1 font-semibold text-slate-600 text-sm transition-colors hover:border-slate-300 hover:bg-opacity-70"
-							onClick={() => onColorSelected({ hsl })}
+							className="default-btn mt-1 inline-flex items-center gap-1 self-start px-3 py-1"
+							onClick={() => onColorSelected({ hsl: scopedHSL })}
 						>
 							<CheckIcon size={0.8} /> Apply color
 						</button>

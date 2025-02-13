@@ -16,6 +16,12 @@ export interface HexFormat {
 	hex: string;
 }
 
+export interface IsValidHSLProps extends HSLFormat {}
+
+export interface IsValidRGBProps extends RGBFormat {}
+
+export interface IsValidHexProps extends HexFormat {}
+
 export interface HSLToColorProps extends HSLFormat {}
 
 export interface HSLToRGBProps extends HSLFormat {}

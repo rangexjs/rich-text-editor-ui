@@ -1,38 +1,91 @@
 import { Fragment } from "react";
 
 import { buttonsName } from "@constants";
-import type { EditorToolbarProps } from "./EditorToolbar-types";
+
 import {
+	AnchorToolbarButton,
 	BackgroundColorToolbarButton,
+	BlockQuoteToolbarButton,
 	BoldToolbarButton,
+	CodeBlockToolbarButton,
 	ColorToolbarButton,
+	FontFamilyToolbarButton,
+	FontSizeToolbarButton,
 	HistoryBackToolbarButton,
 	HistoryForwardToolbarButton,
+	ImageToolbarButton,
+	IndentationToolbarButton,
 	ItalicToolbarButton,
+	LetterSpacingToolbarButton,
+	LineHeightToolbarButton,
+	LineTagNameToolbarButton,
+	ListToolbarButton,
+	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
+	TableToolbarButton,
+	TextAlignToolbarButton,
+	TodoListToolbarButton,
 	UnderlineToolbarButton,
 } from "./ToolbarButtons";
+
+import type { EditorToolbarProps } from "./EditorToolbar-types";
 
 export const EditorToolbar = ({
 	toolbarRows,
 	toolbarButtonsActionManager,
-	formattableButtonsState,
-	insertionButtonsState: _,
-	navigationButtonsState,
+	formatLineTagNameButtonsState,
+	formatStylesButtonsState,
+	historyNavigationButtonsState,
+	nodeInsertionButtonsState,
 }: EditorToolbarProps) => {
-	const { backgroundColor, bold, color, italic, strikethrough, underline } =
-		formattableButtonsState;
+	const { tagName } = formatLineTagNameButtonsState;
 
-	const { historyBack, historyForward } = navigationButtonsState;
+	const {
+		backgroundColor,
+		bold,
+		color,
+		fontFamily,
+		fontSize,
+		indentation,
+		italic,
+		letterSpacing,
+		lineHeight,
+		strikethrough,
+		textAlign,
+		underline,
+	} = formatStylesButtonsState;
+
+	const { historyBack, historyForward } = historyNavigationButtonsState;
+
+	const { anchor, blockQuote, codeBlock, image, list, table, todoList } =
+		nodeInsertionButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
 			groups.map((name) => {
+				if (buttonsName.anchor === name) {
+					return (
+						<AnchorToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={anchor}
+						/>
+					);
+				}
+
 				if (buttonsName.backgroundColor === name) {
 					return (
 						<BackgroundColorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={backgroundColor}
+						/>
+					);
+				}
+
+				if (buttonsName.blockQuote === name) {
+					return (
+						<BlockQuoteToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={blockQuote}
 						/>
 					);
 				}
@@ -46,11 +99,38 @@ export const EditorToolbar = ({
 					);
 				}
 
+				if (buttonsName.codeBlock === name) {
+					return (
+						<CodeBlockToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={codeBlock}
+						/>
+					);
+				}
+
 				if (buttonsName.color === name) {
 					return (
 						<ColorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={color}
+						/>
+					);
+				}
+
+				if (buttonsName.fontFamily === name) {
+					return (
+						<FontFamilyToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={fontFamily}
+						/>
+					);
+				}
+
+				if (buttonsName.fontSize === name) {
+					return (
+						<FontSizeToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={fontSize}
 						/>
 					);
 				}
@@ -73,6 +153,24 @@ export const EditorToolbar = ({
 					);
 				}
 
+				if (buttonsName.image === name) {
+					return (
+						<ImageToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={image}
+						/>
+					);
+				}
+
+				if (buttonsName.indentation === name) {
+					return (
+						<IndentationToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={indentation}
+						/>
+					);
+				}
+
 				if (buttonsName.italic === name) {
 					return (
 						<ItalicToolbarButton
@@ -82,11 +180,83 @@ export const EditorToolbar = ({
 					);
 				}
 
+				if (buttonsName.letterSpacing === name) {
+					return (
+						<LetterSpacingToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={letterSpacing}
+						/>
+					);
+				}
+
+				if (buttonsName.lineHeight === name) {
+					return (
+						<LineHeightToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={lineHeight}
+						/>
+					);
+				}
+
+				if (buttonsName.lineTagName === name) {
+					return (
+						<LineTagNameToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={tagName}
+						/>
+					);
+				}
+
+				if (buttonsName.list === name) {
+					return (
+						<ListToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={list}
+						/>
+					);
+				}
+
+				if (buttonsName.removeFormat === name) {
+					return (
+						<RemoveFormatToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							formattableButtonsState={formatStylesButtonsState}
+						/>
+					);
+				}
+
 				if (buttonsName.strikethrough === name) {
 					return (
 						<StrikethroughToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							states={{ strikethrough, underline }}
+						/>
+					);
+				}
+
+				if (buttonsName.table === name) {
+					return (
+						<TableToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={table}
+						/>
+					);
+				}
+
+				if (buttonsName.textAlign === name) {
+					return (
+						<TextAlignToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={textAlign}
+						/>
+					);
+				}
+
+				if (buttonsName.todoList === name) {
+					return (
+						<TodoListToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={todoList}
 						/>
 					);
 				}
@@ -109,13 +279,13 @@ export const EditorToolbar = ({
 				<div key={rowIndex} className="flex flex-wrap gap-1.5">
 					{toolbarRow.map((groups, groupIndex, { length }) => (
 						<Fragment key={groupIndex}>
-							<div className="inline-flex flex-wrap items-center gap-1">
+							<div className="inline-flex flex-wrap items-center gap-0.5">
 								{groups.map((Button, buttonKey) => (
 									<span key={buttonKey}>{Button}</span>
 								))}
 							</div>
 							{groupIndex < length - 1 && (
-								<span className="inline-block w-px shrink-0 bg-gray-300" />
+								<span className="w-px shrink-0 bg-gray-300" />
 							)}
 						</Fragment>
 					))}

@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Color, type HSLFormat } from "@utilities";
 
 import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
+import { PrimaryButton } from "../../../PrimaryButton";
 import { ColorIcon } from "../../../SVGs";
-import { ToolbarButton } from "../../../ToolbarButton";
 
 import type { CreateColorPropsProps } from "./ColorToolbarButton-types";
 
@@ -28,7 +28,7 @@ export const ColorToolbarButton = ({
 
 		const color = hsl && Color.hsl(hsl).hex().hex;
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ color });
+		toolbarButtonsActionManager.onFormatStyles?.({ color });
 	};
 
 	useEffect(() => {
@@ -73,7 +73,7 @@ export const ColorToolbarButton = ({
 
 	return (
 		<>
-			<ToolbarButton
+			<PrimaryButton
 				checked={isChecked}
 				disabled={state.isDisabled}
 				isChevron={true}
@@ -81,7 +81,7 @@ export const ColorToolbarButton = ({
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
 				<ColorIcon />
-			</ToolbarButton>
+			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
 				className="mt-1 rounded-lg border border-slate-200 shadow-md"

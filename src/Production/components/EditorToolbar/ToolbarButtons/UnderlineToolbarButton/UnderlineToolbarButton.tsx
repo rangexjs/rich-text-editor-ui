@@ -1,7 +1,7 @@
 import {
-	ToolbarButton,
-	type ToolbarButtonOnClickFn,
-} from "../../.././ToolbarButton";
+	PrimaryButton,
+	type PrimaryButtonOnClickFn,
+} from "../../../PrimaryButton";
 import { UnderlineIcon } from "../../../SVGs";
 
 import type { TextDecorationState } from "../Utilities";
@@ -14,23 +14,23 @@ export const UnderlineToolbarButton = ({
 }: UnderlineToolbarButtonProps) => {
 	const { strikethrough, underline } = states;
 
-	const onClick: ToolbarButtonOnClickFn = () => {
+	const onClick: PrimaryButtonOnClickFn = () => {
 		const textDecoration: TextDecorationState = new Set();
 
 		strikethrough.isChecked && textDecoration.add("line-through");
 		underline.isChecked || textDecoration.add("underline");
 
-		toolbarButtonsActionManager.onFormatStylesChange?.({ textDecoration });
+		toolbarButtonsActionManager.onFormatStyles?.({ textDecoration });
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={underline.isChecked}
 			disabled={underline.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<UnderlineIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

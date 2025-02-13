@@ -1,8 +1,8 @@
-import { HistoryForwardIcon } from "../../../SVGs";
 import {
-	ToolbarButton,
-	type ToolbarButtonOnClickFn,
-} from "../../../ToolbarButton";
+	PrimaryButton,
+	type PrimaryButtonOnClickFn,
+} from "../../../PrimaryButton";
+import { HistoryForwardIcon } from "../../../SVGs";
 
 import type { HistoryForwardToolbarButtonProps } from "./HistoryForwardToolbarButton-types";
 
@@ -10,20 +10,20 @@ export const HistoryForwardToolbarButton = ({
 	toolbarButtonsActionManager,
 	state,
 }: HistoryForwardToolbarButtonProps) => {
-	const onClick: ToolbarButtonOnClickFn = () => {
-		toolbarButtonsActionManager.onNavigationChange?.({
+	const onClick: PrimaryButtonOnClickFn = () => {
+		toolbarButtonsActionManager.onHistoryNavigation?.({
 			type: "history-forward",
 		});
 	};
 
 	return (
-		<ToolbarButton
+		<PrimaryButton
 			checked={false}
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
 		>
 			<HistoryForwardIcon />
-		</ToolbarButton>
+		</PrimaryButton>
 	);
 };

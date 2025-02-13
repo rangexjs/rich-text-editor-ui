@@ -7,26 +7,36 @@ import type { AppProps } from "./App-types";
 export const App = ({
 	toolbarButtons,
 	toolbarButtonsActionManager,
-	formattableButtonsStore,
-	insertionButtonsStore,
-	navigationButtonsStore,
+	formatLineTagNameButtonsStore,
+	formatStylesButtonsStore,
+	historyNavigationButtonsStore,
+	nodeInsertionButtonsStore,
 	richTextArea,
 }: AppProps) => {
 	const richTextEditorRef = useRef<HTMLDivElement>(null);
 
-	const formattableButtonsState = useSyncExternalStore(
-		formattableButtonsStore.subscribe.bind(formattableButtonsStore),
-		formattableButtonsStore.getSnapshot.bind(formattableButtonsStore),
+	const formatLineTagNameButtonsState = useSyncExternalStore(
+		formatLineTagNameButtonsStore.subscribe.bind(formatLineTagNameButtonsStore),
+		formatLineTagNameButtonsStore.getSnapshot.bind(
+			formatLineTagNameButtonsStore,
+		),
 	);
 
-	const insertionButtonsState = useSyncExternalStore(
-		insertionButtonsStore.subscribe.bind(insertionButtonsStore),
-		insertionButtonsStore.getSnapshot.bind(insertionButtonsStore),
+	const formatStylesButtonsState = useSyncExternalStore(
+		formatStylesButtonsStore.subscribe.bind(formatStylesButtonsStore),
+		formatStylesButtonsStore.getSnapshot.bind(formatStylesButtonsStore),
 	);
 
-	const navigationButtonsState = useSyncExternalStore(
-		navigationButtonsStore.subscribe.bind(navigationButtonsStore),
-		navigationButtonsStore.getSnapshot.bind(navigationButtonsStore),
+	const historyNavigationButtonsState = useSyncExternalStore(
+		historyNavigationButtonsStore.subscribe.bind(historyNavigationButtonsStore),
+		historyNavigationButtonsStore.getSnapshot.bind(
+			historyNavigationButtonsStore,
+		),
+	);
+
+	const nodeInsertionButtonsState = useSyncExternalStore(
+		nodeInsertionButtonsStore.subscribe.bind(nodeInsertionButtonsStore),
+		nodeInsertionButtonsStore.getSnapshot.bind(nodeInsertionButtonsStore),
 	);
 
 	useEffect(() => {
@@ -45,9 +55,10 @@ export const App = ({
 			<EditorToolbar
 				toolbarRows={toolbarButtons}
 				toolbarButtonsActionManager={toolbarButtonsActionManager}
-				formattableButtonsState={formattableButtonsState}
-				insertionButtonsState={insertionButtonsState}
-				navigationButtonsState={navigationButtonsState}
+				formatLineTagNameButtonsState={formatLineTagNameButtonsState}
+				formatStylesButtonsState={formatStylesButtonsState}
+				historyNavigationButtonsState={historyNavigationButtonsState}
+				nodeInsertionButtonsState={nodeInsertionButtonsState}
 			/>
 		</div>
 	);

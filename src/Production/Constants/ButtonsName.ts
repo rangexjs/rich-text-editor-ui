@@ -20,9 +20,8 @@ export const buttonsName = {
 	strikethrough: "strikethrough",
 	symbol: "symbol",
 	table: "table",
-	textAlignCenter: "text-align-center",
-	textAlignJustify: "text-align-justify",
-	textAlignLeft: "text-align-left",
-	textAlignRight: "text-align-right",
+	todoList: "todo-list",
+	lineTagName: "line-tag-name",
+	textAlign: "text-align",
 	underline: "underline",
 } as const;

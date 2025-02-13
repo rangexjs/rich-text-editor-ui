@@ -1,7 +1,8 @@
 import type {
-	FormattableButtonsStore,
-	InsertionButtonsStore,
-	NavigationButtonsStore,
+	FormatLineTagNameButtonsStore,
+	FormatStylesButtonsStore,
+	HistoryNavigationButtonsStore,
+	NodeInsertionButtonsStore,
 } from "@externalStores";
 import type { ToolbarButtonsActionManager } from "src/Production/ToolbarButtonsActionManager";
 
@@ -12,8 +13,9 @@ export type ToolbarButtons = EditorToolbarRows;
 export interface AppProps {
 	toolbarButtons: ToolbarButtons;
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
-	formattableButtonsStore: FormattableButtonsStore;
-	insertionButtonsStore: InsertionButtonsStore;
-	navigationButtonsStore: NavigationButtonsStore;
+	formatLineTagNameButtonsStore: FormatLineTagNameButtonsStore;
+	formatStylesButtonsStore: FormatStylesButtonsStore;
+	historyNavigationButtonsStore: HistoryNavigationButtonsStore;
+	nodeInsertionButtonsStore: NodeInsertionButtonsStore;
 	richTextArea: HTMLElement;
 }
