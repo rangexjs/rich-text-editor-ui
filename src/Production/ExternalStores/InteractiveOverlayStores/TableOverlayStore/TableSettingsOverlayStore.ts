@@ -66,6 +66,7 @@ const initialState: TableSettingsOverlayState = Object.seal({
 		deleteRow: { disabled: false },
 	},
 	cellSpanModifier: {
+		mergeSelectedCells: { disabled: false },
 		mergeCellUp: { disabled: false },
 		mergeCellDown: { disabled: false },
 		mergeCellRight: { disabled: false },

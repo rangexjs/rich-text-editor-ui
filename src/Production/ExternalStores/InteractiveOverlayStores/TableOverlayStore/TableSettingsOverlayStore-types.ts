@@ -83,6 +83,7 @@ export interface RowButtons {
 }
 
 export interface CellSpanModifier {
+	mergeSelectedCells: CellButtonProps;
 	mergeCellUp: CellButtonProps;
 	mergeCellRight: CellButtonProps;
 	mergeCellDown: CellButtonProps;
@@ -96,6 +97,7 @@ type CellColActionType = "insert-col-left" | "insert-col-right" | "delete-col";
 type CellRowActionType = "insert-row-above" | "insert-row-below" | "delete-row";
 
 type CellSpanModifierType =
+	| "merge-selected-cells"
 	| "merge-cell-up"
 	| "merge-cell-down"
 	| "merge-cell-left"
