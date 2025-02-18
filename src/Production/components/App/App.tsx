@@ -45,7 +45,7 @@ export const App = ({
 		}
 
 		richTextEditorRef.current.append(richTextArea);
-	});
+	}, [richTextArea]);
 
 	return (
 		<div
