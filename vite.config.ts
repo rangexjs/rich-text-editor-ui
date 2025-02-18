@@ -1,18 +1,21 @@
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
 	server: { port: 3300 },
-	plugins: [react(), tsconfigPaths()],
+	plugins: [
+		react(),
+		tsconfigPaths(),
+		dts({ entryRoot: "src/Production", outDir: "dist" }),
+	],
 	build: {
-		rollupOptions: {
-			input: "src/Production/index.ts",
-			output: {
-				entryFileNames: "editor-toolbar.js",
-				format: "es",
-			},
-			preserveEntrySignatures: "exports-only",
+		outDir: "dist",
+		lib: {
+			entry: "src/Production",
+			fileName: "index",
+			formats: ["es"],
 		},
 	},
 });
