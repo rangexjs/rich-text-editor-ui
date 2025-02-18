@@ -50,24 +50,29 @@ export const LineTagNameToolbarButton = ({
 
 	const lineTagNames = state.values;
 
-	const firstItem = lineTagNames.values().next();
+	const buttonText = (() => {
+		const firstItem = lineTagNames.values().next();
 
-	if (firstItem.done) {
-		throw new Error("List of LineTagName can't be empty.");
-	}
+		if (firstItem.done) {
+			return "None";
+		}
 
-	const buttonTextDictionary = {
-		p: "Paragraph",
-		h1: "Heading 1",
-		h2: "Heading 2",
-		h3: "Heading 3",
-		h4: "Heading 4",
-		h5: "Heading 5",
-		h6: "Heading 6",
-	};
+		if (lineTagNames.size > 1) {
+			return "Mixed";
+		}
 
-	const buttonText =
-		lineTagNames.size > 1 ? "Mixed" : buttonTextDictionary[firstItem.value];
+		const buttonTextDictionary = {
+			p: "Paragraph",
+			h1: "Heading 1",
+			h2: "Heading 2",
+			h3: "Heading 3",
+			h4: "Heading 4",
+			h5: "Heading 5",
+			h6: "Heading 6",
+		};
+
+		return buttonTextDictionary[firstItem.value];
+	})();
 
 	const onClick = (tagName: LineTagNameValue) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
