@@ -4,8 +4,6 @@ import {
 } from "../../../PrimaryButton";
 import { StrikethroughIcon } from "../../../SVGs";
 
-import type { TextDecorationState } from "../Utilities";
-
 import type { StrikethroughToolbarButtonProps } from "./StrikethroughToolbarButton-types";
 
 export const StrikethroughToolbarButton = ({
@@ -15,10 +13,13 @@ export const StrikethroughToolbarButton = ({
 	const { strikethrough, underline } = states;
 
 	const onClick: PrimaryButtonOnClickFn = () => {
-		const textDecoration: TextDecorationState = new Set();
+		const textDecorationList: string[] = [];
 
-		strikethrough.isChecked || textDecoration.add("line-through");
-		underline.isChecked && textDecoration.add("underline");
+		strikethrough.isChecked || textDecorationList.push("line-through");
+		underline.isChecked && textDecorationList.push("underline");
+
+		const textDecoration =
+			textDecorationList.length === 0 ? null : textDecorationList.join(" ");
 
 		toolbarButtonsActionManager.onFormatStyles?.({ textDecoration });
 	};
