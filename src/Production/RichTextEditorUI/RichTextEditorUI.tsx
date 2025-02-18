@@ -20,7 +20,7 @@ import type {
 	OnNodeInsertionProps,
 	RichTextEditorUIConstructorProps,
 	UpdateFormatLineTagNameButtonsProps,
-	UpdateFormatStylesStylesButtonsProps,
+	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
 } from "./RichTextEditorUI-types";
@@ -97,7 +97,7 @@ export class RichTextEditorUI {
 		this.#formatLineTagNameButtonsStore.updateState(props);
 	}
 
-	updateFormatStylesButtons(props: UpdateFormatStylesStylesButtonsProps) {
+	updateFormatStylesButtons(props: UpdateFormatStylesButtonsProps) {
 		this.#formatStylesButtonsStore.updateState(props);
 	}
 

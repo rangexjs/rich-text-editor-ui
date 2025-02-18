@@ -25,7 +25,7 @@ export type OnHistoryNavigationProps = OnHistoryNavigationFn;
 
 export type OnNodeInsertionProps = OnNodeInsertionFn;
 
-export interface UpdateFormatStylesStylesButtonsProps
+export interface UpdateFormatStylesButtonsProps
 	extends Partial<FormatStylesButtonsState> {}
 
 export interface UpdateNodeInsertionButtonsProps
