@@ -1,5 +1,3 @@
-import type { FontFamilyValue, TextAlignType } from "@components";
-
 interface BackgroundColorState {
 	isDisabled: boolean;
 	values: Set<string>;
@@ -17,17 +15,17 @@ interface ColorState {
 
 interface FontFamilyState {
 	isDisabled: boolean;
-	values: Set<FontFamilyValue>;
+	values: Set<string>;
 }
 
 interface FontSizeState {
 	isDisabled: boolean;
-	values: Set<`${string}px`>;
+	values: Set<string>;
 }
 
 interface IndentationState {
 	isDisabled: boolean;
-	values: Set<`${string}px`>;
+	values: Set<string>;
 }
 
 interface ItalicState {
@@ -37,7 +35,7 @@ interface ItalicState {
 
 interface LetterSpacingState {
 	isDisabled: boolean;
-	values: Set<`${string}px`>;
+	values: Set<string>;
 }
 
 interface LineHeightState {
@@ -52,7 +50,7 @@ interface StrikethroughState {
 
 interface TextAlignState {
 	isDisabled: boolean;
-	values: Set<TextAlignType>;
+	values: Set<string>;
 }
 
 interface UnderlineState {

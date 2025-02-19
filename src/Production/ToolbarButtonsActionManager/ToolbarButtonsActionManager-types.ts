@@ -13,7 +13,7 @@ export interface FormatStylesActionState {
 	lineHeight?: `${number}` | `${number}.${number}` | null;
 	paddingInlineStart?: `${number}px` | null;
 	textAlign?: "center" | "justify" | "left" | "right" | null;
-	textDecoration?: Set<"line-through" | "underline">;
+	textDecoration?: string | null;
 }
 
 type ButtonsNameKey = keyof typeof buttonsName;

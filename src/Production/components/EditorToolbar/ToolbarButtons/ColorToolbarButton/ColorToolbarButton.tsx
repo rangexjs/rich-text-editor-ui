@@ -93,7 +93,10 @@ export const ColorToolbarButton = ({
 					justifySelf: "anchor-center",
 				}}
 			>
-				<ColorPanel activeColors={[]} onColorSelected={onColorSelected} />
+				<ColorPanel
+					activeColors={activeColors}
+					onColorSelected={onColorSelected}
+				/>
 			</div>
 		</>
 	);

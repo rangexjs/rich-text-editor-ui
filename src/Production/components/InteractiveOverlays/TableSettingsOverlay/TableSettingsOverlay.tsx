@@ -190,6 +190,15 @@ export const TableSettingsOverlay = ({
 	const cellSpanModifierButtonsGroup: TableButtonsGroup = [
 		[
 			{
+				name: "Merge selected cells",
+				disabled: cellSpanModifier.mergeSelectedCells.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "merge-selected-cells",
+					}),
+			},
+			{
 				name: "Merge cell up",
 				disabled: cellSpanModifier.mergeCellUp.disabled,
 				onClick: () =>

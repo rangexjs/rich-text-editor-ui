@@ -26,7 +26,7 @@ export const TableCellDropdown = ({
 							<button
 								key={name}
 								type="button"
-								className="rounded-sm p-2 text-left transition-colors hover:bg-slate-50"
+								className="rounded-sm p-2 text-left transition-colors hover:bg-slate-50 disabled:text-gray-400 disabled:hover:bg-transparent"
 								disabled={disabled}
 								onClick={onClick}
 							>
