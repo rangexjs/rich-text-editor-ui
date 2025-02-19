@@ -1,11 +1,16 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { Triangle } from "../Triangle";
+
 import type { PrimaryCharInputProps } from "./PrimaryCharInput-types";
 
 export const PrimaryCharInput = ({
+	inputRef,
 	inputProps,
 	title,
 	className,
+	isInvalid,
+	invalidMessage,
 }: PrimaryCharInputProps) => {
 	const [inputValue, setInputValue] = useState(inputProps.value ?? "");
 	const [titleHeight, setTitleHeight] = useState(Number.NaN);
@@ -83,6 +88,8 @@ export const PrimaryCharInput = ({
 		return `calc(anchor(50%) - ${titleHeight / 2}px)`;
 	})();
 
+	const isShowInvalid = isInvalid && invalidMessage && isFocus;
+
 	return (
 		<div
 			className={`bg-white ${className ?? ""}`}
@@ -109,6 +116,7 @@ export const PrimaryCharInput = ({
 				</span>
 			)}
 			<input
+				ref={inputRef}
 				type={inputProps.type}
 				value={inputValue}
 				placeholder={inputProps.placeholder}
@@ -122,6 +130,31 @@ export const PrimaryCharInput = ({
 					setIsFocus(false);
 				}}
 			/>
+			<Triangle
+				width={18}
+				height={10}
+				className="absolute bg-red-400"
+				style={{
+					// @ts-ignore
+					positionAnchor: primaryCharInputAnchor,
+					top: "anchor(bottom)",
+					justifySelf: "anchor-center",
+					display: isShowInvalid ? "" : "none",
+				}}
+			/>
+			<div
+				className="absolute z-50 mt-1.5 rounded-sm border border-red-400 bg-white p-1 text-xs shadow-sm "
+				style={{
+					// @ts-ignore
+					positionAnchor: primaryCharInputAnchor,
+					top: "anchor(bottom)",
+					justifySelf: "anchor-center",
+					display: isShowInvalid ? "" : "none",
+					maxWidth: "calc(anchor-size(width) * 2)",
+				}}
+			>
+				{invalidMessage}
+			</div>
 		</div>
 	);
 };
