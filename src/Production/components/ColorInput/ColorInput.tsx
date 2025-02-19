@@ -8,26 +8,36 @@ import {
 	PrimaryCharInput,
 } from "../PrimaryCharInput";
 
-import type { ColorInputProps } from "./ColorInput-types";
+import type {
+	ColorInputProps,
+	GetValidInputHexProps,
+	GetValidInputHexReturn,
+} from "./ColorInput-types";
 
-const getValidInputHex = (hex: string | null) => {
-	const defaultHex = "#000000ff";
+const getValidInputHex = (
+	color: GetValidInputHexProps,
+): GetValidInputHexReturn => {
+	const defaultHex = "#00000000";
 
-	if (hex === null) {
+	if (color === undefined) {
 		return defaultHex;
 	}
 
-	const hexColor = Color.hex({ hex });
+	try {
+		const hsl = Color.fromColor({ color }).hslFormat();
 
-	if (hexColor.isValid()) {
+		const { hex } = Color.hsl(hsl).hex();
+
 		return hex;
-	}
+	} catch {
+		console.warn("Color format couldn't be processed.", { color: color });
 
-	return defaultHex;
+		return defaultHex;
+	}
 };
 
 export const ColorInput = ({
-	hex,
+	color,
 	className,
 	onColorSelected,
 }: ColorInputProps) => {
@@ -44,9 +54,11 @@ export const ColorInput = ({
 		button.popoverTargetElement = dropdown;
 	}, []);
 
-	const validHex = getValidInputHex(hex);
+	const validHex = getValidInputHex(color);
 
-	const inputText = hex === null ? "None" : validHex;
+	const isTransparent = !!validHex.endsWith("00");
+
+	const inputText = color === null ? "None" : validHex;
 
 	const hsl = Color.hex({ hex: validHex }).hexToHsl();
 
@@ -82,6 +94,8 @@ export const ColorInput = ({
 		button.click();
 	};
 
+	const squareBackgroundColor = isTransparent ? "#888" : validHex;
+
 	return (
 		<span
 			className={`inline-flex ${className}`}
@@ -111,11 +125,16 @@ export const ColorInput = ({
 				}}
 			>
 				<span
-					className="inline-block size-5 rounded-sm"
+					className="relative inline-flex size-5 items-center justify-center overflow-clip rounded-sm"
 					style={{
-						backgroundColor: validHex,
+						backgroundColor: squareBackgroundColor,
 					}}
-				/>
+				>
+					<span
+						className="absolute inline-block h-8 w-1 rotate-45 bg-red-500"
+						style={{ display: isTransparent ? "" : "none" }}
+					/>
+				</span>
 			</button>
 			<div
 				ref={dropdownRef}

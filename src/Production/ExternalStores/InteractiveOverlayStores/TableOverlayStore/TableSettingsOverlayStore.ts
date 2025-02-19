@@ -19,7 +19,7 @@ export const tableBorderStyles = [
 	"outset",
 	"none",
 	"hidden",
-] as const;
+];
 
 export const cellBorderStyles = [
 	"solid",
@@ -32,7 +32,7 @@ export const cellBorderStyles = [
 	"outset",
 	"none",
 	"hidden",
-] as const;
+];
 
 const initialState: TableSettingsOverlayState = Object.seal({
 	layoutView: tableLayoutViewOptions.tableIcons,
@@ -41,16 +41,16 @@ const initialState: TableSettingsOverlayState = Object.seal({
 		height: "0px",
 		alignment: "left",
 		borderStyle: "solid",
-		borderColor: "#000000ff",
+		borderColor: "#00000000",
 		borderWidth: "0px",
 	},
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
 	onTablePropertiesAction: () => {},
 	cellProps: {
 		borderStyle: "solid",
-		borderColor: "#000000ff",
+		borderColor: "#00000000",
 		borderWidth: "0px",
-		background: "#000000ff",
+		background: "#00000000",
 		alignment: "top",
 	},
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>

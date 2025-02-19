@@ -1,10 +1,6 @@
-import {
-	type TableBorderWidth,
-	type TableHeight,
-	type TableWidth,
-	tableBorderStyles,
-	tableLayoutViewOptions,
-} from "@externalStores";
+import { useRef, useState } from "react";
+
+import { tableBorderStyles, tableLayoutViewOptions } from "@externalStores";
 import {
 	Color,
 	type HSLFormat,
@@ -26,7 +22,15 @@ import {
 	ContentAlignRightIcon,
 } from "../../../SVGs";
 
-import type { TablePropertiesProps } from "./TableProperties-types";
+import { getValidBorderStyle } from "../Utilities";
+
+import type {
+	GetBorderWidthForActionReturn,
+	GetTableHeightForActionReturn,
+	GetTableWidthForActionReturn,
+	InputValidity,
+	TablePropertiesProps,
+} from "./TableProperties-types";
 
 export const TableProperties = ({
 	layoutView,
@@ -35,11 +39,25 @@ export const TableProperties = ({
 	setTableProps,
 	onTablePropertiesAction,
 }: TablePropertiesProps) => {
+	const tableWidthInputRef = useRef<HTMLInputElement>(null);
+	const tableHeightInputRef = useRef<HTMLInputElement>(null);
+	const borderWidthInputRef = useRef<HTMLInputElement>(null);
+
+	const [inputValidity, setInputValidity] = useState<InputValidity>({
+		tableWidth: true,
+		tableHeight: true,
+		borderWidth: true,
+	});
+
 	const onTableWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setInputValidity((prev) => ({ ...prev, tableWidth: true }));
+
 		setTableProps({ width: value });
 	};
 
 	const onTableHeightChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setInputValidity((prev) => ({ ...prev, tableHeight: true }));
+
 		setTableProps({ height: value });
 	};
 
@@ -74,8 +92,13 @@ export const TableProperties = ({
 		},
 	);
 
+	const validBorderStyle = getValidBorderStyle({
+		borderStyle: tableProps.borderStyle,
+		validBorderStyles: tableBorderStyles,
+	});
+
 	const tableBorderStyleComboBoxTitle =
-		tableProps.borderStyle[0].toUpperCase() + tableProps.borderStyle.slice(1);
+		validBorderStyle[0].toUpperCase() + validBorderStyle.slice(1);
 
 	const onBorderColorSelected: OnColorSelected = ({ hsl }) => {
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
@@ -89,72 +112,137 @@ export const TableProperties = ({
 		setTableProps({ borderColor: hex });
 	};
 
-	const onCancel = () => {
-		onTablePropertiesAction({ type: "cancel" });
+	const onBorderWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setInputValidity((prev) => ({ ...prev, borderWidth: true }));
+
+		setTableProps({ borderWidth: value });
+	};
+
+	const closePanel = () => {
+		setInputValidity({
+			tableWidth: true,
+			tableHeight: true,
+			borderWidth: true,
+		});
 
 		updateLayoutView();
 	};
 
+	const onCancel = () => {
+		onTablePropertiesAction({ type: "cancel" });
+
+		closePanel();
+	};
+
+	const getTableWidthForAction = (): GetTableWidthForActionReturn => {
+		if (tableProps.width === undefined || tableProps.width === undefined) {
+			return { isInvalid: false, tableWidth: undefined };
+		}
+
+		const pixelValue = getPixelFromInput({ input: tableProps.width });
+
+		if (pixelValue !== null) {
+			const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
+			return { isInvalid: false, tableWidth: `${adjustedPixel}px` };
+		}
+
+		const percentageValue = getPercentageFromInput({
+			input: tableProps.width,
+		});
+
+		if (percentageValue !== null) {
+			return { isInvalid: false, tableWidth: `${percentageValue}%` };
+		}
+
+		return { isInvalid: true };
+	};
+
+	const getTableHeightForAction = (): GetTableHeightForActionReturn => {
+		if (tableProps.height === undefined || tableProps.height === "") {
+			return { isInvalid: false, tableHeight: undefined };
+		}
+
+		const pixelValue = getPixelFromInput({ input: tableProps.height });
+
+		if (pixelValue !== null) {
+			const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
+
+			return { isInvalid: false, tableHeight: `${adjustedPixel}px` };
+		}
+
+		return { isInvalid: true };
+	};
+
+	const getBorderWidthForAction = (): GetBorderWidthForActionReturn => {
+		if (tableProps.borderWidth === undefined || tableProps.borderWidth === "") {
+			return { isInvalid: false, borderWidth: undefined };
+		}
+
+		const pixelValue = getPixelFromInput({ input: tableProps.borderWidth });
+
+		if (pixelValue !== null) {
+			const adjustedPixel = Math.min(20, Math.max(0, pixelValue));
+
+			return { isInvalid: false, borderWidth: `${adjustedPixel}px` };
+		}
+
+		return { isInvalid: true };
+	};
+
 	const onApply = () => {
-		const widthProp = ((): TableWidth => {
-			const pixelValue = getPixelFromInput({ input: tableProps.width });
+		const tableWidthForAction = getTableWidthForAction();
 
-			if (pixelValue !== null) {
-				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
-				return `${adjustedPixel}px`;
+		if (tableWidthForAction.isInvalid) {
+			setInputValidity((prev) => ({ ...prev, tableWidth: false }));
+
+			if (!tableWidthInputRef.current) {
+				throw new Error("TableWidthInputRef can't be null.");
 			}
 
-			const percentageValue = getPercentageFromInput({
-				input: tableProps.width,
-			});
+			tableWidthInputRef.current.focus();
 
-			if (percentageValue !== null) {
-				return `${percentageValue}%`;
+			return;
+		}
+
+		const tableHeightForAction = getTableHeightForAction();
+
+		if (tableHeightForAction.isInvalid) {
+			setInputValidity((prev) => ({ ...prev, tableHeight: false }));
+
+			if (!tableHeightInputRef.current) {
+				throw new Error("TableHeightInputRef can't be null.");
 			}
 
-			// If the input value is invalid
-			return "500px";
-		})();
+			tableHeightInputRef.current.focus();
 
-		const heightProp = ((): TableHeight => {
-			const pixelValue = getPixelFromInput({ input: tableProps.height });
+			return;
+		}
 
-			if (pixelValue !== null) {
-				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
-				return `${adjustedPixel}px`;
+		const borderWidthForAction = getBorderWidthForAction();
+
+		if (borderWidthForAction.isInvalid) {
+			setInputValidity((prev) => ({ ...prev, borderWidth: false }));
+
+			if (!borderWidthInputRef.current) {
+				throw new Error("BorderBWidthInputRef can't be null.");
 			}
 
-			// If the input value is invalid
-			return "500px";
-		})();
+			borderWidthInputRef.current.focus();
 
-		const borderWidthProp = ((): TableBorderWidth => {
-			if (!tableProps.borderWidth) {
-				return "0px";
-			}
-
-			const pixelValue = getPixelFromInput({ input: tableProps.borderWidth });
-
-			if (pixelValue !== null) {
-				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
-				return `${adjustedPixel}px`;
-			}
-
-			// If the input value is invalid
-			return "0px";
-		})();
+			return;
+		}
 
 		onTablePropertiesAction({
 			type: "apply",
-			width: widthProp,
-			height: heightProp,
+			width: tableWidthForAction.tableWidth,
+			height: tableHeightForAction.tableHeight,
 			alignment: tableProps.alignment,
 			borderStyle: tableProps.borderStyle,
 			borderColor: tableProps.borderColor,
-			borderWidth: borderWidthProp,
+			borderWidth: borderWidthForAction.borderWidth,
 		});
 
-		updateLayoutView();
+		closePanel();
 	};
 
 	return (
@@ -173,6 +261,7 @@ export const TableProperties = ({
 						<span className="font font-semibold text-sm">Size</span>
 						<div className="flex h-8 items-center gap-1">
 							<PrimaryCharInput
+								inputRef={tableWidthInputRef}
 								inputProps={{
 									type: "text",
 									value: tableProps.width,
@@ -182,9 +271,12 @@ export const TableProperties = ({
 								}}
 								title="Width"
 								className="h-full"
+								isInvalid={!inputValidity.tableWidth}
+								invalidMessage="Allowed formats: px, %"
 							/>
 							<span className="text-sm">x</span>
 							<PrimaryCharInput
+								inputRef={tableHeightInputRef}
 								inputProps={{
 									type: "text",
 									value: tableProps.height,
@@ -194,6 +286,8 @@ export const TableProperties = ({
 								}}
 								title="Height"
 								className="h-full"
+								isInvalid={!inputValidity.tableHeight}
+								invalidMessage="Allowed formats: px"
 							/>
 						</div>
 					</div>
@@ -214,18 +308,22 @@ export const TableProperties = ({
 							buttonStyles={{ minWidth: "80px" }}
 						/>
 						<ColorInput
-							hex={tableProps.borderColor}
+							color={tableProps.borderColor}
 							className="h-full"
 							onColorSelected={onBorderColorSelected}
 						/>
 						<PrimaryCharInput
+							inputRef={borderWidthInputRef}
 							inputProps={{
 								type: "text",
 								value: tableProps.borderWidth,
+								onChange: onBorderWidthChange,
 								style: { height: "100%" },
 							}}
 							title="Width"
 							className="h-full w-24"
+							isInvalid={!inputValidity.borderWidth}
+							invalidMessage="Allowed formats: px"
 						/>
 					</div>
 				</div>
