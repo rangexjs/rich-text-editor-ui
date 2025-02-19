@@ -33,19 +33,19 @@ export const CellProperties = ({
 
 	const alignmentButtons: RadioButtonsList = [
 		{
-			checked: cellProps.alignment === "top",
+			checked: cellProps.verticalAlign === "top",
 			children: <AlignTopIcon className="w-6" />,
-			onClick: () => setCellProps({ alignment: "top" }),
+			onClick: () => setCellProps({ verticalAlign: "top" }),
 		},
 		{
-			checked: cellProps.alignment === "middle",
+			checked: cellProps.verticalAlign === "baseline",
 			children: <AlignMiddleIcon className="w-6" />,
-			onClick: () => setCellProps({ alignment: "middle" }),
+			onClick: () => setCellProps({ verticalAlign: "baseline" }),
 		},
 		{
-			checked: cellProps.alignment === "bottom",
+			checked: cellProps.verticalAlign === "bottom",
 			children: <AlignBottomIcon className="w-6" />,
-			onClick: () => setCellProps({ alignment: "bottom" }),
+			onClick: () => setCellProps({ verticalAlign: "bottom" }),
 		},
 	];
 
@@ -92,12 +92,12 @@ export const CellProperties = ({
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
 
 		if (hsl === null) {
-			setCellProps({ background: "transparent" });
+			setCellProps({ backgroundColor: "transparent" });
 		}
 
 		const { hex } = Color.hsl(definedHSL).hex();
 
-		setCellProps({ background: hex });
+		setCellProps({ backgroundColor: hex });
 	};
 
 	const closePanel = () => {
@@ -120,7 +120,7 @@ export const CellProperties = ({
 		const pixelValue = getPixelFromInput({ input: cellProps.borderWidth });
 
 		if (pixelValue !== null) {
-			const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
+			const adjustedPixel = Math.min(10, Math.max(0, pixelValue));
 
 			return { isInvalid: false, borderWidth: `${adjustedPixel}px` };
 		}
@@ -143,13 +143,21 @@ export const CellProperties = ({
 			return;
 		}
 
+		const verticalAlign = (
+			{
+				top: "top",
+				baseline: null,
+				bottom: "bottom",
+			} as const
+		)[cellProps.verticalAlign];
+
 		onCellPropertiesAction({
 			type: "apply",
 			borderStyle: cellProps.borderStyle,
 			borderColor: cellProps.borderColor,
 			borderWidth: borderWidthForAction.borderWidth,
-			background: cellProps.background,
-			alignment: cellProps.alignment,
+			backgroundColor: cellProps.backgroundColor,
+			verticalAlign,
 		});
 
 		closePanel();
@@ -203,7 +211,7 @@ export const CellProperties = ({
 						<span className="font font-semibold text-sm">Background</span>
 						<div className="flex h-8 items-center gap-1">
 							<ColorInput
-								color={cellProps.background}
+								color={cellProps.backgroundColor}
 								className="h-full"
 								onColorSelected={onBackgroundSelected}
 							/>

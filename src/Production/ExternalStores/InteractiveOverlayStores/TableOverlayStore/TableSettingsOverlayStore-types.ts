@@ -44,14 +44,14 @@ export type OnTablePropertiesActionFn = (
 	props: OnTablePropertiesActionProps,
 ) => void;
 
-export type CellAlignment = "top" | "middle" | "bottom";
+export type CellVerticalAlign = "top" | "baseline" | "bottom";
 
 export interface CellProps {
 	borderStyle: string | undefined;
 	borderColor: string | undefined;
 	borderWidth: string | undefined;
-	background: string | undefined;
-	alignment: CellAlignment;
+	backgroundColor: string | undefined;
+	verticalAlign: CellVerticalAlign;
 }
 
 export type CellActionBorderStyle = string | null | undefined;
@@ -60,7 +60,9 @@ export type CellActionBorderColor = string | null | undefined;
 
 export type CellActionBorderWidth = `${string}px` | null | undefined;
 
-export type CellActionBackground = string | null | undefined;
+export type CellActionBackgroundColor = string | null | undefined;
+
+export type CellActionVerticalAlign = "top" | "bottom" | null;
 
 export type OnCellPropertiesActionProps =
 	| {
@@ -68,8 +70,8 @@ export type OnCellPropertiesActionProps =
 			borderStyle: CellActionBorderStyle;
 			borderColor: CellActionBorderColor;
 			borderWidth: CellActionBorderWidth;
-			background: CellActionBackground;
-			alignment: CellAlignment;
+			backgroundColor: CellActionBackgroundColor;
+			verticalAlign: CellActionVerticalAlign;
 	  }
 	| { type: "cancel" };
 
