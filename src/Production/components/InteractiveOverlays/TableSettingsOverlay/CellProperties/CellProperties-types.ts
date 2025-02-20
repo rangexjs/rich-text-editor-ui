@@ -1,4 +1,5 @@
 import type {
+	CellActionBorderWidth,
 	CellProps,
 	OnCellPropertiesActionFn,
 	TableLayoutViewOptionsValue,
@@ -7,6 +8,13 @@ import type {
 export interface SetCellPropsProps extends Partial<CellProps> {}
 
 export type SetCellPropsFn = (props: SetCellPropsProps) => void;
+
+export type GetBorderWidthForActionReturn =
+	| {
+			isInvalid: false;
+			borderWidth: CellActionBorderWidth;
+	  }
+	| { isInvalid: true };
 
 export interface CellPropertiesProps {
 	layoutView: TableLayoutViewOptionsValue;

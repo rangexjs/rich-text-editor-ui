@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, RefObject } from "react";
 
 export interface OnPrimaryCharInputChangeProps {
 	value: string;
@@ -32,7 +32,10 @@ export interface InputProps {
 }
 
 export interface PrimaryCharInputProps {
+	inputRef?: RefObject<HTMLInputElement>;
 	inputProps: InputProps;
 	title?: string;
 	className?: string;
+	isInvalid?: boolean;
+	invalidMessage?: string;
 }

@@ -7,3 +7,10 @@ export {
 } from "./RichTextEditorUI";
 
 export type { ToolbarButtons } from "@components";
+export type {
+	TableAlignment,
+	OnTablePropertiesActionFn,
+	OnTablePropertiesActionProps,
+	OnCellPropertiesActionFn,
+	OnCellPropertiesActionProps,
+} from "@externalStores";

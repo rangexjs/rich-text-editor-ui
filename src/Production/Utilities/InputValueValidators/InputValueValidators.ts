@@ -21,7 +21,7 @@ export const getPixelFromInput = ({
 		return null;
 	}
 
-	if ("pixel" in match.groups) {
+	if (!("pixel" in match.groups)) {
 		return null;
 	}
 
@@ -47,11 +47,11 @@ export const getPercentageFromInput = ({
 		return null;
 	}
 
-	if ("percentage" in match.groups) {
+	if (!("percentage" in match.groups)) {
 		return null;
 	}
 
-	const { pixel } = match.groups;
+	const { percentage } = match.groups;
 
-	return Math.min(100, Math.max(0, +pixel));
+	return Math.min(100, Math.max(0, +percentage));
 };

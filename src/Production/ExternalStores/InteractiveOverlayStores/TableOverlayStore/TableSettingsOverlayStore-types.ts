@@ -1,65 +1,78 @@
-import type {
-	cellBorderStyles,
-	tableBorderStyles,
-	tableLayoutViewOptions,
-} from "./TableSettingsOverlayStore";
+import type { tableLayoutViewOptions } from "./TableSettingsOverlayStore";
 
 export type TableLayoutViewOptions = typeof tableLayoutViewOptions;
 
 export type TableLayoutViewOptionsValue =
 	TableLayoutViewOptions[keyof TableLayoutViewOptions];
 
-export type TableWidth = string;
-
-export type TableHeight = string;
-
 export type TableAlignment = "left" | "center" | "right";
-
-export type TableBorderStyles = typeof tableBorderStyles;
-
-export type TableBorderStyle = TableBorderStyles[number];
 
 export type TableBorderColor = string;
 
-export type TableBorderWidth = string;
-
 export interface TableProps {
-	width: TableWidth;
-	height: TableHeight;
+	width: string | undefined;
+	height: string | undefined;
 	alignment: TableAlignment;
-	borderStyle: TableBorderStyle;
-	borderColor: TableBorderColor;
-	borderWidth: TableBorderWidth;
+	borderStyle: string | undefined;
+	borderColor: string | undefined;
+	borderWidth: string | undefined;
 }
 
+export type TableActionWidth = `${number}%` | `${number}px` | undefined;
+
+export type TableActionHeight = `${number}px` | undefined;
+
+export type TableActionBorderStyle = string | null | undefined;
+
+export type TableActionBorderColor = string | null | undefined;
+
+export type TableActionBorderWidth = `${string}px` | null | undefined;
+
 export type OnTablePropertiesActionProps =
-	| ({ type: "apply" } & TableProps)
+	| {
+			type: "apply";
+			width: TableActionWidth;
+			height: TableActionHeight;
+			alignment: TableAlignment;
+			borderStyle: TableActionBorderStyle;
+			borderColor: TableActionBorderColor;
+			borderWidth: TableActionBorderWidth;
+	  }
 	| { type: "cancel" };
 
 export type OnTablePropertiesActionFn = (
 	props: OnTablePropertiesActionProps,
 ) => void;
 
-export type CellBorderStyles = typeof cellBorderStyles;
-
-export type CellBorderStyle = CellBorderStyles[number];
-
-export type CellBorderColor = string;
-
-export type CellBorderWidth = string;
-
-export type CellAlignment = "top" | "middle" | "bottom";
+export type CellVerticalAlign = "top" | "baseline" | "bottom";
 
 export interface CellProps {
-	borderStyle: TableBorderStyle;
-	borderColor: TableBorderColor;
-	borderWidth: TableBorderWidth;
-	background: string;
-	alignment: CellAlignment;
+	borderStyle: string | undefined;
+	borderColor: string | undefined;
+	borderWidth: string | undefined;
+	backgroundColor: string | undefined;
+	verticalAlign: CellVerticalAlign;
 }
 
+export type CellActionBorderStyle = string | null | undefined;
+
+export type CellActionBorderColor = string | null | undefined;
+
+export type CellActionBorderWidth = `${string}px` | null | undefined;
+
+export type CellActionBackgroundColor = string | null | undefined;
+
+export type CellActionVerticalAlign = "top" | "bottom" | null;
+
 export type OnCellPropertiesActionProps =
-	| ({ type: "apply" } & CellProps)
+	| {
+			type: "apply";
+			borderStyle: CellActionBorderStyle;
+			borderColor: CellActionBorderColor;
+			borderWidth: CellActionBorderWidth;
+			backgroundColor: CellActionBackgroundColor;
+			verticalAlign: CellActionVerticalAlign;
+	  }
 	| { type: "cancel" };
 
 export type OnCellPropertiesActionFn = (

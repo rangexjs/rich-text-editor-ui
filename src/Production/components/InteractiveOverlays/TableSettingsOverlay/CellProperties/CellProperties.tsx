@@ -1,18 +1,24 @@
-import {
-	type CellBorderWidth,
-	cellBorderStyles,
-	tableLayoutViewOptions,
-} from "@externalStores";
+import { useRef, useState } from "react";
+
+import { cellBorderStyles, tableLayoutViewOptions } from "@externalStores";
 import { Color, type HSLFormat, getPixelFromInput } from "@utilities";
 
 import { ColorInput } from "../../../ColorInput";
 import type { OnColorSelected } from "../../../ColorPanel";
 import { ComboBox, type ComboBoxList } from "../../../ComboBox";
-import { PrimaryCharInput } from "../../../PrimaryCharInput";
+import {
+	type OnPrimaryCharInputChangeFn,
+	PrimaryCharInput,
+} from "../../../PrimaryCharInput";
 import { RadioButtons, type RadioButtonsList } from "../../../RadioButtons";
 import { AlignBottomIcon, AlignMiddleIcon, AlignTopIcon } from "../../../SVGs";
 
-import type { CellPropertiesProps } from "./CellProperties-types";
+import { getValidBorderStyle } from "../Utilities";
+
+import type {
+	CellPropertiesProps,
+	GetBorderWidthForActionReturn,
+} from "./CellProperties-types";
 
 export const CellProperties = ({
 	layoutView,
@@ -21,21 +27,25 @@ export const CellProperties = ({
 	setCellProps,
 	onCellPropertiesAction,
 }: CellPropertiesProps) => {
+	const borderWidthInputRef = useRef<HTMLInputElement>(null);
+
+	const [isBorderWidthValid, setIsBorderWidthValid] = useState(true);
+
 	const alignmentButtons: RadioButtonsList = [
 		{
-			checked: cellProps.alignment === "top",
+			checked: cellProps.verticalAlign === "top",
 			children: <AlignTopIcon className="w-6" />,
-			onClick: () => setCellProps({ alignment: "top" }),
+			onClick: () => setCellProps({ verticalAlign: "top" }),
 		},
 		{
-			checked: cellProps.alignment === "middle",
+			checked: cellProps.verticalAlign === "baseline",
 			children: <AlignMiddleIcon className="w-6" />,
-			onClick: () => setCellProps({ alignment: "middle" }),
+			onClick: () => setCellProps({ verticalAlign: "baseline" }),
 		},
 		{
-			checked: cellProps.alignment === "bottom",
+			checked: cellProps.verticalAlign === "bottom",
 			children: <AlignBottomIcon className="w-6" />,
-			onClick: () => setCellProps({ alignment: "bottom" }),
+			onClick: () => setCellProps({ verticalAlign: "bottom" }),
 		},
 	];
 
@@ -52,8 +62,13 @@ export const CellProperties = ({
 		},
 	);
 
+	const validBorderStyle = getValidBorderStyle({
+		borderStyle: cellProps.borderStyle,
+		validBorderStyles: cellBorderStyles,
+	});
+
 	const tableBorderStyleComboBoxTitle =
-		cellProps.borderStyle[0].toUpperCase() + cellProps.borderStyle.slice(1);
+		validBorderStyle[0].toUpperCase() + validBorderStyle.slice(1);
 
 	const onBorderColorSelected: OnColorSelected = ({ hsl }) => {
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
@@ -67,51 +82,85 @@ export const CellProperties = ({
 		setCellProps({ borderColor: hex });
 	};
 
+	const onBorderWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setIsBorderWidthValid(true);
+
+		setCellProps({ borderWidth: value });
+	};
+
 	const onBackgroundSelected: OnColorSelected = ({ hsl }) => {
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
 
 		if (hsl === null) {
-			setCellProps({ background: "transparent" });
+			setCellProps({ backgroundColor: "transparent" });
 		}
 
 		const { hex } = Color.hsl(definedHSL).hex();
 
-		setCellProps({ background: hex });
+		setCellProps({ backgroundColor: hex });
+	};
+
+	const closePanel = () => {
+		setIsBorderWidthValid(true);
+
+		updateLayoutView();
 	};
 
 	const onCancel = () => {
 		onCellPropertiesAction({ type: "cancel" });
 
-		updateLayoutView();
+		closePanel();
+	};
+
+	const getBorderWidthForAction = (): GetBorderWidthForActionReturn => {
+		if (cellProps.borderWidth === undefined || cellProps.borderWidth === "") {
+			return { isInvalid: false, borderWidth: undefined };
+		}
+
+		const pixelValue = getPixelFromInput({ input: cellProps.borderWidth });
+
+		if (pixelValue !== null) {
+			const adjustedPixel = Math.min(10, Math.max(0, pixelValue));
+
+			return { isInvalid: false, borderWidth: `${adjustedPixel}px` };
+		}
+
+		return { isInvalid: true };
 	};
 
 	const onApply = () => {
-		const borderWidthProp = ((): CellBorderWidth => {
-			if (!cellProps.borderWidth) {
-				return "0px";
+		const borderWidthForAction = getBorderWidthForAction();
+
+		if (borderWidthForAction.isInvalid) {
+			setIsBorderWidthValid(false);
+
+			if (!borderWidthInputRef.current) {
+				throw new Error("BorderWidthInputRef can't be null.");
 			}
 
-			const pixelValue = getPixelFromInput({ input: cellProps.borderWidth });
+			borderWidthInputRef.current.focus();
 
-			if (pixelValue !== null) {
-				const adjustedPixel = Math.min(10000, Math.max(100, pixelValue));
-				return `${adjustedPixel}px`;
-			}
+			return;
+		}
 
-			// If the input value is invalid
-			return "0px";
-		})();
+		const verticalAlign = (
+			{
+				top: "top",
+				baseline: null,
+				bottom: "bottom",
+			} as const
+		)[cellProps.verticalAlign];
 
 		onCellPropertiesAction({
 			type: "apply",
 			borderStyle: cellProps.borderStyle,
 			borderColor: cellProps.borderColor,
-			borderWidth: borderWidthProp,
-			background: cellProps.background,
-			alignment: cellProps.alignment,
+			borderWidth: borderWidthForAction.borderWidth,
+			backgroundColor: cellProps.backgroundColor,
+			verticalAlign,
 		});
 
-		updateLayoutView();
+		closePanel();
 	};
 	return (
 		<div
@@ -138,18 +187,22 @@ export const CellProperties = ({
 							buttonStyles={{ minWidth: "80px" }}
 						/>
 						<ColorInput
-							hex={cellProps.borderColor}
+							color={cellProps.borderColor}
 							className="h-full"
 							onColorSelected={onBorderColorSelected}
 						/>
 						<PrimaryCharInput
+							inputRef={borderWidthInputRef}
 							inputProps={{
 								type: "text",
 								value: cellProps.borderWidth,
+								onChange: onBorderWidthChange,
 								style: { height: "100%" },
 							}}
 							title="Width"
 							className="h-full w-24"
+							isInvalid={!isBorderWidthValid}
+							invalidMessage="Allowed format: px"
 						/>
 					</div>
 				</div>
@@ -158,7 +211,7 @@ export const CellProperties = ({
 						<span className="font font-semibold text-sm">Background</span>
 						<div className="flex h-8 items-center gap-1">
 							<ColorInput
-								hex={cellProps.background}
+								color={cellProps.backgroundColor}
 								className="h-full"
 								onColorSelected={onBackgroundSelected}
 							/>
