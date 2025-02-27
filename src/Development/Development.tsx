@@ -95,7 +95,7 @@ export const simulateProductEnvironment = ({
 				values: new Set([1, 1.2, 2, 4, -1, -3.1]),
 			},
 			strikethrough: { isChecked: false, isDisabled: false },
-			textAlign: { isDisabled: false, values: new Set(["left", "center"]) },
+			textAlign: { isDisabled: false, values: new Set(["start", "center"]) },
 			underline: { isChecked: false, isDisabled: false },
 		});
 

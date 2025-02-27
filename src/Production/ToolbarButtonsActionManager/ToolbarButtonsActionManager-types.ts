@@ -12,7 +12,7 @@ export interface FormatStylesActionState {
 	letterSpacing?: string | null;
 	lineHeight?: `${number}` | `${number}.${number}` | null;
 	paddingInlineStart?: `${number}px` | null;
-	textAlign?: "center" | "justify" | "left" | "right" | null;
+	textAlign?: "start" | "center" | "justify" | "end" | null;
 	textDecoration?: string | null;
 }
 
