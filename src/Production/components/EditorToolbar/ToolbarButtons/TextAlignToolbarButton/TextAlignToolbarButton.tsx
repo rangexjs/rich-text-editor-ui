@@ -14,7 +14,7 @@ import type {
 	TextAlignToolbarButtonProps,
 } from "./TextAlignToolbarButton-types";
 
-const textAlignList: TextAlignList = ["left", "center", "right", "justify"];
+const textAlignList: TextAlignList = ["start", "center", "end", "justify"];
 
 export const TextAlignToolbarButton = ({
 	toolbarButtonsActionManager,
@@ -56,7 +56,7 @@ export const TextAlignToolbarButton = ({
 	const textAlignValues = [...state.values];
 
 	// RTL writing mode will be handled later
-	!textAlignValues.length && textAlignValues.push("left");
+	!textAlignValues.length && textAlignValues.push("start");
 
 	const firstItem = textAlignValues.at(0);
 
@@ -89,10 +89,10 @@ export const TextAlignToolbarButton = ({
 				anchorName={textAlignToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
 			>
+				{firstItem === "start" && <TextAlignLeftIcon />}
 				{firstItem === "center" && <TextAlignCenterIcon />}
 				{firstItem === "justify" && <TextAlignJustifyIcon />}
-				{firstItem === "left" && <TextAlignLeftIcon />}
-				{firstItem === "right" && <TextAlignRightIcon />}
+				{firstItem === "end" && <TextAlignRightIcon />}
 			</PrimaryButton>
 			<div
 				ref={popoverTargetElementRef}
@@ -111,10 +111,10 @@ export const TextAlignToolbarButton = ({
 						checked={textAlignValues.includes(textAlign)}
 						onClick={() => onTextAlignClick(textAlign)}
 					>
+						{textAlign === "start" && <TextAlignLeftIcon />}
 						{textAlign === "center" && <TextAlignCenterIcon />}
 						{textAlign === "justify" && <TextAlignJustifyIcon />}
-						{textAlign === "left" && <TextAlignLeftIcon />}
-						{textAlign === "right" && <TextAlignRightIcon />}
+						{textAlign === "end" && <TextAlignRightIcon />}
 					</PrimaryButton>
 				))}
 			</div>

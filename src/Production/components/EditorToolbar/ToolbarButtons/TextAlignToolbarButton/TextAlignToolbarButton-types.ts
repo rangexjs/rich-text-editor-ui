@@ -3,7 +3,7 @@ import type { PickType } from "@utilities";
 
 import type { ToolbarButtonsActionManagerObj } from "../Utilities";
 
-export type TextAlignType = "center" | "justify" | "left" | "right";
+export type TextAlignType = "start" | "center" | "justify" | "end";
 
 export type TextAlignList = TextAlignType[];
 
