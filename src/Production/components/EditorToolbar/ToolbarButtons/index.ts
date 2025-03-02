@@ -17,6 +17,7 @@ export * from "./LineTagNameToolbarButton";
 export * from "./ListToolbarButton";
 export * from "./RemoveFormatToolbarButton";
 export * from "./StrikethroughToolbarButton";
+export * from "./SymbolsToolbarButton";
 export * from "./TableToolbarButton";
 export * from "./TextAlignToolbarButton";
 export * from "./TodoListToolbarButton";

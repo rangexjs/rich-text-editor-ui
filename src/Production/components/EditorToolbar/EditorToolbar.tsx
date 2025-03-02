@@ -22,6 +22,7 @@ import {
 	ListToolbarButton,
 	RemoveFormatToolbarButton,
 	StrikethroughToolbarButton,
+	SymbolsToolbarButton,
 	TableToolbarButton,
 	TextAlignToolbarButton,
 	TodoListToolbarButton,
@@ -57,8 +58,16 @@ export const EditorToolbar = ({
 
 	const { historyBack, historyForward } = historyNavigationButtonsState;
 
-	const { anchor, blockQuote, codeBlock, image, list, table, todoList } =
-		nodeInsertionButtonsState;
+	const {
+		anchor,
+		blockQuote,
+		codeBlock,
+		image,
+		list,
+		symbols,
+		table,
+		todoList,
+	} = nodeInsertionButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
@@ -230,6 +239,15 @@ export const EditorToolbar = ({
 						<StrikethroughToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							states={{ strikethrough, underline }}
+						/>
+					);
+				}
+
+				if (buttonsName.symbols === name) {
+					return (
+						<SymbolsToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={symbols}
 						/>
 					);
 				}

@@ -69,8 +69,13 @@ interface ImageURL {
 type ImageActionState = GetButtonType<"image"> & (ImageFileUpload | ImageURL);
 
 export type ListActionStateListType = "disc" | "circle" | "square" | "decimal";
+
 interface ListActionState extends GetButtonType<"list"> {
 	listType: ListActionStateListType;
+}
+
+interface SymbolsActionState extends GetButtonType<"symbols"> {
+	data: string;
 }
 
 interface TableActionState extends GetButtonType<"table"> {
@@ -86,6 +91,7 @@ export type NodeInsertionActionState =
 	| CodeBlockActionState
 	| ImageActionState
 	| ListActionState
+	| SymbolsActionState
 	| TableActionState
 	| TodoListActionState;
 

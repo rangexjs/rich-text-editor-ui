@@ -23,6 +23,10 @@ interface ListState {
 	isDisabled: boolean;
 }
 
+interface SymbolsState {
+	isDisabled: boolean;
+}
+
 interface TableState {
 	isDisabled: boolean;
 }
@@ -38,6 +42,7 @@ export interface NodeInsertionButtonsState {
 	customComponent: CustomComponentState;
 	image: ImageState;
 	list: ListState;
+	symbols: SymbolsState;
 	table: TableState;
 	todoList: TodoListState;
 }
