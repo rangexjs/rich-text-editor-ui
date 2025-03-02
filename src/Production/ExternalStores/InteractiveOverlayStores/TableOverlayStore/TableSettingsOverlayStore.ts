@@ -51,7 +51,7 @@ const initialState: TableSettingsOverlayState = Object.seal({
 		borderColor: "#00000000",
 		borderWidth: "0px",
 		backgroundColor: "#00000000",
-		verticalAlign: "top",
+		alignContent: "start",
 	},
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
 	onCellPropertiesAction: () => {},
