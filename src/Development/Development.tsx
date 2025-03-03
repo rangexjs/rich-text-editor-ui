@@ -32,6 +32,7 @@ export const simulateProductEnvironment = ({
 				"code-block",
 				"image",
 				"anchor",
+				"symbols",
 			],
 		],
 		[
@@ -110,6 +111,7 @@ export const simulateProductEnvironment = ({
 		codeBlock: { isDisabled: false },
 		image: { isDisabled: false },
 		list: { isDisabled: false },
+		symbols: { isDisabled: false },
 		table: { isDisabled: false },
 		todoList: { isDisabled: false },
 	});

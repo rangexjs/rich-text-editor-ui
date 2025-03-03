@@ -33,19 +33,19 @@ export const CellProperties = ({
 
 	const alignmentButtons: RadioButtonsList = [
 		{
-			checked: cellProps.verticalAlign === "top",
+			checked: cellProps.alignContent === "start",
 			children: <AlignTopIcon className="w-6" />,
-			onClick: () => setCellProps({ verticalAlign: "top" }),
+			onClick: () => setCellProps({ alignContent: "start" }),
 		},
 		{
-			checked: cellProps.verticalAlign === "baseline",
+			checked: cellProps.alignContent === "center",
 			children: <AlignMiddleIcon className="w-6" />,
-			onClick: () => setCellProps({ verticalAlign: "baseline" }),
+			onClick: () => setCellProps({ alignContent: "center" }),
 		},
 		{
-			checked: cellProps.verticalAlign === "bottom",
+			checked: cellProps.alignContent === "end",
 			children: <AlignBottomIcon className="w-6" />,
-			onClick: () => setCellProps({ verticalAlign: "bottom" }),
+			onClick: () => setCellProps({ alignContent: "end" }),
 		},
 	];
 
@@ -143,21 +143,13 @@ export const CellProperties = ({
 			return;
 		}
 
-		const verticalAlign = (
-			{
-				top: "top",
-				baseline: null,
-				bottom: "bottom",
-			} as const
-		)[cellProps.verticalAlign];
-
 		onCellPropertiesAction({
 			type: "apply",
 			borderStyle: cellProps.borderStyle,
 			borderColor: cellProps.borderColor,
 			borderWidth: borderWidthForAction.borderWidth,
 			backgroundColor: cellProps.backgroundColor,
-			verticalAlign,
+			alignContent: cellProps.alignContent,
 		});
 
 		closePanel();

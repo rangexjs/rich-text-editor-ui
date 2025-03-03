@@ -18,7 +18,7 @@ export const buttonsName = {
 	list: "list",
 	removeFormat: "remove-format",
 	strikethrough: "strikethrough",
-	symbol: "symbol",
+	symbols: "symbols",
 	table: "table",
 	todoList: "todo-list",
 	lineTagName: "line-tag-name",
