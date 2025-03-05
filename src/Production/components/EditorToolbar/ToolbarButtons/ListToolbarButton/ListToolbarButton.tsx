@@ -51,7 +51,7 @@ export const ListToolbarButton = ({
 	const listItemLineHeight = 14;
 	const listItemFillerHeight = 4;
 
-	const onListButtonClick = (listType: OnListButtonClickProps) => {
+	const onListButtonClick = (listStyleType: OnListButtonClickProps) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
 
 		if (!popoverTargetElement) {
@@ -60,7 +60,10 @@ export const ListToolbarButton = ({
 
 		popoverTargetElement.hidePopover();
 
-		toolbarButtonsActionManager.onNodeInsertion?.({ type: "list", listType });
+		toolbarButtonsActionManager.onNodeInsertion?.({
+			type: "list",
+			listStyleType,
+		});
 	};
 
 	return (

@@ -1,12 +1,13 @@
 import type { NodeInsertionButtonsState } from "@externalStores";
-import type { ListActionStateListType } from "@toolbarButtonsActionManager";
 import type { PickType } from "@utilities";
 
 import type { ToolbarButtonsActionManagerObj } from "../Utilities";
 
-export type ListItemList = ListActionStateListType[];
+export type ListStyleType = "disc" | "circle" | "square" | "decimal";
 
-export type OnListButtonClickProps = ListActionStateListType;
+export type ListItemList = ListStyleType[];
+
+export type OnListButtonClickProps = ListStyleType;
 
 export interface ListToolbarButtonProps extends ToolbarButtonsActionManagerObj {
 	state: PickType<NodeInsertionButtonsState, "list">;
