@@ -9,6 +9,12 @@ export class ButtonsStore<State> {
 	}
 
 	updateState(props: Partial<State>) {
+		for (const key in props) {
+			if (props[key] === undefined) {
+				delete props[key];
+			}
+		}
+
 		this.#state = { ...this.#state, ...props };
 
 		for (const listener of this.#listeners) {
