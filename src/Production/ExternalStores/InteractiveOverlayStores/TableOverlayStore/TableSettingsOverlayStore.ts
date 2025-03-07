@@ -2,10 +2,22 @@ import { ButtonsStore } from "../../ButtonsStore";
 
 import type { TableSettingsOverlayState } from "./TableSettingsOverlayStore-types";
 
+const tableProperties = "table-properties";
+
+const tableCellProperties = "table-cell-properties";
+
 export const tableLayoutViewOptions = {
 	tableIcons: "table-icons",
-	tableProperties: "table-properties",
-	tableCellProperties: "table-cell-properties",
+	tableProperties,
+	tableCellProperties,
+} as const;
+
+export const tableActiveView = {
+	tableProperties,
+	tableCellProperties,
+	colButtons: "col-buttons",
+	rowButtons: "row-buttons",
+	cellSpanModifier: "cell-span-modifier",
 } as const;
 
 export const tableBorderStyles = [
@@ -36,6 +48,8 @@ export const cellBorderStyles = [
 
 const initialState: TableSettingsOverlayState = Object.seal({
 	layoutView: tableLayoutViewOptions.tableIcons,
+	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+	onActiveViewChange: () => {},
 	tableProps: {
 		width: "0px",
 		height: "0px",

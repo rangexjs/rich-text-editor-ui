@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import {
 	type TableLayoutViewOptionsValue,
+	tableActiveView,
 	tableLayoutViewOptions,
 } from "@externalStores";
 
@@ -41,6 +42,16 @@ export const TableSettingsOverlay = ({
 	const [dropdownIconState, setDropdownIconState] =
 		useState<DropdownIconState>(null);
 
+	const {
+		layoutView,
+		onActiveViewChange,
+		columnButtons,
+		rowButtons,
+		cellSpanModifier,
+		onTableCellAction,
+		onTableRemove,
+	} = tableSettingsOverlayState;
+
 	useEffect(() => {
 		const columnDropdown = columnDropdownRef.current;
 		const rowDropdown = rowDropdownRef.current;
@@ -49,6 +60,26 @@ export const TableSettingsOverlay = ({
 		if (!(columnDropdown && rowDropdown && cellSpanModifierDropdown)) {
 			return;
 		}
+
+		const beforeToggleIconState = (event: ToggleEvent) => {
+			const { currentTarget, newState } = event;
+
+			if (newState !== "open") {
+				return;
+			}
+
+			if (currentTarget === columnDropdown) {
+				onActiveViewChange({ activeView: tableActiveView.colButtons });
+			}
+
+			if (currentTarget === rowDropdown) {
+				onActiveViewChange({ activeView: tableActiveView.rowButtons });
+			}
+
+			if (currentTarget === cellSpanModifierDropdown) {
+				onActiveViewChange({ activeView: tableActiveView.cellSpanModifier });
+			}
+		};
 
 		const toggleIconState = (event: ToggleEvent) => {
 			const { currentTarget, newState } = event;
@@ -77,6 +108,11 @@ export const TableSettingsOverlay = ({
 
 		for (const dropdown of dropdowns) {
 			// @ts-ignore toggle event has a ToggleEvent interface, ts implemented wrongly
+			dropdown.addEventListener("beforetoggle", beforeToggleIconState, {
+				signal: abortCtrl.signal,
+			});
+
+			// @ts-ignore toggle event has a ToggleEvent interface, ts implemented wrongly
 			dropdown.addEventListener("toggle", toggleIconState, {
 				signal: abortCtrl.signal,
 			});
@@ -85,22 +121,20 @@ export const TableSettingsOverlay = ({
 		return () => {
 			abortCtrl.abort();
 		};
-	}, []);
+	}, [onActiveViewChange]);
 
 	const updateLayoutView = (layoutView: TableLayoutViewOptionsValue) => {
 		tableSettingsOverlayStore.updateState({ layoutView });
+
+		if (
+			layoutView === tableActiveView.tableProperties ||
+			layoutView === tableActiveView.tableCellProperties
+		) {
+			onActiveViewChange({ activeView: layoutView });
+		}
 	};
 
 	const iconSize = 1.2;
-
-	const {
-		layoutView,
-		columnButtons,
-		rowButtons,
-		cellSpanModifier,
-		onTableCellAction,
-		onTableRemove,
-	} = tableSettingsOverlayState;
 
 	const onTableActionButtonClick = ({
 		dropdownRef,

@@ -1,9 +1,24 @@
-import type { tableLayoutViewOptions } from "./TableSettingsOverlayStore";
+import type {
+	tableActiveView,
+	tableLayoutViewOptions,
+} from "./TableSettingsOverlayStore";
 
 export type TableLayoutViewOptions = typeof tableLayoutViewOptions;
 
 export type TableLayoutViewOptionsValue =
 	TableLayoutViewOptions[keyof TableLayoutViewOptions];
+
+export type TableActiveView = typeof tableActiveView;
+
+export type TableActiveViewValue = TableActiveView[keyof TableActiveView];
+
+export interface OnTableActiveViewChangeProps {
+	activeView: TableActiveViewValue;
+}
+
+export type OnTableActiveViewChangeFn = (
+	props: OnTableActiveViewChangeProps,
+) => void;
 
 export type TableAlignment = "left" | "center" | "right";
 
@@ -131,6 +146,7 @@ export type OnTableCellActionFn = (props: OnTableCellActionProps) => void;
 
 export interface TableSettingsOverlayState {
 	layoutView: TableLayoutViewOptionsValue;
+	onActiveViewChange: OnTableActiveViewChangeFn;
 	tableProps: TableProps;
 	onTablePropertiesAction: OnTablePropertiesActionFn;
 	cellProps: CellProps;
