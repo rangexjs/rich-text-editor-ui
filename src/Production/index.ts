@@ -15,6 +15,7 @@ export type {
 
 export type {
 	TableAlignment,
+	TableLayoutViewOptionsValue,
 	OnTablePropertiesActionFn,
 	OnTablePropertiesActionProps,
 	OnCellPropertiesActionFn,
