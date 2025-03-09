@@ -134,4 +134,21 @@ export const simulateProductEnvironment = ({
 	richTextEditorUI.onNodeInsertion((props) => {
 		console.log(props);
 	});
+
+	// Feature flags (should be reworked in the future to make manual testing easier)
+	const isAddTable = false;
+	const isAddAnchor = false;
+
+	if (isAddTable) {
+		const tableSettings =
+			richTextEditorUI.interactiveOverlay.createTableSettingsElement();
+
+		richTextArea.append(tableSettings);
+	}
+
+	if (isAddAnchor) {
+		const anchor = richTextEditorUI.interactiveOverlay.createAnchorElement();
+
+		richTextArea.append(anchor);
+	}
 };
