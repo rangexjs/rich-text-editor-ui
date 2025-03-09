@@ -1,4 +1,4 @@
-import { ButtonsStore } from "../../ButtonsStore";
+import { ExternalStore } from "../../ExternalStore";
 
 import type { AnchorOverlayState } from "./AnchorOverlayStore-types";
 
@@ -11,7 +11,7 @@ const initialState: AnchorOverlayState = Object.seal({
 	onAction: () => {},
 });
 
-export class AnchorOverlayStore extends ButtonsStore<AnchorOverlayState> {
+export class AnchorOverlayStore extends ExternalStore<AnchorOverlayState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

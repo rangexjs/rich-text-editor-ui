@@ -1,4 +1,4 @@
-import { ButtonsStore } from "../../ButtonsStore";
+import { ExternalStore } from "../../ExternalStore";
 
 import type { TableSettingsOverlayState } from "./TableSettingsOverlayStore-types";
 
@@ -94,7 +94,7 @@ const initialState: TableSettingsOverlayState = Object.seal({
 	onTableRemove: () => {},
 });
 
-export class TableSettingsOverlayStore extends ButtonsStore<TableSettingsOverlayState> {
+export class TableSettingsOverlayStore extends ExternalStore<TableSettingsOverlayState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

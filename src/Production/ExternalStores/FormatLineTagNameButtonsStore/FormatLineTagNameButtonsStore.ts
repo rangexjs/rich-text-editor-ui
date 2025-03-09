@@ -1,4 +1,4 @@
-import { ButtonsStore } from "../ButtonsStore";
+import { ExternalStore } from "../ExternalStore";
 
 import type { FormatLineTagNameButtonsState } from "./FormatLineTagNameButtonsStore-types";
 
@@ -9,7 +9,7 @@ const initialState: FormatLineTagNameButtonsState = Object.seal({
 	},
 });
 
-export class FormatLineTagNameButtonsStore extends ButtonsStore<FormatLineTagNameButtonsState> {
+export class FormatLineTagNameButtonsStore extends ExternalStore<FormatLineTagNameButtonsState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

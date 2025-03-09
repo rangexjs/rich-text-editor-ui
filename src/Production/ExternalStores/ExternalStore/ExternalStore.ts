@@ -1,6 +1,6 @@
-import type { ConstructorProps } from "./ButtonsStore-types";
+import type { ConstructorProps } from "./ExternalStore-types";
 
-export class ButtonsStore<State> {
+export class ExternalStore<State> {
 	#state;
 	#listeners: (() => void)[] = [];
 
