@@ -14,6 +14,7 @@ const initialState: AnchorOverlayState = Object.seal({
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
 	onAction: () => {},
 	anchorProps: {
+		textToDisplay: "Example website",
 		url: "https://example.com",
 		isOpenNewTab: true,
 		isDownloadable: false,

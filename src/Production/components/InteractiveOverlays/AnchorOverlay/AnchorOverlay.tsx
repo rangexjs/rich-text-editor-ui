@@ -48,6 +48,10 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 		});
 	};
 
+	const onTextToDisplayChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setAnchorProps({ textToDisplay: value });
+	};
+
 	const onURLChange: OnPrimaryCharInputChangeFn = ({ value }) => {
 		setAnchorProps({ url: value });
 	};
@@ -75,6 +79,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 	const onApply = () => {
 		onAction({
 			type: "apply",
+			textToDisplay: anchorProps.textToDisplay,
 			url: safeUrl,
 			isOpenNewTab: anchorProps.isOpenNewTab,
 			isDownloadable: anchorProps.isDownloadable,
@@ -97,7 +102,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 			>
 				<span className="w-36 overflow-hidden text-ellipsis whitespace-nowrap text-blue-700 text-sm underline">
 					<a href={safeUrl} target="_blank" rel="noreferrer" title={safeUrl}>
-						{safeUrl}
+						{anchorProps.textToDisplay || safeUrl}
 					</a>
 				</span>
 				<span className="w-px shrink-0 self-stretch bg-slate-400" />
@@ -111,6 +116,16 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 				</span>
 			</div>
 			<div style={{ display: shouldShowEdit ? "" : "none" }}>
+				<PrimaryCharInput
+					className="mb-4 w-full"
+					inputProps={{
+						type: "text",
+						value: anchorProps.textToDisplay,
+						onChange: onTextToDisplayChange,
+						placeholder: "Example website",
+					}}
+					title={"Text to display"}
+				/>
 				<PrimaryCharInput
 					className="mb-2 w-full"
 					inputProps={{

@@ -16,6 +16,7 @@ export type OnAnchorActiveViewChangeFn = (
 ) => void;
 
 export interface AnchorProps {
+	textToDisplay: string;
 	url: string;
 	isOpenNewTab: boolean;
 	isDownloadable: boolean;
