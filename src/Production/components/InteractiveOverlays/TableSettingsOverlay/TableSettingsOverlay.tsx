@@ -359,7 +359,7 @@ export const TableSettingsOverlay = ({
 	};
 
 	return (
-		<div>
+		<div className="bg-white">
 			<div
 				className="flex gap-1 p-1"
 				style={{

@@ -88,7 +88,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 	const shouldShowEdit = layoutView === anchorLayoutViewOptions.edit;
 
 	return (
-		<div className="w-60 p-3">
+		<div className="w-60 bg-white p-3">
 			<div
 				className="flex items-center gap-1"
 				style={{
