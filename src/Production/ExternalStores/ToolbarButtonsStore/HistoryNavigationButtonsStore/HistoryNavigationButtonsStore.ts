@@ -1,4 +1,4 @@
-import { ExternalStore } from "../ExternalStore";
+import { ExternalStore } from "../../ExternalStore";
 
 import type { HistoryNavigationButtonsState } from "./HistoryNavigationButtonsStore-types";
 

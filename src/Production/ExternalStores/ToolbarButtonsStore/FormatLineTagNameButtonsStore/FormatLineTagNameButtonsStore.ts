@@ -1,4 +1,4 @@
-import { ExternalStore } from "../ExternalStore";
+import { ExternalStore } from "../../ExternalStore";
 
 import type { FormatLineTagNameButtonsState } from "./FormatLineTagNameButtonsStore-types";
 
