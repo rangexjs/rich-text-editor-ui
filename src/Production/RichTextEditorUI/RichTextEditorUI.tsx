@@ -26,6 +26,7 @@ import type {
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
+	#shadowRoot;
 	#root;
 	#toolbarButtonsActionManager = new ToolbarButtonsActionManager();
 	#formatLineTagNameButtonsStore = new FormatLineTagNameButtonsStore();
@@ -41,13 +42,15 @@ export class RichTextEditorUI {
 	}: RichTextEditorUIConstructorProps) {
 		const shadowRoot = domNode.attachShadow({ mode: "closed" });
 
+		this.#shadowRoot = shadowRoot;
+
 		const styleSheet = new CSSStyleSheet();
 
 		styleSheet.replaceSync(inlineCss);
 
-		shadowRoot.adoptedStyleSheets.push(styleSheet);
+		this.#shadowRoot.adoptedStyleSheets.push(styleSheet);
 
-		this.#root = createRoot(shadowRoot);
+		this.#root = createRoot(this.#shadowRoot);
 
 		/**
 		 * In development: Handle HMR updates manually
@@ -75,6 +78,10 @@ export class RichTextEditorUI {
 				richTextArea={richTextArea}
 			/>,
 		);
+	}
+
+	get shadowRoot() {
+		return this.#shadowRoot;
 	}
 
 	onFormatLineTagName(callback: OnFormatLineTagNameProps) {
