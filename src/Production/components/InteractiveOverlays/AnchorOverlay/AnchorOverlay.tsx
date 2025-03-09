@@ -1,4 +1,9 @@
-import { useLayoutEffect, useState, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
+
+import {
+	type AnchorLayoutView,
+	anchorLayoutViewOptions,
+} from "@externalStores";
 
 import {
 	type OnPrimaryCharInputChangeFn,
@@ -7,7 +12,10 @@ import {
 import { EditIcon, TrashIcon } from "../../SVGs";
 import { ToggleButton } from "../../ToggleButton";
 
-import type { AnchorPopoverProps } from "./AnchorOverlay-types";
+import type {
+	AnchorPopoverProps,
+	SetAnchorPropsFn,
+} from "./AnchorOverlay-types";
 
 export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 	const anchorOverlayState = useSyncExternalStore(
@@ -15,62 +23,77 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 		anchorOverlayStore.getSnapshot.bind(anchorOverlayStore),
 	);
 
-	const [layout, setLayout] = useState(anchorOverlayState.layout);
-	const [url, setUrl] = useState(anchorOverlayState.url);
-	const [isOpenNewTab, setIsOpenNewTab] = useState(
-		anchorOverlayState.isOpenNewTab,
-	);
-	const [isDownloadable, setIsDownloadable] = useState(
-		anchorOverlayState.isDownloadable,
-	);
+	const { anchorProps, layoutView, onAction, onActiveViewChange } =
+		anchorOverlayState;
 
-	useLayoutEffect(() => {
-		setLayout(anchorOverlayState.layout);
-		setUrl(anchorOverlayState.url);
-		setIsOpenNewTab(anchorOverlayState.isOpenNewTab);
-		setIsDownloadable(anchorOverlayState.isDownloadable);
-	}, [anchorOverlayState]);
+	const updateLayoutView = (layoutView: AnchorLayoutView) => {
+		anchorOverlayStore.updateState({ layoutView });
+
+		onActiveViewChange({ activeView: layoutView });
+	};
 
 	const onEdit = () => {
-		setLayout("edit");
+		updateLayoutView(anchorLayoutViewOptions.edit);
 	};
 
 	const onUnlink = () => {
-		anchorOverlayState.onAction({ type: "unlink" });
+		onAction({ type: "unlink" });
+
+		updateLayoutView(anchorLayoutViewOptions.main);
 	};
 
-	const onChange: OnPrimaryCharInputChangeFn = ({ value }) => {
-		setUrl(value);
-	};
-
-	const toggleNewTab = () => {
-		setIsOpenNewTab((prev) => !prev);
-	};
-
-	// const toggleDownloadable = () => {
-	// 	setIsDownloadable((prev) => !prev);
-	// };
-
-	const onCancel = () => {
-		anchorOverlayState.onAction({ type: "cancel" });
-	};
-
-	const onApply = () => {
-		anchorOverlayState.onAction({
-			type: "apply",
-			url,
-			isOpenNewTab,
-			isDownloadable,
+	const setAnchorProps: SetAnchorPropsFn = (anchorProps) => {
+		anchorOverlayStore.updateState({
+			anchorProps: { ...anchorOverlayState.anchorProps, ...anchorProps },
 		});
 	};
 
-	const safeUrl = url.replaceAll(/^javascript:/g, "");
+	const onURLChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setAnchorProps({ url: value });
+	};
+
+	const toggleNewTab = () => {
+		const { isOpenNewTab } = anchorProps;
+
+		setAnchorProps({ isOpenNewTab: !isOpenNewTab });
+	};
+
+	const toggleDownloadable = () => {
+		const { isDownloadable } = anchorProps;
+
+		setAnchorProps({ isDownloadable: !isDownloadable });
+	};
+
+	const onCancel = () => {
+		onAction({ type: "cancel" });
+
+		updateLayoutView(anchorLayoutViewOptions.main);
+	};
+
+	const safeUrl = anchorProps.url.trim().replaceAll(/^javascript:/g, "");
+
+	const onApply = () => {
+		onAction({
+			type: "apply",
+			url: safeUrl,
+			isOpenNewTab: anchorProps.isOpenNewTab,
+			isDownloadable: anchorProps.isDownloadable,
+		});
+
+		updateLayoutView(anchorLayoutViewOptions.main);
+	};
+
+	const shouldShowMain = layoutView === anchorLayoutViewOptions.main;
+
+	const shouldShowEdit = layoutView === anchorLayoutViewOptions.edit;
 
 	return (
 		<div className="w-60 p-3">
 			<div
 				className="flex items-center gap-1"
-				style={{ display: layout === "default" ? "" : "none" }}
+				style={{
+					display: shouldShowMain ? "" : "none",
+				}}
 			>
 				<span className="w-36 overflow-hidden text-ellipsis whitespace-nowrap text-blue-700 text-sm underline">
 					<a href={safeUrl} target="_blank" rel="noreferrer" title={safeUrl}>
@@ -87,13 +110,13 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 					</button>
 				</span>
 			</div>
-			<div style={{ display: layout === "edit" ? "" : "none" }}>
+			<div style={{ display: shouldShowEdit ? "" : "none" }}>
 				<PrimaryCharInput
 					className="mb-2 w-full"
 					inputProps={{
 						type: "text",
-						value: url,
-						onChange,
+						value: anchorProps.url,
+						onChange: onURLChange,
 						placeholder: "https://example.com",
 					}}
 					title={"URL"}
@@ -103,15 +126,15 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 					onClick={toggleNewTab}
 				>
 					<span className="text-sm">Open in new tab</span>
-					<ToggleButton isChecked={isOpenNewTab} />
+					<ToggleButton isChecked={anchorProps.isOpenNewTab} />
 				</div>
-				{/* <div
+				<div
 					className="flex cursor-pointer select-none justify-between"
 					onClick={toggleDownloadable}
 				>
 					<span className="text-sm">Downloadable</span>
-					<ToggleButton isChecked={isDownloadable} />
-				</div> */}
+					<ToggleButton isChecked={anchorProps.isDownloadable} />
+				</div>
 				<div className="mt-3 flex justify-between gap-3">
 					<button
 						type="button"
