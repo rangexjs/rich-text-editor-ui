@@ -136,8 +136,8 @@ export const simulateProductEnvironment = ({
 	});
 
 	// Feature flags (should be reworked in the future to make manual testing easier)
-	const isAddTable = false;
-	const isAddAnchor = false;
+	const isAddTable = true;
+	const isAddAnchor = true;
 
 	if (isAddTable) {
 		const tableSettings =
