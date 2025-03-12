@@ -14,6 +14,9 @@ export type {
 } from "@components";
 
 export type {
+	AnchorProps,
+	CellProps,
+	TableProps,
 	TableAlignment,
 	TableLayoutViewOptionsValue,
 	OnTablePropertiesActionFn,
