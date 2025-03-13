@@ -45,6 +45,10 @@ export const App = ({
 		}
 
 		richTextEditorRef.current.append(richTextArea);
+
+		return () => {
+			richTextArea.remove();
+		};
 	}, [richTextArea]);
 
 	return (
