@@ -6,6 +6,7 @@ import {
 	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
+	NonCategorizedOperationButtonsStore,
 } from "@externalStores";
 import { InteractiveOverlayManager } from "@interactiveOverlayManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
@@ -18,11 +19,13 @@ import type {
 	OnFormatStylesProps,
 	OnHistoryNavigationProps,
 	OnNodeInsertionProps,
+	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
+	UpdateNonCategorizedOperationButtonsProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
@@ -33,6 +36,8 @@ export class RichTextEditorUI {
 	#formatStylesButtonsStore = new FormatStylesButtonsStore();
 	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
 	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
+	#nonCategorizedOperationButtonsStore =
+		new NonCategorizedOperationButtonsStore();
 	#interactiveOverlayManager = new InteractiveOverlayManager();
 
 	constructor({
@@ -75,6 +80,9 @@ export class RichTextEditorUI {
 				formatStylesButtonsStore={this.#formatStylesButtonsStore}
 				historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
 				nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
+				nonCategorizedOperationButtonsStore={
+					this.#nonCategorizedOperationButtonsStore
+				}
 				richTextArea={richTextArea}
 			/>,
 		);
@@ -100,6 +108,10 @@ export class RichTextEditorUI {
 		this.#toolbarButtonsActionManager.onNodeInsertion = callback;
 	}
 
+	onNonCategorizedOperation(callback: OnNonCategorizedOperationProps) {
+		this.#toolbarButtonsActionManager.onNonCategorizedOperation = callback;
+	}
+
 	updateFormatLineTagNameButtons(props: UpdateFormatLineTagNameButtonsProps) {
 		this.#formatLineTagNameButtonsStore.updateState(props);
 	}
@@ -114,6 +126,12 @@ export class RichTextEditorUI {
 
 	updateNodeInsertionButtons(props: UpdateNodeInsertionButtonsProps) {
 		this.#nodeInsertionButtonsStore.updateState(props);
+	}
+
+	updateNonCategorizedOperationButtons(
+		props: UpdateNonCategorizedOperationButtonsProps,
+	) {
+		this.#nonCategorizedOperationButtonsStore.updateState(props);
 	}
 
 	get interactiveOverlay() {

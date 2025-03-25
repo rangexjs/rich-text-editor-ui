@@ -11,6 +11,7 @@ export const App = ({
 	formatStylesButtonsStore,
 	historyNavigationButtonsStore,
 	nodeInsertionButtonsStore,
+	nonCategorizedOperationButtonsStore,
 	richTextArea,
 }: AppProps) => {
 	const richTextEditorRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,15 @@ export const App = ({
 		nodeInsertionButtonsStore.getSnapshot.bind(nodeInsertionButtonsStore),
 	);
 
+	const nonCategorizedOperationButtonsState = useSyncExternalStore(
+		nonCategorizedOperationButtonsStore.subscribe.bind(
+			nonCategorizedOperationButtonsStore,
+		),
+		nonCategorizedOperationButtonsStore.getSnapshot.bind(
+			nonCategorizedOperationButtonsStore,
+		),
+	);
+
 	useEffect(() => {
 		if (!richTextEditorRef.current) {
 			return;
@@ -63,6 +73,9 @@ export const App = ({
 				formatStylesButtonsState={formatStylesButtonsState}
 				historyNavigationButtonsState={historyNavigationButtonsState}
 				nodeInsertionButtonsState={nodeInsertionButtonsState}
+				nonCategorizedOperationButtonsState={
+					nonCategorizedOperationButtonsState
+				}
 			/>
 		</div>
 	);

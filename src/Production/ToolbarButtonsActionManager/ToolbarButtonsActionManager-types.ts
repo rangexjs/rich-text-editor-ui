@@ -96,3 +96,18 @@ export type NodeInsertionActionState =
 type OnNodeInsertionFnProps = NodeInsertionActionState;
 
 export type OnNodeInsertionFn = (props: OnNodeInsertionFnProps) => void;
+
+// NonCategorizedOperation
+
+interface IsTextAreaReadOnlyActionState
+	extends GetButtonType<"isTextAreaReadOnly"> {
+	newState: boolean;
+}
+
+export type NonCategorizedOperationActionState = IsTextAreaReadOnlyActionState;
+
+type OnNonCategorizedOperationProps = NonCategorizedOperationActionState;
+
+export type OnNonCategorizedOperationFn = (
+	props: OnNonCategorizedOperationProps,
+) => void;

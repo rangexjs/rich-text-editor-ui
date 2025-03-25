@@ -15,6 +15,7 @@ import {
 	HistoryForwardToolbarButton,
 	ImageToolbarButton,
 	IndentationToolbarButton,
+	IsTextAreaReadOnlyToolbarButton,
 	ItalicToolbarButton,
 	LetterSpacingToolbarButton,
 	LineHeightToolbarButton,
@@ -38,6 +39,7 @@ export const EditorToolbar = ({
 	formatStylesButtonsState,
 	historyNavigationButtonsState,
 	nodeInsertionButtonsState,
+	nonCategorizedOperationButtonsState,
 }: EditorToolbarProps) => {
 	const { tagName } = formatLineTagNameButtonsState;
 
@@ -68,6 +70,8 @@ export const EditorToolbar = ({
 		table,
 		todoList,
 	} = nodeInsertionButtonsState;
+
+	const { isTextAreaReadOnly } = nonCategorizedOperationButtonsState;
 
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
@@ -176,6 +180,15 @@ export const EditorToolbar = ({
 						<IndentationToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
 							state={indentation}
+						/>
+					);
+				}
+
+				if (buttonsName.isTextAreaReadOnly === name) {
+					return (
+						<IsTextAreaReadOnlyToolbarButton
+							toolbarButtonsActionManager={toolbarButtonsActionManager}
+							state={isTextAreaReadOnly}
 						/>
 					);
 				}

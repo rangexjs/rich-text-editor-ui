@@ -34,6 +34,7 @@ export const simulateProductEnvironment = ({
 				"anchor",
 				"symbols",
 			],
+			["is-text-area-read-only"],
 		],
 		[
 			["line-tag-name"],
@@ -132,6 +133,10 @@ export const simulateProductEnvironment = ({
 	});
 
 	richTextEditorUI.onNodeInsertion((props) => {
+		console.log(props);
+	});
+
+	richTextEditorUI.onNonCategorizedOperation((props) => {
 		console.log(props);
 	});
 

@@ -4,6 +4,7 @@ import type {
 	FormatStylesButtonsState,
 	HistoryNavigationButtonsState,
 	NodeInsertionButtonsState,
+	NonCategorizedOperationButtonsState,
 } from "@externalStores";
 import type { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
@@ -24,4 +25,5 @@ export interface EditorToolbarProps {
 	formatStylesButtonsState: FormatStylesButtonsState;
 	historyNavigationButtonsState: HistoryNavigationButtonsState;
 	nodeInsertionButtonsState: NodeInsertionButtonsState;
+	nonCategorizedOperationButtonsState: NonCategorizedOperationButtonsState;
 }

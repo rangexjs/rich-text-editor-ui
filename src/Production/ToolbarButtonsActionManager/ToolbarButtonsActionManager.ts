@@ -3,6 +3,7 @@ import type {
 	OnFormatStylesChangeFn,
 	OnHistoryNavigationFn,
 	OnNodeInsertionFn,
+	OnNonCategorizedOperationFn,
 } from "./ToolbarButtonsActionManager-types";
 
 export class ToolbarButtonsActionManager {
@@ -10,4 +11,5 @@ export class ToolbarButtonsActionManager {
 	onFormatStyles: OnFormatStylesChangeFn | null = null;
 	onHistoryNavigation: OnHistoryNavigationFn | null = null;
 	onNodeInsertion: OnNodeInsertionFn | null = null;
+	onNonCategorizedOperation: OnNonCategorizedOperationFn | null = null;
 }
