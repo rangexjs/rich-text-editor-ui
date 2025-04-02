@@ -14,7 +14,7 @@
 		"fix": "biome check --write",
 		"fix:unsafe": "biome check --write --unsafe",
 		"lint": "biome check && tsc",
-		"publish": "biome check && tsc && vite build && npm publish"
+		"npm:publish": "biome check && tsc && vite build && npm publish"
 	},
 	"dependencies": {
 		"react": "^19.0.0",
