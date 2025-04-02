@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { TableIcon } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type {
 	OnSquareButtonClickProps,
 	SquareStateList,
@@ -141,16 +143,9 @@ export const TableToolbarButton = ({
 			>
 				<TableIcon size={1.1} />
 			</PrimaryButton>
-			<div
+			<ToolbarDropdown
 				ref={popoverTargetElementRef}
-				popover="auto"
-				className="absolute mt-1 rounded-md border border-slate-200 bg-white p-1 leading-[0] shadow-md"
-				style={{
-					// @ts-ignore
-					positionAnchor: tableToolbarButtonAnchor,
-					top: "anchor(bottom)",
-					justifySelf: "anchor-center",
-				}}
+				className="p-1 leading-[0]"
 			>
 				<div
 					className="inline-grid"
@@ -175,7 +170,7 @@ export const TableToolbarButton = ({
 				<div className="mt-1 text-center text-sm">
 					{squareNumbers.row} x {squareNumbers.col}
 				</div>
-			</div>
+			</ToolbarDropdown>
 		</>
 	);
 };

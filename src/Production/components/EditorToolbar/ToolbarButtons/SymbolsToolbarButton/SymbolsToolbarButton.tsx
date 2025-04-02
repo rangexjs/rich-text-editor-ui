@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+
+import { buttonsName } from "@constants";
+
 import { PrimaryButton } from "../../../PrimaryButton";
 import { SymbolIcon } from "../../../SVGs";
 
@@ -6,7 +9,6 @@ import { ToolbarDropdown } from "../Utilities";
 
 import { emojis } from "./SymbolsList";
 
-import { buttonsName } from "@constants";
 import type { SymbolsToolbarButtonProps } from "./SymbolsToolbarButton-types";
 
 export const SymbolsToolbarButton = ({
@@ -73,11 +75,7 @@ export const SymbolsToolbarButton = ({
 			>
 				<SymbolIcon />
 			</PrimaryButton>
-			<ToolbarDropdown
-				ref={popoverTargetElementRef}
-				positionAnchor={symbolsToolbarButtonAnchor}
-				className="max-h-52"
-			>
+			<ToolbarDropdown ref={popoverTargetElementRef} className="max-h-52">
 				<div className="inline-grid grid-cols-8 gap-0.5 p-1">
 					{emojis.map((emoji, index) => (
 						<button

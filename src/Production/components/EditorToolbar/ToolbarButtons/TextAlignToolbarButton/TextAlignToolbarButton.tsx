@@ -8,6 +8,8 @@ import {
 	TextAlignRightIcon,
 } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type {
 	OnTextAlignClickProps,
 	TextAlignList,
@@ -94,16 +96,9 @@ export const TextAlignToolbarButton = ({
 				{firstItem === "justify" && <TextAlignJustifyIcon />}
 				{firstItem === "end" && <TextAlignRightIcon />}
 			</PrimaryButton>
-			<div
+			<ToolbarDropdown
 				ref={popoverTargetElementRef}
-				popover="auto"
-				className="absolute mt-1 gap-0.5 rounded-md border border-slate-200 bg-white p-1 text-sm shadow-md [&:popover-open]:flex"
-				style={{
-					// @ts-ignore
-					positionAnchor: textAlignToolbarButtonAnchor,
-					top: "anchor(bottom)",
-					justifySelf: "anchor-center",
-				}}
+				className="gap-0.5 p-1 text-sm [&:popover-open]:flex"
 			>
 				{textAlignList.map((textAlign) => (
 					<PrimaryButton
@@ -117,7 +112,7 @@ export const TextAlignToolbarButton = ({
 						{textAlign === "end" && <TextAlignRightIcon />}
 					</PrimaryButton>
 				))}
-			</div>
+			</ToolbarDropdown>
 		</>
 	);
 };

@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontSizeIcon } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type {
 	FontSizeToolbarButtonProps,
 	OnFontSizeClickProps,
@@ -98,16 +100,9 @@ export const FontSizeToolbarButton = ({
 			>
 				<FontSizeIcon />
 			</PrimaryButton>
-			<div
+			<ToolbarDropdown
 				ref={popoverTargetElementRef}
-				popover="auto"
-				className="absolute mt-1 max-h-80 flex-col rounded-md border border-slate-200 bg-white py-2 text-sm shadow-md [&:popover-open]:flex"
-				style={{
-					// @ts-ignore
-					positionAnchor: fontSizeToolbarButtonAnchor,
-					top: "anchor(bottom)",
-					justifySelf: "anchor-center",
-				}}
+				className="max-h-80 flex-col py-2 text-sm [&:popover-open]:flex"
 			>
 				<PrimaryButton
 					className="justify-center rounded-none px-1 py-0.5 font-semibold"
@@ -145,7 +140,7 @@ export const FontSizeToolbarButton = ({
 						</span>
 					</PrimaryButton>
 				))}
-			</div>
+			</ToolbarDropdown>
 		</>
 	);
 };

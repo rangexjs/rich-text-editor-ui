@@ -6,6 +6,8 @@ import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { BackgroundColorIcon } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type { CreateBackgroundColorPropsProps } from "./BackgroundColorToolbarButton-types";
 
 export const BackgroundColorToolbarButton = ({
@@ -82,22 +84,12 @@ export const BackgroundColorToolbarButton = ({
 			>
 				<BackgroundColorIcon />
 			</PrimaryButton>
-			<div
-				ref={popoverTargetElementRef}
-				className="mt-1 rounded-lg border border-slate-200 shadow-md"
-				popover="auto"
-				style={{
-					// @ts-ignore
-					positionAnchor: anchorName,
-					top: "anchor(bottom)",
-					justifySelf: "anchor-center",
-				}}
-			>
+			<ToolbarDropdown ref={popoverTargetElementRef}>
 				<ColorPanel
 					activeColors={activeColors}
 					onColorSelected={onColorSelected}
 				/>
-			</div>
+			</ToolbarDropdown>
 		</>
 	);
 };

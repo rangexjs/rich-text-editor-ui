@@ -5,6 +5,8 @@ import type { LineTagNameValue } from "@externalStores";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type {
 	DropDownButtonList,
 	LineTagNameToolbarButtonProps,
@@ -138,16 +140,10 @@ export const LineTagNameToolbarButton = ({
 			>
 				{buttonText}
 			</PrimaryButton>
-			<div
+			<ToolbarDropdown
 				ref={popoverTargetElementRef}
-				popover="auto"
-				className="mt-1 w-32 flex-col rounded-md border border-slate-200 bg-slate-white py-2 shadow-md [&:popover-open]:flex"
-				style={{
-					// @ts-ignore
-					positionAnchor: anchorName,
-					top: "anchor(bottom)",
-					left: "anchor(left)",
-				}}
+				className="w-32 flex-col py-2 [&:popover-open]:flex"
+				position="left"
 			>
 				{dropdownButtonList.map(({ tagName, name, isActive }) => (
 					<PrimaryButton
@@ -179,7 +175,7 @@ export const LineTagNameToolbarButton = ({
 						</span>
 					</PrimaryButton>
 				))}
-			</div>
+			</ToolbarDropdown>
 		</>
 	);
 };
