@@ -151,8 +151,6 @@ export const TableSettingsOverlay = ({
 		onTableCellAction({ type });
 	};
 
-	const tableColumnAnchor = "--table-column-anchor";
-
 	const columnButtonsGroup: TableButtonsGroup = [
 		[
 			{
@@ -185,8 +183,6 @@ export const TableSettingsOverlay = ({
 		],
 	];
 
-	const tableRowAnchor = "--table-row-anchor";
-
 	const rowButtonsGroup: TableButtonsGroup = [
 		[
 			{
@@ -218,8 +214,6 @@ export const TableSettingsOverlay = ({
 			},
 		],
 	];
-
-	const tableCellSpanModifierAnchor = "--table-cell-span-modifier-anchor";
 
 	const cellSpanModifierButtonsGroup: TableButtonsGroup = [
 		[
@@ -308,7 +302,6 @@ export const TableSettingsOverlay = ({
 			dropdownRef: columnDropdownRef,
 			popover: (
 				<TableCellDropdown
-					anchorName={tableColumnAnchor}
 					popoverTargetElementRef={columnDropdownRef}
 					buttonsGroup={columnButtonsGroup}
 				/>
@@ -321,7 +314,6 @@ export const TableSettingsOverlay = ({
 			dropdownRef: rowDropdownRef,
 			popover: (
 				<TableCellDropdown
-					anchorName={tableRowAnchor}
 					popoverTargetElementRef={rowDropdownRef}
 					buttonsGroup={rowButtonsGroup}
 				/>
@@ -334,7 +326,6 @@ export const TableSettingsOverlay = ({
 			dropdownRef: cellSpanModifierDropdownRef,
 			popover: (
 				<TableCellDropdown
-					anchorName={tableCellSpanModifierAnchor}
 					popoverTargetElementRef={cellSpanModifierDropdownRef}
 					buttonsGroup={cellSpanModifierButtonsGroup}
 				/>

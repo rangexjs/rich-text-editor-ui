@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import type { TableCellDropdownProps } from "./TableCellDropdown-types";
 
 export const TableCellDropdown = ({
-	anchorName,
 	popoverTargetElementRef,
 	buttonsGroup,
 }: TableCellDropdownProps) => {
@@ -11,10 +10,9 @@ export const TableCellDropdown = ({
 		<div
 			ref={popoverTargetElementRef}
 			className="absolute mt-2 rounded-md border border-slate-200 bg-white p-1 shadow-md"
+			// @ts-ignore
 			popover="auto"
 			style={{
-				// @ts-ignore
-				anchorName,
 				top: "anchor(bottom)",
 				justifySelf: "anchor-center",
 			}}
