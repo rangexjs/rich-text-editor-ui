@@ -12,6 +12,7 @@ export const buttonsName = {
 	historyForward: "history-forward",
 	image: "image",
 	indentation: "indentation",
+	isTextAreaReadOnly: "is-text-area-read-only",
 	italic: "italic",
 	letterSpacing: "letter-spacing",
 	lineHeight: "line-height",

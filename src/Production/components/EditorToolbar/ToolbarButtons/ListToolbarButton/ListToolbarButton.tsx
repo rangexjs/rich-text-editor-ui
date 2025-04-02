@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { ListIcon } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type {
 	ListItemList,
 	ListToolbarButtonProps,
@@ -51,7 +53,7 @@ export const ListToolbarButton = ({
 	const listItemLineHeight = 14;
 	const listItemFillerHeight = 4;
 
-	const onListButtonClick = (listType: OnListButtonClickProps) => {
+	const onListButtonClick = (listStyleType: OnListButtonClickProps) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
 
 		if (!popoverTargetElement) {
@@ -60,7 +62,10 @@ export const ListToolbarButton = ({
 
 		popoverTargetElement.hidePopover();
 
-		toolbarButtonsActionManager.onNodeInsertion?.({ type: "list", listType });
+		toolbarButtonsActionManager.onNodeInsertion?.({
+			type: "list",
+			listStyleType,
+		});
 	};
 
 	return (
@@ -74,17 +79,7 @@ export const ListToolbarButton = ({
 			>
 				<ListIcon />
 			</PrimaryButton>
-			<div
-				ref={popoverTargetElementRef}
-				popover="auto"
-				className="absolute mt-1 rounded-md border border-slate-200 bg-white p-1 shadow-md"
-				style={{
-					// @ts-ignore
-					positionAnchor: listToolbarButtonAnchor,
-					top: "anchor(bottom)",
-					justifySelf: "anchor-center",
-				}}
-			>
+			<ToolbarDropdown ref={popoverTargetElementRef} className="p-1">
 				<div className="grid grid-cols-2 gap-1">
 					{listItemList.map((type) => (
 						<PrimaryButton key={type} onClick={() => onListButtonClick(type)}>
@@ -111,7 +106,7 @@ export const ListToolbarButton = ({
 						</PrimaryButton>
 					))}
 				</div>
-			</div>
+			</ToolbarDropdown>
 		</>
 	);
 };

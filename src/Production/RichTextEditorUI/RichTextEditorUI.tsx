@@ -6,6 +6,7 @@ import {
 	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
+	NonCategorizedOperationButtonsStore,
 } from "@externalStores";
 import { InteractiveOverlayManager } from "@interactiveOverlayManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
@@ -18,20 +19,25 @@ import type {
 	OnFormatStylesProps,
 	OnHistoryNavigationProps,
 	OnNodeInsertionProps,
+	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
+	UpdateNonCategorizedOperationButtonsProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
+	#shadowRoot;
 	#root;
 	#toolbarButtonsActionManager = new ToolbarButtonsActionManager();
 	#formatLineTagNameButtonsStore = new FormatLineTagNameButtonsStore();
 	#formatStylesButtonsStore = new FormatStylesButtonsStore();
 	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
 	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
+	#nonCategorizedOperationButtonsStore =
+		new NonCategorizedOperationButtonsStore();
 	#interactiveOverlayManager = new InteractiveOverlayManager();
 
 	constructor({
@@ -41,13 +47,15 @@ export class RichTextEditorUI {
 	}: RichTextEditorUIConstructorProps) {
 		const shadowRoot = domNode.attachShadow({ mode: "closed" });
 
+		this.#shadowRoot = shadowRoot;
+
 		const styleSheet = new CSSStyleSheet();
 
 		styleSheet.replaceSync(inlineCss);
 
-		shadowRoot.adoptedStyleSheets.push(styleSheet);
+		this.#shadowRoot.adoptedStyleSheets.push(styleSheet);
 
-		this.#root = createRoot(shadowRoot);
+		this.#root = createRoot(this.#shadowRoot);
 
 		/**
 		 * In development: Handle HMR updates manually
@@ -72,9 +80,16 @@ export class RichTextEditorUI {
 				formatStylesButtonsStore={this.#formatStylesButtonsStore}
 				historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
 				nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
+				nonCategorizedOperationButtonsStore={
+					this.#nonCategorizedOperationButtonsStore
+				}
 				richTextArea={richTextArea}
 			/>,
 		);
+	}
+
+	get shadowRoot() {
+		return this.#shadowRoot;
 	}
 
 	onFormatLineTagName(callback: OnFormatLineTagNameProps) {
@@ -93,6 +108,10 @@ export class RichTextEditorUI {
 		this.#toolbarButtonsActionManager.onNodeInsertion = callback;
 	}
 
+	onNonCategorizedOperation(callback: OnNonCategorizedOperationProps) {
+		this.#toolbarButtonsActionManager.onNonCategorizedOperation = callback;
+	}
+
 	updateFormatLineTagNameButtons(props: UpdateFormatLineTagNameButtonsProps) {
 		this.#formatLineTagNameButtonsStore.updateState(props);
 	}
@@ -107,6 +126,12 @@ export class RichTextEditorUI {
 
 	updateNodeInsertionButtons(props: UpdateNodeInsertionButtonsProps) {
 		this.#nodeInsertionButtonsStore.updateState(props);
+	}
+
+	updateNonCategorizedOperationButtons(
+		props: UpdateNonCategorizedOperationButtonsProps,
+	) {
+		this.#nonCategorizedOperationButtonsStore.updateState(props);
 	}
 
 	get interactiveOverlay() {

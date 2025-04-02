@@ -1,4 +1,4 @@
-import type { CodeBlockLanguage } from "@components";
+import type { CodeBlockLanguage, ListStyleType } from "@components";
 import type { buttonsName } from "@constants";
 
 // FormatStyles
@@ -68,10 +68,8 @@ interface ImageURL {
 
 type ImageActionState = GetButtonType<"image"> & (ImageFileUpload | ImageURL);
 
-export type ListActionStateListType = "disc" | "circle" | "square" | "decimal";
-
 interface ListActionState extends GetButtonType<"list"> {
-	listType: ListActionStateListType;
+	listStyleType: ListStyleType;
 }
 
 interface SymbolsActionState extends GetButtonType<"symbols"> {
@@ -98,3 +96,18 @@ export type NodeInsertionActionState =
 type OnNodeInsertionFnProps = NodeInsertionActionState;
 
 export type OnNodeInsertionFn = (props: OnNodeInsertionFnProps) => void;
+
+// NonCategorizedOperation
+
+interface IsTextAreaReadOnlyActionState
+	extends GetButtonType<"isTextAreaReadOnly"> {
+	newState: boolean;
+}
+
+export type NonCategorizedOperationActionState = IsTextAreaReadOnlyActionState;
+
+type OnNonCategorizedOperationProps = NonCategorizedOperationActionState;
+
+export type OnNonCategorizedOperationFn = (
+	props: OnNonCategorizedOperationProps,
+) => void;

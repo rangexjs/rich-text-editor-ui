@@ -1,14 +1,24 @@
-export {
-	RichTextEditorUI,
-	type UpdateFormatLineTagNameButtonsProps,
-	type UpdateFormatStylesButtonsProps,
-	type UpdateHistoryNavigationButtonsProps,
-	type UpdateNodeInsertionButtonsProps,
+export { RichTextEditorUI } from "./RichTextEditorUI";
+
+export type {
+	UpdateFormatLineTagNameButtonsProps,
+	UpdateFormatStylesButtonsProps,
+	UpdateHistoryNavigationButtonsProps,
+	UpdateNodeInsertionButtonsProps,
 } from "./RichTextEditorUI";
 
-export type { ToolbarButtons } from "@components";
 export type {
+	CodeBlockLanguage,
+	ListStyleType,
+	ToolbarButtons,
+} from "@components";
+
+export type {
+	AnchorProps,
+	CellProps,
+	TableProps,
 	TableAlignment,
+	TableLayoutViewOptionsValue,
 	OnTablePropertiesActionFn,
 	OnTablePropertiesActionProps,
 	OnCellPropertiesActionFn,

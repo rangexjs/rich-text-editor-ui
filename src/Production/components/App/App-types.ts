@@ -3,6 +3,7 @@ import type {
 	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
+	NonCategorizedOperationButtonsStore,
 } from "@externalStores";
 import type { ToolbarButtonsActionManager } from "src/Production/ToolbarButtonsActionManager";
 
@@ -17,5 +18,6 @@ export interface AppProps {
 	formatStylesButtonsStore: FormatStylesButtonsStore;
 	historyNavigationButtonsStore: HistoryNavigationButtonsStore;
 	nodeInsertionButtonsStore: NodeInsertionButtonsStore;
+	nonCategorizedOperationButtonsStore: NonCategorizedOperationButtonsStore;
 	richTextArea: HTMLElement;
 }

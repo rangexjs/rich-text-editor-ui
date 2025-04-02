@@ -1,6 +1,6 @@
 {
 	"name": "@rangex/rich-text-editor-ui",
-	"version": "0.2.0-alpha.1",
+	"version": "0.3.0-alpha.2",
 	"private": false,
 	"type": "module",
 	"repository": "git@github.com:rangexjs/rich-text-editor-ui.git",
@@ -14,7 +14,7 @@
 		"fix": "biome check --write",
 		"fix:unsafe": "biome check --write --unsafe",
 		"lint": "biome check && tsc",
-		"publish": "biome check && tsc && vite build && npm publish"
+		"npm:publish": "biome check && tsc && vite build && npm publish"
 	},
 	"dependencies": {
 		"react": "^19.0.0",

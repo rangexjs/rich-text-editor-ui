@@ -1,4 +1,4 @@
-import { ButtonsStore } from "../ButtonsStore";
+import { ExternalStore } from "../../ExternalStore";
 
 import type { FormatStylesButtonsState } from "./FormatStylesButtonsStore-types";
 
@@ -17,7 +17,7 @@ const initialState: FormatStylesButtonsState = Object.seal({
 	underline: { isChecked: false, isDisabled: true },
 });
 
-export class FormatStylesButtonsStore extends ButtonsStore<FormatStylesButtonsState> {
+export class FormatStylesButtonsStore extends ExternalStore<FormatStylesButtonsState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

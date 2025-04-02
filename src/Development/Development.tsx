@@ -34,6 +34,7 @@ export const simulateProductEnvironment = ({
 				"anchor",
 				"symbols",
 			],
+			["is-text-area-read-only"],
 		],
 		[
 			["line-tag-name"],
@@ -134,4 +135,25 @@ export const simulateProductEnvironment = ({
 	richTextEditorUI.onNodeInsertion((props) => {
 		console.log(props);
 	});
+
+	richTextEditorUI.onNonCategorizedOperation((props) => {
+		console.log(props);
+	});
+
+	// Feature flags (should be reworked in the future to make manual testing easier)
+	const isAddTable = true;
+	const isAddAnchor = true;
+
+	if (isAddTable) {
+		const tableSettings =
+			richTextEditorUI.interactiveOverlay.createTableSettingsElement();
+
+		richTextArea.append(tableSettings);
+	}
+
+	if (isAddAnchor) {
+		const anchor = richTextEditorUI.interactiveOverlay.createAnchorElement();
+
+		richTextArea.append(anchor);
+	}
 };

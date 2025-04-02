@@ -12,6 +12,8 @@ import {
 	ImageUploadIcon,
 } from "../../../SVGs";
 
+import { ToolbarDropdown } from "../Utilities";
+
 import type {
 	ImageToolbarButtonProps,
 	PopoverButtons,
@@ -178,16 +180,9 @@ export const ImageToolbarButton = ({
 			>
 				<ImageIcon />
 			</PrimaryButton>
-			<div
+			<ToolbarDropdown
 				ref={popoverTargetElementRef}
-				popover="auto"
-				className="absolute mt-1 flex-col rounded-md border border-slate-200 bg-white py-1 shadow-md [&:popover-open]:flex"
-				style={{
-					// @ts-ignore
-					positionAnchor: imageToolbarButtonAnchor,
-					top: "anchor(bottom)",
-					justifySelf: "anchor-center",
-				}}
+				className="flex-col py-1 [&:popover-open]:flex"
 			>
 				{popoverButtons.map(({ children, onClick }, index) => (
 					<PrimaryButton key={index} className="rounded-none" onClick={onClick}>
@@ -196,7 +191,7 @@ export const ImageToolbarButton = ({
 						</span>
 					</PrimaryButton>
 				))}
-			</div>
+			</ToolbarDropdown>
 			<dialog
 				ref={imageUrlDialogRef}
 				className="w-[min(272px,100%)] rounded-md border border-slate-200 bg-white p-2 shadow-md"

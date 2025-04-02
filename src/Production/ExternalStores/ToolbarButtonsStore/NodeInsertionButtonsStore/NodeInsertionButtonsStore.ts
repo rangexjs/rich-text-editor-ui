@@ -1,4 +1,4 @@
-import { ButtonsStore } from "../ButtonsStore";
+import { ExternalStore } from "../../ExternalStore";
 
 import type { NodeInsertionButtonsState } from "./NodeInsertionButtonsStore-types";
 
@@ -14,7 +14,7 @@ const initialState: NodeInsertionButtonsState = Object.seal({
 	todoList: { isDisabled: true },
 });
 
-export class NodeInsertionButtonsStore extends ButtonsStore<NodeInsertionButtonsState> {
+export class NodeInsertionButtonsStore extends ExternalStore<NodeInsertionButtonsState> {
 	constructor() {
 		super({ state: { ...initialState } });
 	}

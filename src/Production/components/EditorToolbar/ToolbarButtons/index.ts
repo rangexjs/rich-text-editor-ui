@@ -10,6 +10,7 @@ export * from "./HistoryBackToolbarButton";
 export * from "./HistoryForwardToolbarButton";
 export * from "./ImageToolbarButton";
 export * from "./IndentationToolbarButton";
+export * from "./IsTextAreaReadOnlyToolbarButton";
 export * from "./ItalicToolbarButton";
 export * from "./LetterSpacingToolbarButton";
 export * from "./LineHeightToolbarButton";

@@ -1,3 +1,5 @@
+import { namedColors } from "./NamedColors";
+
 import type {
 	ColorHSLProps,
 	ColorHexProps,
@@ -46,7 +48,7 @@ const isValidRGB = ({ r, g, b, a }: IsValidRGBProps) => {
 };
 
 const isValidHex = ({ hex }: IsValidHexProps) => {
-	const replacedHex = hex.replace(/^#/, "");
+	const replacedHex = hex.replace(/^#/, "").toLowerCase();
 
 	if (/[^0-9a-f]/.test(replacedHex)) {
 		return false;
@@ -270,6 +272,14 @@ const getHSLFormatFromColor = ({
 
 	if (color.startsWith("#")) {
 		return hexToHsl({ hex: color });
+	}
+
+	const namedColor = namedColors.find(({ name }) => name === color);
+
+	if (namedColor) {
+		const { hex } = namedColor;
+
+		return hexToHsl({ hex });
 	}
 
 	throw new Error("Color type couldn't be handled.");

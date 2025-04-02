@@ -130,7 +130,7 @@ export const ColorPanel = ({
 
 	return (
 		<div className="flex w-[264px] flex-col bg-white p-1">
-			<div className="mb-2 flex justify-around rounded-lg bg-slate-50 ">
+			<div className="mb-2 flex justify-around rounded-md bg-slate-50 ">
 				{tabList.map(({ name, anchorName }) => (
 					<button
 						key={name}
@@ -147,7 +147,7 @@ export const ColorPanel = ({
 					</button>
 				))}
 				<span
-					className="pointer-events-none absolute rounded-lg"
+					className="pointer-events-none absolute rounded-md"
 					style={{
 						// @ts-ignore
 						positionAnchor: activeAnchorName,

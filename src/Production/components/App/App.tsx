@@ -11,9 +11,10 @@ export const App = ({
 	formatStylesButtonsStore,
 	historyNavigationButtonsStore,
 	nodeInsertionButtonsStore,
+	nonCategorizedOperationButtonsStore,
 	richTextArea,
 }: AppProps) => {
-	const richTextEditorRef = useRef<HTMLDivElement>(null);
+	const richTextAreaWrapperRef = useRef<HTMLDivElement>(null);
 
 	const formatLineTagNameButtonsState = useSyncExternalStore(
 		formatLineTagNameButtonsStore.subscribe.bind(formatLineTagNameButtonsStore),
@@ -39,19 +40,29 @@ export const App = ({
 		nodeInsertionButtonsStore.getSnapshot.bind(nodeInsertionButtonsStore),
 	);
 
+	const nonCategorizedOperationButtonsState = useSyncExternalStore(
+		nonCategorizedOperationButtonsStore.subscribe.bind(
+			nonCategorizedOperationButtonsStore,
+		),
+		nonCategorizedOperationButtonsStore.getSnapshot.bind(
+			nonCategorizedOperationButtonsStore,
+		),
+	);
+
 	useEffect(() => {
-		if (!richTextEditorRef.current) {
+		if (!richTextAreaWrapperRef.current) {
 			return;
 		}
 
-		richTextEditorRef.current.append(richTextArea);
+		richTextAreaWrapperRef.current.append(richTextArea);
+
+		return () => {
+			richTextArea.remove();
+		};
 	}, [richTextArea]);
 
 	return (
-		<div
-			ref={richTextEditorRef}
-			className="rounded border border-slate-300 border-solid"
-		>
+		<div className="rounded border border-slate-300 border-solid">
 			<EditorToolbar
 				toolbarRows={toolbarButtons}
 				toolbarButtonsActionManager={toolbarButtonsActionManager}
@@ -59,7 +70,11 @@ export const App = ({
 				formatStylesButtonsState={formatStylesButtonsState}
 				historyNavigationButtonsState={historyNavigationButtonsState}
 				nodeInsertionButtonsState={nodeInsertionButtonsState}
+				nonCategorizedOperationButtonsState={
+					nonCategorizedOperationButtonsState
+				}
 			/>
+			<div ref={richTextAreaWrapperRef} />
 		</div>
 	);
 };
