@@ -97,7 +97,6 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 		<div
 			id={interactiveOverlayId.anchor}
 			className="w-60 bg-white p-3"
-			// @ts-ignore
 			popover="manual"
 		>
 			<div

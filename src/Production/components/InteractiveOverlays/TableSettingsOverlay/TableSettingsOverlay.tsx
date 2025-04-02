@@ -354,7 +354,6 @@ export const TableSettingsOverlay = ({
 		<div
 			id={interactiveOverlayId.tableSettings}
 			className="bg-white"
-			// @ts-ignore
 			popover="manual"
 		>
 			<div
