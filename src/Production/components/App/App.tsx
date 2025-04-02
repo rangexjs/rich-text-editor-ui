@@ -14,7 +14,7 @@ export const App = ({
 	nonCategorizedOperationButtonsStore,
 	richTextArea,
 }: AppProps) => {
-	const richTextEditorRef = useRef<HTMLDivElement>(null);
+	const richTextAreaWrapperRef = useRef<HTMLDivElement>(null);
 
 	const formatLineTagNameButtonsState = useSyncExternalStore(
 		formatLineTagNameButtonsStore.subscribe.bind(formatLineTagNameButtonsStore),
@@ -50,11 +50,11 @@ export const App = ({
 	);
 
 	useEffect(() => {
-		if (!richTextEditorRef.current) {
+		if (!richTextAreaWrapperRef.current) {
 			return;
 		}
 
-		richTextEditorRef.current.append(richTextArea);
+		richTextAreaWrapperRef.current.append(richTextArea);
 
 		return () => {
 			richTextArea.remove();
@@ -62,10 +62,7 @@ export const App = ({
 	}, [richTextArea]);
 
 	return (
-		<div
-			ref={richTextEditorRef}
-			className="rounded border border-slate-300 border-solid"
-		>
+		<div className="rounded border border-slate-300 border-solid">
 			<EditorToolbar
 				toolbarRows={toolbarButtons}
 				toolbarButtonsActionManager={toolbarButtonsActionManager}
@@ -77,6 +74,7 @@ export const App = ({
 					nonCategorizedOperationButtonsState
 				}
 			/>
+			<div ref={richTextAreaWrapperRef} />
 		</div>
 	);
 };
