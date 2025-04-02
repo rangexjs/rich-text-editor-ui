@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 
+import { interactiveOverlayId } from "@constants";
 import {
 	type AnchorLayoutView,
 	anchorLayoutViewOptions,
@@ -93,7 +94,12 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 	const shouldShowEdit = layoutView === anchorLayoutViewOptions.edit;
 
 	return (
-		<div className="w-60 bg-white p-3">
+		<div
+			id={interactiveOverlayId.anchor}
+			className="w-60 bg-white p-3"
+			// @ts-ignore
+			popover="manual"
+		>
 			<div
 				className="flex items-center gap-1"
 				style={{

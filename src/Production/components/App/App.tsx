@@ -1,6 +1,7 @@
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 
 import { EditorToolbar } from "../EditorToolbar";
+import { RichTextAreaWrapper } from "../RichTextAreaWrapper";
 
 import type { AppProps } from "./App-types";
 
@@ -12,10 +13,11 @@ export const App = ({
 	historyNavigationButtonsStore,
 	nodeInsertionButtonsStore,
 	nonCategorizedOperationButtonsStore,
+	interactiveOverlays,
+	anchorOverlayStore,
+	tableSettingsOverlayStore,
 	richTextArea,
 }: AppProps) => {
-	const richTextAreaWrapperRef = useRef<HTMLDivElement>(null);
-
 	const formatLineTagNameButtonsState = useSyncExternalStore(
 		formatLineTagNameButtonsStore.subscribe.bind(formatLineTagNameButtonsStore),
 		formatLineTagNameButtonsStore.getSnapshot.bind(
@@ -49,18 +51,6 @@ export const App = ({
 		),
 	);
 
-	useEffect(() => {
-		if (!richTextAreaWrapperRef.current) {
-			return;
-		}
-
-		richTextAreaWrapperRef.current.append(richTextArea);
-
-		return () => {
-			richTextArea.remove();
-		};
-	}, [richTextArea]);
-
 	return (
 		<div className="rounded border border-slate-300 border-solid">
 			<EditorToolbar
@@ -74,7 +64,12 @@ export const App = ({
 					nonCategorizedOperationButtonsState
 				}
 			/>
-			<div ref={richTextAreaWrapperRef} />
+			<RichTextAreaWrapper
+				interactiveOverlays={interactiveOverlays}
+				anchorOverlayStore={anchorOverlayStore}
+				tableSettingsOverlayStore={tableSettingsOverlayStore}
+				richTextArea={richTextArea}
+			/>
 		</div>
 	);
 };

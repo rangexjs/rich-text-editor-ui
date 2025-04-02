@@ -1,14 +1,17 @@
+import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 
 import { App } from "@components";
+import { interactiveOverlayId } from "@constants";
 import {
+	AnchorOverlayStore,
 	FormatLineTagNameButtonsStore,
 	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
 	NonCategorizedOperationButtonsStore,
+	TableSettingsOverlayStore,
 } from "@externalStores";
-import { InteractiveOverlayManager } from "@interactiveOverlayManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
 // @ts-ignore
@@ -21,11 +24,13 @@ import type {
 	OnNodeInsertionProps,
 	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
+	UpdateAnchorOverlayStateProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
 	UpdateNonCategorizedOperationButtonsProps,
+	UpdateTableSettingsOverlayStateProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
@@ -38,11 +43,13 @@ export class RichTextEditorUI {
 	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
 	#nonCategorizedOperationButtonsStore =
 		new NonCategorizedOperationButtonsStore();
-	#interactiveOverlayManager = new InteractiveOverlayManager();
+	#anchorOverlayStore = new AnchorOverlayStore();
+	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
 
 	constructor({
 		domNode,
 		toolbarButtons,
+		interactiveOverlays,
 		richTextArea,
 	}: RichTextEditorUIConstructorProps) {
 		const shadowRoot = domNode.attachShadow({ mode: "closed" });
@@ -72,24 +79,61 @@ export class RichTextEditorUI {
 			});
 		}
 
-		this.#root.render(
-			<App
-				toolbarButtons={toolbarButtons}
-				toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
-				formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
-				formatStylesButtonsStore={this.#formatStylesButtonsStore}
-				historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
-				nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
-				nonCategorizedOperationButtonsStore={
-					this.#nonCategorizedOperationButtonsStore
-				}
-				richTextArea={richTextArea}
-			/>,
-		);
+		flushSync(() => {
+			this.#root.render(
+				<App
+					toolbarButtons={toolbarButtons}
+					toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
+					formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
+					formatStylesButtonsStore={this.#formatStylesButtonsStore}
+					historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
+					nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
+					nonCategorizedOperationButtonsStore={
+						this.#nonCategorizedOperationButtonsStore
+					}
+					interactiveOverlays={interactiveOverlays}
+					anchorOverlayStore={this.#anchorOverlayStore}
+					tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
+					richTextArea={richTextArea}
+				/>,
+			);
+		});
 	}
 
 	get shadowRoot() {
 		return this.#shadowRoot;
+	}
+
+	get anchorOverlay() {
+		const anchorOverlay = this.#shadowRoot.getElementById(
+			interactiveOverlayId.anchor,
+		);
+
+		if (!anchorOverlay) {
+			throw new Error("AnchorOverlay wasn't found.");
+		}
+
+		if (!(anchorOverlay instanceof HTMLDivElement)) {
+			throw new Error("AnchorOverlay's type is invalid.");
+		}
+
+		return anchorOverlay;
+	}
+
+	get tableSettingsOverlay() {
+		const tableSettingsOverlay = this.#shadowRoot.getElementById(
+			interactiveOverlayId.tableSettings,
+		);
+
+		if (!tableSettingsOverlay) {
+			throw new Error("TableSettingsOverlay wasn't found.");
+		}
+
+		if (!(tableSettingsOverlay instanceof HTMLDivElement)) {
+			throw new Error("TableSettingsOverlay's type is invalid.");
+		}
+
+		return tableSettingsOverlay;
 	}
 
 	onFormatLineTagName(callback: OnFormatLineTagNameProps) {
@@ -134,8 +178,12 @@ export class RichTextEditorUI {
 		this.#nonCategorizedOperationButtonsStore.updateState(props);
 	}
 
-	get interactiveOverlay() {
-		return this.#interactiveOverlayManager.interactiveOverlay;
+	updateAnchorOverlayState(props: UpdateAnchorOverlayStateProps) {
+		this.#anchorOverlayStore.updateState(props);
+	}
+
+	updateTableSettingsOverlayState(props: UpdateTableSettingsOverlayStateProps) {
+		this.#tableSettingsOverlayStore.updateState(props);
 	}
 
 	unmount() {

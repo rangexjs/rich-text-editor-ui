@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
+import { interactiveOverlayId } from "@constants";
 import {
 	type TableLayoutViewOptionsValue,
 	tableActiveView,
@@ -350,7 +351,12 @@ export const TableSettingsOverlay = ({
 	};
 
 	return (
-		<div className="bg-white">
+		<div
+			id={interactiveOverlayId.tableSettings}
+			className="bg-white"
+			// @ts-ignore
+			popover="manual"
+		>
 			<div
 				className="flex gap-1 p-1"
 				style={{

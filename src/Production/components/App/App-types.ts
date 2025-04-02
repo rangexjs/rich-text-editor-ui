@@ -5,13 +5,14 @@ import type {
 	NodeInsertionButtonsStore,
 	NonCategorizedOperationButtonsStore,
 } from "@externalStores";
-import type { ToolbarButtonsActionManager } from "src/Production/ToolbarButtonsActionManager";
+import type { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
 import type { EditorToolbarRows } from "../EditorToolbar";
+import type { RichTextAreaWrapperProps } from "../RichTextAreaWrapper";
 
 export type ToolbarButtons = EditorToolbarRows;
 
-export interface AppProps {
+export interface AppProps extends RichTextAreaWrapperProps {
 	toolbarButtons: ToolbarButtons;
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
 	formatLineTagNameButtonsStore: FormatLineTagNameButtonsStore;
@@ -19,5 +20,4 @@ export interface AppProps {
 	historyNavigationButtonsStore: HistoryNavigationButtonsStore;
 	nodeInsertionButtonsStore: NodeInsertionButtonsStore;
 	nonCategorizedOperationButtonsStore: NonCategorizedOperationButtonsStore;
-	richTextArea: HTMLElement;
 }

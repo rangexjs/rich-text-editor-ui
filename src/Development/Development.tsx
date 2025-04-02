@@ -57,6 +57,7 @@ export const simulateProductEnvironment = ({
 	const richTextEditorUI = new RichTextEditorUI({
 		domNode: innerRoot,
 		toolbarButtons,
+		interactiveOverlays: { anchor: true, tableSettings: true },
 		richTextArea,
 	});
 
@@ -140,20 +141,31 @@ export const simulateProductEnvironment = ({
 		console.log(props);
 	});
 
-	// Feature flags (should be reworked in the future to make manual testing easier)
+	// Feature flags (should be reworked in the future to make manual testing easier, consider storybook)
 	const isAddTable = true;
-	const isAddAnchor = true;
+	const isAddAnchor = false;
 
 	if (isAddTable) {
-		const tableSettings =
-			richTextEditorUI.interactiveOverlay.createTableSettingsElement();
+		const { tableSettingsOverlay } = richTextEditorUI;
 
-		richTextArea.append(tableSettings);
+		tableSettingsOverlay.style.top = "anchor(bottom)";
+		tableSettingsOverlay.style.left = "anchor(left)";
+
+		setTimeout(() => {
+			// @ts-ignore
+			tableSettingsOverlay.showPopover({ source: richTextArea });
+		});
 	}
 
 	if (isAddAnchor) {
-		const anchor = richTextEditorUI.interactiveOverlay.createAnchorElement();
+		const { anchorOverlay } = richTextEditorUI;
 
-		richTextArea.append(anchor);
+		anchorOverlay.style.top = "anchor(bottom)";
+		anchorOverlay.style.left = "anchor(left)";
+
+		setTimeout(() => {
+			// @ts-ignore
+			anchorOverlay.showPopover({ source: richTextArea });
+		});
 	}
 };
