@@ -32,7 +32,7 @@ export interface InputProps {
 }
 
 export interface PrimaryCharInputProps {
-	inputRef?: RefObject<HTMLInputElement>;
+	inputRef?: RefObject<HTMLInputElement | null>;
 	inputProps: InputProps;
 	title?: string;
 	className?: string;

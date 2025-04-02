@@ -21,7 +21,7 @@ export interface PrimaryButtonProps {
 	disabled?: boolean;
 	isChevron?: boolean;
 	anchorName?: string;
-	popoverTargetElementRef?: RefObject<HTMLElement>;
+	popoverTargetElementRef?: RefObject<HTMLElement | null>;
 	className?: string;
 	onClick?: PrimaryButtonOnClickFn;
 }

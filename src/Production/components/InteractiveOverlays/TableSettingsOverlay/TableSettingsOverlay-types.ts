@@ -9,12 +9,12 @@ import type { PrimaryButtonProps } from "../../PrimaryButton";
 export type DropdownIconState = "col" | "row" | "cell-modifier" | null;
 
 export interface OnTableActionButtonClickProps {
-	dropdownRef: RefObject<HTMLDivElement>;
+	dropdownRef: RefObject<HTMLDivElement | null>;
 	type: TableCellActionType;
 }
 
 interface TableIconButton extends PrimaryButtonProps {
-	dropdownRef?: RefObject<HTMLDivElement>;
+	dropdownRef?: RefObject<HTMLDivElement | null>;
 	popover?: ReactNode;
 }
 
