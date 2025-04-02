@@ -9,7 +9,7 @@ export const TableCellDropdown = ({
 	return (
 		<div
 			ref={popoverTargetElementRef}
-			className="absolute mt-2 rounded-md border border-slate-200 bg-white p-1 shadow-md"
+			className="mt-2 rounded-md border border-slate-200 bg-white p-1 shadow-md"
 			// @ts-ignore
 			popover="auto"
 			style={{
