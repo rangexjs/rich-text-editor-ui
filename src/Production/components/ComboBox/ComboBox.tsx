@@ -25,8 +25,6 @@ export const ComboBox = ({
 		button.popoverTargetElement = dropdown;
 	}, []);
 
-	const comboBoxAnchor = "--combo-box-anchor";
-
 	const onListItemClick = ({ onClick }: OnListItemClickProps) => {
 		const dropdown = dropdownRef.current;
 
@@ -40,33 +38,21 @@ export const ComboBox = ({
 	};
 
 	return (
-		<span
-			className={className}
-			style={{
-				// @ts-ignore
-				anchorScope: comboBoxAnchor,
-			}}
-		>
+		<span className={className}>
 			<button
 				ref={buttonRef}
 				type="button"
 				className="default-btn inline-flex h-full items-center justify-between px-2"
-				style={{
-					...buttonStyles,
-					// @ts-ignore
-					anchorName: comboBoxAnchor,
-				}}
+				style={buttonStyles}
 			>
 				{buttonChildren}
 				<ChevronIcon />
 			</button>
 			<div
 				ref={dropdownRef}
-				className="absolute mt-1 flex-col rounded-md border border-slate-200 shadow-md [&:popover-open]:flex"
+				className="mt-1 flex-col rounded-md border border-slate-200 shadow-md [&:popover-open]:flex"
 				popover="auto"
 				style={{
-					// @ts-ignore
-					positionAnchor: comboBoxAnchor,
 					top: "anchor(bottom)",
 					left: "anchor(left)",
 					width: "anchor-size(width)",
