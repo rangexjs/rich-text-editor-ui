@@ -373,7 +373,7 @@ export const TableSettingsOverlay = ({
 								checked={checked}
 								isChevron={isChevron}
 								popoverTargetElementRef={dropdownRef}
-								className="text-slate-700"
+								className="rounded-sm p-1.5 text-slate-700"
 								onClick={onClick}
 							>
 								{children}

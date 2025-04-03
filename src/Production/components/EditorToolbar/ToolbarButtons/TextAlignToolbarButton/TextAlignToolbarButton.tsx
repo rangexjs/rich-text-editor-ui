@@ -8,7 +8,7 @@ import {
 	TextAlignRightIcon,
 } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	OnTextAlignClickProps,
@@ -90,6 +90,7 @@ export const TextAlignToolbarButton = ({
 				isChevron={true}
 				anchorName={textAlignToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				{firstItem === "start" && <TextAlignLeftIcon />}
 				{firstItem === "center" && <TextAlignCenterIcon />}
@@ -105,6 +106,7 @@ export const TextAlignToolbarButton = ({
 						key={textAlign}
 						checked={textAlignValues.includes(textAlign)}
 						onClick={() => onTextAlignClick(textAlign)}
+						className="rounded-xs p-1"
 					>
 						{textAlign === "start" && <TextAlignLeftIcon />}
 						{textAlign === "center" && <TextAlignCenterIcon />}

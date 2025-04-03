@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CodeBlockIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type {
 	CodeBlockToolbarButtonProps,
 	OnLanguageClickProps,
@@ -91,6 +93,7 @@ export const CodeBlockToolbarButton = ({
 				isChevron={true}
 				anchorName={codeBlockToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<CodeBlockIcon />
 			</PrimaryButton>
@@ -108,7 +111,7 @@ export const CodeBlockToolbarButton = ({
 				{codeBlockLanguages.map((language) => (
 					<PrimaryButton
 						key={language}
-						className="rounded-none px-2 text-sm"
+						className="px-2 py-1 text-sm"
 						onClick={() => onLanguageClick(language)}
 					>
 						{language}

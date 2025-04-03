@@ -293,7 +293,10 @@ export const TableProperties = ({
 					</div>
 					<div className="flex basis-5/12 flex-col gap-2">
 						<span className="font font-semibold text-sm">Alignment</span>
-						<RadioButtons buttons={alignmentButtons} />
+						<RadioButtons
+							buttons={alignmentButtons}
+							className="rounded-md border border-slate-300"
+						/>
 					</div>
 				</div>
 				<div>

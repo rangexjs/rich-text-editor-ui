@@ -383,7 +383,7 @@ export const InputColorFormat = ({
 						style={{ display: colorFormat === "Hex" ? "" : "none" }}
 					>
 						<input
-							className="h-full w-full px-0.5 text-center outline-none"
+							className="h-full w-full px-0.5 text-center outline-hidden"
 							type="text"
 							value={inputHex}
 							onChange={onHexChange}
@@ -397,7 +397,7 @@ export const InputColorFormat = ({
 						{rgbInputList.map(({ name, value }) => (
 							<input
 								key={name}
-								className="h-full w-full border-slate-200 px-0.5 text-center outline-none [&:not(:last-child)]:border-r"
+								className="h-full w-full border-slate-200 px-0.5 text-center outline-hidden [&:not(:last-child)]:border-r"
 								type="number"
 								name={name}
 								value={value}
@@ -413,7 +413,7 @@ export const InputColorFormat = ({
 						{hslInputList.map(({ name, value }) => (
 							<input
 								key={name}
-								className="h-full w-full border-slate-200 px-0.5 text-center outline-none [&:not(:last-child)]:border-r"
+								className="h-full w-full border-slate-200 px-0.5 text-center outline-hidden [&:not(:last-child)]:border-r"
 								type="number"
 								name={name}
 								value={value}
@@ -425,7 +425,7 @@ export const InputColorFormat = ({
 				</span>
 				<span className="inline-flex h-full items-center border-slate-200 border-l">
 					<input
-						className="w-8 px-1 text-center outline-none"
+						className="w-8 px-1 text-center outline-hidden"
 						type="number"
 						value={inputAlpha}
 						onChange={onAlphaChange}

@@ -4,6 +4,8 @@ import {
 } from "../../../PrimaryButton";
 import { HistoryBackIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { HistoryBackToolbarButtonProps } from "./HistoryBackToolbarButton-types";
 
 export const HistoryBackToolbarButton = ({
@@ -20,6 +22,7 @@ export const HistoryBackToolbarButton = ({
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<HistoryBackIcon />
 		</PrimaryButton>

@@ -1,6 +1,8 @@
 import { PrimaryButton } from "../../../PrimaryButton";
 import { RemoveFormatIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { RemoveFormatToolbarButtonProps } from "./RemoveFormatToolbarButton-types";
 
 export const RemoveFormatToolbarButton = ({
@@ -59,6 +61,7 @@ export const RemoveFormatToolbarButton = ({
 			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<RemoveFormatIcon />
 		</PrimaryButton>

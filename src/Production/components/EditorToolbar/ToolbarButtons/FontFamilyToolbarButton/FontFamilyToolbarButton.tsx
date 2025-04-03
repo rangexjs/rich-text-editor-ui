@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontFamilyIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	FontFamilyToolbarButtonProps,
@@ -104,6 +104,7 @@ export const FontFamilyToolbarButton = ({
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<FontFamilyIcon />
 			</PrimaryButton>
@@ -112,7 +113,7 @@ export const FontFamilyToolbarButton = ({
 				className="max-h-80 flex-col py-2 [&:popover-open]:flex"
 			>
 				<PrimaryButton
-					className="rounded-none px-6 py-1 font-semibold text-sm"
+					className="px-6 py-1 font-semibold text-sm"
 					onClick={() => onFontFamilyClick("default")}
 				>
 					Default
@@ -120,7 +121,7 @@ export const FontFamilyToolbarButton = ({
 				{fontFamilyList.map((fontFamily) => (
 					<PrimaryButton
 						key={fontFamily}
-						className="rounded-none px-6 py-1 text-sm"
+						className="px-6 py-1 text-sm"
 						onClick={() => onFontFamilyClick(fontFamily)}
 					>
 						<span

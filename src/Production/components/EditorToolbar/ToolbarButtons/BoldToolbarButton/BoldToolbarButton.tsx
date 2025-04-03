@@ -3,6 +3,7 @@ import {
 	type PrimaryButtonOnClickFn,
 } from "../../../PrimaryButton";
 import { BoldIcon } from "../../../SVGs";
+import { toolbarButtonClassName } from "../Utilities";
 
 import type { BoldToolbarButtonProps } from "./BoldToolbarButton-types";
 
@@ -22,6 +23,7 @@ export const BoldToolbarButton = ({
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<BoldIcon />
 		</PrimaryButton>

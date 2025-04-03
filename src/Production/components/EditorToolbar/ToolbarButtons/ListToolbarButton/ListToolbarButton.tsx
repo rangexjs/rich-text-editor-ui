@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { ListIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	ListItemList,
@@ -76,13 +76,18 @@ export const ListToolbarButton = ({
 				isChevron={true}
 				anchorName={listToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<ListIcon />
 			</PrimaryButton>
 			<ToolbarDropdown ref={popoverTargetElementRef} className="p-1">
 				<div className="grid grid-cols-2 gap-1">
 					{listItemList.map((type) => (
-						<PrimaryButton key={type} onClick={() => onListButtonClick(type)}>
+						<PrimaryButton
+							key={type}
+							onClick={() => onListButtonClick(type)}
+							className="rounded p-1"
+						>
 							<ul className="px-1 ps-4">
 								{Array.from({ length: 3 }, (_, i) => (
 									<li

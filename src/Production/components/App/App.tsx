@@ -52,7 +52,7 @@ export const App = ({
 	);
 
 	return (
-		<div className="rounded border border-slate-300 border-solid">
+		<div className="rounded-sm border border-slate-300 border-solid">
 			<EditorToolbar
 				toolbarRows={toolbarButtons}
 				toolbarButtonsActionManager={toolbarButtonsActionManager}

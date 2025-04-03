@@ -1,6 +1,8 @@
 import { PrimaryButton } from "../../../PrimaryButton";
 import { BlockQuoteIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { BlockQuoteToolbarButtonProps } from "./BlockQuoteToolbarButton-types";
 
 export const BlockQuoteToolbarButton = ({
@@ -12,7 +14,11 @@ export const BlockQuoteToolbarButton = ({
 	};
 
 	return (
-		<PrimaryButton disabled={state.isDisabled} onClick={onClick}>
+		<PrimaryButton
+			disabled={state.isDisabled}
+			onClick={onClick}
+			className={toolbarButtonClassName}
+		>
 			<BlockQuoteIcon />
 		</PrimaryButton>
 	);

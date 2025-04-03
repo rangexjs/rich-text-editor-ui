@@ -118,14 +118,14 @@ export const ColorInput = ({
 			<button
 				ref={buttonRef}
 				type="button"
-				className="inline-flex items-center rounded-sm border border-slate-300 p-1"
+				className="inline-flex items-center rounded-xs border border-slate-300 p-1"
 				style={{
 					// @ts-ignore
 					anchorName: colorInputAnchor,
 				}}
 			>
 				<span
-					className="relative inline-flex size-5 items-center justify-center overflow-clip rounded-sm"
+					className="relative inline-flex size-5 items-center justify-center overflow-clip rounded-xs"
 					style={{
 						backgroundColor: squareBackgroundColor,
 					}}

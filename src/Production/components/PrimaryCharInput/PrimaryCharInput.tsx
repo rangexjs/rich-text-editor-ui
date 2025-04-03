@@ -143,7 +143,7 @@ export const PrimaryCharInput = ({
 				}}
 			/>
 			<div
-				className="absolute z-50 mt-1.5 rounded-sm border border-red-400 bg-white p-1 text-xs shadow-sm "
+				className="absolute z-50 mt-1.5 rounded-xs border border-red-400 bg-white p-1 text-xs shadow-xs "
 				style={{
 					// @ts-ignore
 					positionAnchor: primaryCharInputAnchor,

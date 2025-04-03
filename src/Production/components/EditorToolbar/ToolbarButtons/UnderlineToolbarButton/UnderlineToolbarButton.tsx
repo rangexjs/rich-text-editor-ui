@@ -4,6 +4,8 @@ import {
 } from "../../../PrimaryButton";
 import { UnderlineIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { UnderlineToolbarButtonProps } from "./UnderlineToolbarButton-types";
 
 export const UnderlineToolbarButton = ({
@@ -30,6 +32,7 @@ export const UnderlineToolbarButton = ({
 			disabled={underline.isDisabled}
 			isChevron={false}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<UnderlineIcon />
 		</PrimaryButton>

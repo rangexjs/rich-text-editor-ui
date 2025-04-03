@@ -12,7 +12,7 @@ import {
 	ImageUploadIcon,
 } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	ImageToolbarButtonProps,
@@ -177,6 +177,7 @@ export const ImageToolbarButton = ({
 				isChevron={true}
 				anchorName={imageToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<ImageIcon />
 			</PrimaryButton>
@@ -185,7 +186,7 @@ export const ImageToolbarButton = ({
 				className="flex-col py-1 [&:popover-open]:flex"
 			>
 				{popoverButtons.map(({ children, onClick }, index) => (
-					<PrimaryButton key={index} className="rounded-none" onClick={onClick}>
+					<PrimaryButton key={index} className="p-2 py-1.5" onClick={onClick}>
 						<span className="inline-flex items-center gap-2 text-sm">
 							{children}
 						</span>
@@ -200,7 +201,7 @@ export const ImageToolbarButton = ({
 					<h2>Insert image via URL</h2>
 					<button
 						type="button"
-						className="rounded-sm p-2 transition-colors hover:bg-slate-100"
+						className="rounded-xs p-2 transition-colors hover:bg-slate-100"
 						onClick={closeImageUrlDialog}
 					>
 						<CloseIcon size={0.7} />

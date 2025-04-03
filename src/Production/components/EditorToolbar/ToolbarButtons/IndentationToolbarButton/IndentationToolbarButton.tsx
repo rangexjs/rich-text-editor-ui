@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, IndentationIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type {
 	IndentationToolbarButtonProps,
 	OnIndentationClickProps,
@@ -99,6 +101,7 @@ export const IndentationToolbarButton = ({
 				isChevron={true}
 				anchorName={indentationToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<IndentationIcon />
 			</PrimaryButton>
@@ -114,7 +117,7 @@ export const IndentationToolbarButton = ({
 				}}
 			>
 				<PrimaryButton
-					className="justify-center rounded-none px-1 py-0.5 font-semibold"
+					className="justify-center px-1 py-0.5 font-semibold"
 					onClick={() => onIndentationClick("remove")}
 				>
 					Remove
@@ -122,7 +125,7 @@ export const IndentationToolbarButton = ({
 				{sortedIndentations.map((indentation) => (
 					<PrimaryButton
 						key={indentation}
-						className="rounded-none px-8 py-0.5 text-start font-semibold"
+						className="px-8 py-0.5 text-start font-semibold"
 						onClick={() => onIndentationClick(indentation)}
 					>
 						<span
