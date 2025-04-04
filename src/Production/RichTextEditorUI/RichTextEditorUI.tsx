@@ -1,3 +1,4 @@
+import { StrictMode } from "react";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 
@@ -86,22 +87,24 @@ export class RichTextEditorUI {
 
 		flushSync(() => {
 			this.#root.render(
-				<App
-					toolbarButtons={toolbarButtons}
-					toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
-					formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
-					formatStylesButtonsStore={this.#formatStylesButtonsStore}
-					historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
-					nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
-					nonCategorizedOperationButtonsStore={
-						this.#nonCategorizedOperationButtonsStore
-					}
-					interactiveOverlays={interactiveOverlays}
-					anchorOverlayStore={this.#anchorOverlayStore}
-					caretListboxOverlayStore={this.#caretListboxOverlayStore}
-					tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
-					richTextArea={richTextArea}
-				/>,
+				<StrictMode>
+					<App
+						toolbarButtons={toolbarButtons}
+						toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
+						formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
+						formatStylesButtonsStore={this.#formatStylesButtonsStore}
+						historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
+						nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
+						nonCategorizedOperationButtonsStore={
+							this.#nonCategorizedOperationButtonsStore
+						}
+						interactiveOverlays={interactiveOverlays}
+						anchorOverlayStore={this.#anchorOverlayStore}
+						caretListboxOverlayStore={this.#caretListboxOverlayStore}
+						tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
+						richTextArea={richTextArea}
+					/>
+				</StrictMode>,
 			);
 		});
 	}
