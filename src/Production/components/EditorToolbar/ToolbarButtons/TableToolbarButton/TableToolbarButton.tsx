@@ -144,10 +144,7 @@ export const TableToolbarButton = ({
 			>
 				<TableIcon size={1.1} />
 			</PrimaryButton>
-			<ToolbarDropdown
-				ref={popoverTargetElementRef}
-				className="p-1 leading-[0]"
-			>
+			<ToolbarDropdown ref={popoverTargetElementRef} className="p-1 leading-0">
 				<div
 					className="inline-grid"
 					style={{
@@ -168,7 +165,7 @@ export const TableToolbarButton = ({
 						</button>
 					))}
 				</div>
-				<div className="mt-1 text-center text-sm">
+				<div className="mt-1 text-center text-sm leading-4">
 					{squareNumbers.row} x {squareNumbers.col}
 				</div>
 			</ToolbarDropdown>
