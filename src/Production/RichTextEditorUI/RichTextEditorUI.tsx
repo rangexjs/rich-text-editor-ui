@@ -5,6 +5,7 @@ import { App } from "@components";
 import { interactiveOverlayId } from "@constants";
 import {
 	AnchorOverlayStore,
+	CaretListboxOverlayStore,
 	FormatLineTagNameButtonsStore,
 	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
@@ -17,6 +18,8 @@ import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 // @ts-ignore
 import inlineCss from "../global.css?inline";
 
+import { getOverlayElement } from "./Utilities";
+
 import type {
 	OnFormatLineTagNameProps,
 	OnFormatStylesProps,
@@ -25,6 +28,7 @@ import type {
 	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
 	UpdateAnchorOverlayStateProps,
+	UpdateCaretListboxOverlayStateProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
@@ -44,6 +48,7 @@ export class RichTextEditorUI {
 	#nonCategorizedOperationButtonsStore =
 		new NonCategorizedOperationButtonsStore();
 	#anchorOverlayStore = new AnchorOverlayStore();
+	#caretListboxOverlayStore = new CaretListboxOverlayStore();
 	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
 
 	constructor({
@@ -93,6 +98,7 @@ export class RichTextEditorUI {
 					}
 					interactiveOverlays={interactiveOverlays}
 					anchorOverlayStore={this.#anchorOverlayStore}
+					caretListboxOverlayStore={this.#caretListboxOverlayStore}
 					tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
 					richTextArea={richTextArea}
 				/>,
@@ -105,33 +111,28 @@ export class RichTextEditorUI {
 	}
 
 	get anchorOverlay() {
-		const anchorOverlay = this.#shadowRoot.getElementById(
-			interactiveOverlayId.anchor,
-		);
-
-		if (!anchorOverlay) {
-			throw new Error("AnchorOverlay wasn't found.");
-		}
-
-		if (!(anchorOverlay instanceof HTMLDivElement)) {
-			throw new Error("AnchorOverlay's type is invalid.");
-		}
+		const anchorOverlay = getOverlayElement({
+			id: interactiveOverlayId.anchor,
+			shadowRoot: this.#shadowRoot,
+		});
 
 		return anchorOverlay;
 	}
 
+	get caretListboxOverlay() {
+		const caretListboxOverlay = getOverlayElement({
+			id: interactiveOverlayId.caretListbox,
+			shadowRoot: this.#shadowRoot,
+		});
+
+		return caretListboxOverlay;
+	}
+
 	get tableSettingsOverlay() {
-		const tableSettingsOverlay = this.#shadowRoot.getElementById(
-			interactiveOverlayId.tableSettings,
-		);
-
-		if (!tableSettingsOverlay) {
-			throw new Error("TableSettingsOverlay wasn't found.");
-		}
-
-		if (!(tableSettingsOverlay instanceof HTMLDivElement)) {
-			throw new Error("TableSettingsOverlay's type is invalid.");
-		}
+		const tableSettingsOverlay = getOverlayElement({
+			id: interactiveOverlayId.tableSettings,
+			shadowRoot: this.#shadowRoot,
+		});
 
 		return tableSettingsOverlay;
 	}
@@ -180,6 +181,10 @@ export class RichTextEditorUI {
 
 	updateAnchorOverlayState(props: UpdateAnchorOverlayStateProps) {
 		this.#anchorOverlayStore.updateState(props);
+	}
+
+	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayStateProps) {
+		this.#caretListboxOverlayStore.updateState(props);
 	}
 
 	updateTableSettingsOverlayState(props: UpdateTableSettingsOverlayStateProps) {

@@ -15,6 +15,7 @@ export const App = ({
 	nonCategorizedOperationButtonsStore,
 	interactiveOverlays,
 	anchorOverlayStore,
+	caretListboxOverlayStore,
 	tableSettingsOverlayStore,
 	richTextArea,
 }: AppProps) => {
@@ -67,6 +68,7 @@ export const App = ({
 			<RichTextAreaWrapper
 				interactiveOverlays={interactiveOverlays}
 				anchorOverlayStore={anchorOverlayStore}
+				caretListboxOverlayStore={caretListboxOverlayStore}
 				tableSettingsOverlayStore={tableSettingsOverlayStore}
 				richTextArea={richTextArea}
 			/>

@@ -1,6 +1,7 @@
 import type { AppProps } from "@components";
 import type {
 	AnchorOverlayState,
+	CaretListboxOverlayState,
 	FormatLineTagNameButtonsState,
 	FormatStylesButtonsState,
 	HistoryNavigationButtonsState,
@@ -51,6 +52,9 @@ export interface UpdateHistoryNavigationButtonsProps
 
 export interface UpdateAnchorOverlayStateProps
 	extends Partial<AnchorOverlayState> {}
+
+export interface UpdateCaretListboxOverlayStateProps
+	extends Partial<CaretListboxOverlayState> {}
 
 export interface UpdateTableSettingsOverlayStateProps
 	extends Partial<TableSettingsOverlayState> {}

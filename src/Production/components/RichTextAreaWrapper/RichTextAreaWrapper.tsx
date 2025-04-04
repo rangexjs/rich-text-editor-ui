@@ -1,18 +1,23 @@
 import { useEffect, useRef } from "react";
 
-import { AnchorOverlay, TableSettingsOverlay } from "../InteractiveOverlays";
+import {
+	AnchorOverlay,
+	CaretListboxOverlay,
+	TableSettingsOverlay,
+} from "../InteractiveOverlays";
 
 import type { RichTextAreaWrapperProps } from "./RichTextAreaWrapper-types";
 
 export const RichTextAreaWrapper = ({
 	interactiveOverlays,
 	anchorOverlayStore,
+	caretListboxOverlayStore,
 	tableSettingsOverlayStore,
 	richTextArea,
 }: RichTextAreaWrapperProps) => {
 	const richTextAreaHolderRef = useRef<HTMLDivElement>(null);
 
-	const { anchor, tableSettings } = interactiveOverlays;
+	const { anchor, caretListbox, tableSettings } = interactiveOverlays;
 
 	useEffect(() => {
 		if (!richTextAreaHolderRef.current) {
@@ -31,6 +36,11 @@ export const RichTextAreaWrapper = ({
 			<div ref={richTextAreaHolderRef} />
 			<div>
 				{anchor && <AnchorOverlay anchorOverlayStore={anchorOverlayStore} />}
+				{caretListbox && (
+					<CaretListboxOverlay
+						caretListboxOverlayStore={caretListboxOverlayStore}
+					/>
+				)}
 				{tableSettings && (
 					<TableSettingsOverlay
 						tableSettingsOverlayStore={tableSettingsOverlayStore}
