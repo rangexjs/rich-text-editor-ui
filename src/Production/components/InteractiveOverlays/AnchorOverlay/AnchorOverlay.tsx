@@ -96,7 +96,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 	return (
 		<div
 			id={interactiveOverlayId.anchor}
-			className="w-60 bg-white p-3"
+			className="w-60 rounded-md border border-slate-200 bg-white p-3 shadow-md"
 			popover="manual"
 		>
 			<div
