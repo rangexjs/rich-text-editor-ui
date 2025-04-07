@@ -15,7 +15,6 @@ export const ToolbarDropdown = ({
 	return (
 		<div
 			ref={ref}
-			// @ts-ignore
 			popover="auto"
 			className={`mt-1 rounded-md border border-slate-200 bg-white shadow-md ${className}`}
 			style={{

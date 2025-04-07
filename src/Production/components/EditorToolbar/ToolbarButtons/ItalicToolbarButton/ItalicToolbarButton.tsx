@@ -4,6 +4,8 @@ import {
 } from "../../../PrimaryButton";
 import { ItalicIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { ItalicToolbarButtonProps } from "./ItalicToolbarButton-types";
 
 export const ItalicToolbarButton = ({
@@ -22,6 +24,7 @@ export const ItalicToolbarButton = ({
 			disabled={state.isDisabled}
 			isChevron={false}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<ItalicIcon />
 		</PrimaryButton>

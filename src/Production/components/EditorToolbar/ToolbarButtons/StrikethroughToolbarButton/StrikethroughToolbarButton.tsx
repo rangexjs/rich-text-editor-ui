@@ -4,6 +4,8 @@ import {
 } from "../../../PrimaryButton";
 import { StrikethroughIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { StrikethroughToolbarButtonProps } from "./StrikethroughToolbarButton-types";
 
 export const StrikethroughToolbarButton = ({
@@ -30,6 +32,7 @@ export const StrikethroughToolbarButton = ({
 			disabled={strikethrough.isDisabled}
 			isChevron={false}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<StrikethroughIcon />
 		</PrimaryButton>

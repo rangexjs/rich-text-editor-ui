@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { TableIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	OnSquareButtonClickProps,
@@ -140,13 +140,11 @@ export const TableToolbarButton = ({
 				isChevron={true}
 				anchorName={tableToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<TableIcon size={1.1} />
 			</PrimaryButton>
-			<ToolbarDropdown
-				ref={popoverTargetElementRef}
-				className="p-1 leading-[0]"
-			>
+			<ToolbarDropdown ref={popoverTargetElementRef} className="p-1 leading-0">
 				<div
 					className="inline-grid"
 					style={{
@@ -163,11 +161,11 @@ export const TableToolbarButton = ({
 							className="group cursor-default p-px"
 							onClick={() => onSquareButtonClick({ index })}
 						>
-							<span className="pointer-events-none inline-block h-full w-full rounded-sm border border-slate-200 group-data-[is-active=true]:border-primary group-data-[is-active=true]:bg-primary group-data-[is-active=true]:bg-opacity-20" />
+							<span className="pointer-events-none inline-block h-full w-full rounded-xs border border-slate-200 group-data-[is-active=true]:border-primary group-data-[is-active=true]:bg-primary/20" />
 						</button>
 					))}
 				</div>
-				<div className="mt-1 text-center text-sm">
+				<div className="mt-1 text-center text-sm leading-4">
 					{squareNumbers.row} x {squareNumbers.col}
 				</div>
 			</ToolbarDropdown>

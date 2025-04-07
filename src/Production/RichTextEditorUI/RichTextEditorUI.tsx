@@ -1,18 +1,25 @@
+import { StrictMode } from "react";
+import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 
 import { App } from "@components";
+import { interactiveOverlayId } from "@constants";
 import {
+	AnchorOverlayStore,
+	CaretListboxOverlayStore,
 	FormatLineTagNameButtonsStore,
 	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
 	NonCategorizedOperationButtonsStore,
+	TableSettingsOverlayStore,
 } from "@externalStores";
-import { InteractiveOverlayManager } from "@interactiveOverlayManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 
 // @ts-ignore
 import inlineCss from "../global.css?inline";
+
+import { getOverlayElement } from "./Utilities";
 
 import type {
 	OnFormatLineTagNameProps,
@@ -21,11 +28,14 @@ import type {
 	OnNodeInsertionProps,
 	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
+	UpdateAnchorOverlayStateProps,
+	UpdateCaretListboxOverlayStateProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
 	UpdateNonCategorizedOperationButtonsProps,
+	UpdateTableSettingsOverlayStateProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
@@ -38,11 +48,14 @@ export class RichTextEditorUI {
 	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
 	#nonCategorizedOperationButtonsStore =
 		new NonCategorizedOperationButtonsStore();
-	#interactiveOverlayManager = new InteractiveOverlayManager();
+	#anchorOverlayStore = new AnchorOverlayStore();
+	#caretListboxOverlayStore = new CaretListboxOverlayStore();
+	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
 
 	constructor({
 		domNode,
 		toolbarButtons,
+		interactiveOverlays,
 		richTextArea,
 	}: RichTextEditorUIConstructorProps) {
 		const shadowRoot = domNode.attachShadow({ mode: "closed" });
@@ -72,24 +85,59 @@ export class RichTextEditorUI {
 			});
 		}
 
-		this.#root.render(
-			<App
-				toolbarButtons={toolbarButtons}
-				toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
-				formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
-				formatStylesButtonsStore={this.#formatStylesButtonsStore}
-				historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
-				nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
-				nonCategorizedOperationButtonsStore={
-					this.#nonCategorizedOperationButtonsStore
-				}
-				richTextArea={richTextArea}
-			/>,
-		);
+		flushSync(() => {
+			this.#root.render(
+				<StrictMode>
+					<App
+						toolbarButtons={toolbarButtons}
+						toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
+						formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
+						formatStylesButtonsStore={this.#formatStylesButtonsStore}
+						historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
+						nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
+						nonCategorizedOperationButtonsStore={
+							this.#nonCategorizedOperationButtonsStore
+						}
+						interactiveOverlays={interactiveOverlays}
+						anchorOverlayStore={this.#anchorOverlayStore}
+						caretListboxOverlayStore={this.#caretListboxOverlayStore}
+						tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
+						richTextArea={richTextArea}
+					/>
+				</StrictMode>,
+			);
+		});
 	}
 
 	get shadowRoot() {
 		return this.#shadowRoot;
+	}
+
+	get anchorOverlay() {
+		const anchorOverlay = getOverlayElement({
+			id: interactiveOverlayId.anchor,
+			shadowRoot: this.#shadowRoot,
+		});
+
+		return anchorOverlay;
+	}
+
+	get caretListboxOverlay() {
+		const caretListboxOverlay = getOverlayElement({
+			id: interactiveOverlayId.caretListbox,
+			shadowRoot: this.#shadowRoot,
+		});
+
+		return caretListboxOverlay;
+	}
+
+	get tableSettingsOverlay() {
+		const tableSettingsOverlay = getOverlayElement({
+			id: interactiveOverlayId.tableSettings,
+			shadowRoot: this.#shadowRoot,
+		});
+
+		return tableSettingsOverlay;
 	}
 
 	onFormatLineTagName(callback: OnFormatLineTagNameProps) {
@@ -134,8 +182,16 @@ export class RichTextEditorUI {
 		this.#nonCategorizedOperationButtonsStore.updateState(props);
 	}
 
-	get interactiveOverlay() {
-		return this.#interactiveOverlayManager.interactiveOverlay;
+	updateAnchorOverlayState(props: UpdateAnchorOverlayStateProps) {
+		this.#anchorOverlayStore.updateState(props);
+	}
+
+	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayStateProps) {
+		this.#caretListboxOverlayStore.updateState(props);
+	}
+
+	updateTableSettingsOverlayState(props: UpdateTableSettingsOverlayStateProps) {
+		this.#tableSettingsOverlayStore.updateState(props);
 	}
 
 	unmount() {

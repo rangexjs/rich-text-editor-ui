@@ -4,12 +4,12 @@ import type { RadioButtonsProps } from "./RadioButtons-types";
 
 export const RadioButtons = ({ buttons, className }: RadioButtonsProps) => {
 	return (
-		<div className={`flex rounded-md border ${className}`}>
+		<div className={`flex ${className}`}>
 			{buttons.map(({ checked, children, onClick }, index) => (
 				<PrimaryButton
 					key={index}
 					checked={checked}
-					className="flex-grow justify-center"
+					className="grow justify-center rounded-sm p-1.5"
 					onClick={onClick}
 				>
 					{children}

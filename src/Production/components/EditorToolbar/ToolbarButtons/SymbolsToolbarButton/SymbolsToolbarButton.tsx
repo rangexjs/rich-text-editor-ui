@@ -5,7 +5,7 @@ import { buttonsName } from "@constants";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { SymbolIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import { emojis } from "./SymbolsList";
 
@@ -72,6 +72,7 @@ export const SymbolsToolbarButton = ({
 				isChevron={true}
 				anchorName={symbolsToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<SymbolIcon />
 			</PrimaryButton>
@@ -81,7 +82,7 @@ export const SymbolsToolbarButton = ({
 						<button
 							key={index}
 							type="button"
-							className="rounded-sm border border-transparent text-xl hover:border-slate-200 hover:bg-slate-100"
+							className="rounded-xs border border-transparent text-xl hover:border-slate-200 hover:bg-slate-100"
 							onClick={() => onEmojiClick(emoji)}
 						>
 							{emoji}

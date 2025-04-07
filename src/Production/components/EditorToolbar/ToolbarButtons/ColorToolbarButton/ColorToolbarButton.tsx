@@ -6,7 +6,7 @@ import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { ColorIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type { CreateColorPropsProps } from "./ColorToolbarButton-types";
 
@@ -81,6 +81,7 @@ export const ColorToolbarButton = ({
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<ColorIcon />
 			</PrimaryButton>

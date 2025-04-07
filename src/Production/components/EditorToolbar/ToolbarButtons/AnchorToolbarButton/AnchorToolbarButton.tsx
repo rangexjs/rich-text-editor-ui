@@ -1,6 +1,8 @@
 import { PrimaryButton } from "../../../PrimaryButton";
 import { AnchorIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { AnchorToolbarButtonProps } from "./AnchorToolbarButton-types";
 
 export const AnchorToolbarButton = ({
@@ -16,6 +18,7 @@ export const AnchorToolbarButton = ({
 			checked={state.isChecked}
 			disabled={state.isDisabled}
 			onClick={onClick}
+			className={toolbarButtonClassName}
 		>
 			<AnchorIcon size={1.2} />
 		</PrimaryButton>

@@ -1,10 +1,13 @@
 import type { AppProps } from "@components";
 import type {
+	AnchorOverlayState,
+	CaretListboxOverlayState,
 	FormatLineTagNameButtonsState,
 	FormatStylesButtonsState,
 	HistoryNavigationButtonsState,
 	NodeInsertionButtonsState,
 	NonCategorizedOperationButtonsState,
+	TableSettingsOverlayState,
 } from "@externalStores";
 import type {
 	OnFormatLineTagNameFn,
@@ -15,8 +18,11 @@ import type {
 } from "@toolbarButtonsActionManager";
 
 export interface RichTextEditorUIConstructorProps
-	extends Pick<AppProps, "toolbarButtons" | "richTextArea"> {
-	domNode: Element;
+	extends Pick<
+		AppProps,
+		"toolbarButtons" | "interactiveOverlays" | "richTextArea"
+	> {
+	domNode: HTMLElement;
 }
 
 export type OnFormatLineTagNameProps = OnFormatLineTagNameFn;
@@ -43,3 +49,12 @@ export interface UpdateFormatLineTagNameButtonsProps
 
 export interface UpdateHistoryNavigationButtonsProps
 	extends Partial<HistoryNavigationButtonsState> {}
+
+export interface UpdateAnchorOverlayStateProps
+	extends Partial<AnchorOverlayState> {}
+
+export interface UpdateCaretListboxOverlayStateProps
+	extends Partial<CaretListboxOverlayState> {}
+
+export interface UpdateTableSettingsOverlayStateProps
+	extends Partial<TableSettingsOverlayState> {}

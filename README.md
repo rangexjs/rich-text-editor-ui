@@ -2,6 +2,15 @@
 
 A modern and customizable UI component for rich text editing.
 
+## 🚧 Under Development
+
+**RichTextEditorUI** is currently in its **alpha stage**. At this phase, it primarily serves two purposes:
+
+- Manual Testing: Used internally to test RichTextArea (the core product of RangeX).
+- Demo Integration: Showcased on the homepage to demonstrate text editing capabilities.
+
+While the project is functional, expect potential changes in APIs, features, and stability.
+
 ## 📂 Project Structure
 
 The repository is structured as follows:
@@ -17,4 +26,5 @@ The repository is structured as follows:
 You can install **RichTextEditorUI** via **bun**:
 
 ```sh
-bun install @rangex/rich-text-editor-ui
+bun i @rangex/rich-text-editor-ui
+```

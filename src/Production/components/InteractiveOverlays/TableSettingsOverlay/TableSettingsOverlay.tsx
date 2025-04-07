@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
+import { interactiveOverlayId } from "@constants";
 import {
 	type TableLayoutViewOptionsValue,
 	tableActiveView,
@@ -350,7 +351,11 @@ export const TableSettingsOverlay = ({
 	};
 
 	return (
-		<div className="bg-white">
+		<div
+			id={interactiveOverlayId.tableSettings}
+			className="bg-white"
+			popover="manual"
+		>
 			<div
 				className="flex gap-1 p-1"
 				style={{
@@ -368,7 +373,7 @@ export const TableSettingsOverlay = ({
 								checked={checked}
 								isChevron={isChevron}
 								popoverTargetElementRef={dropdownRef}
-								className="text-slate-700"
+								className="rounded-sm p-1.5 text-slate-700"
 								onClick={onClick}
 							>
 								{children}

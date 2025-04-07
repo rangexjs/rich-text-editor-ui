@@ -9,6 +9,7 @@
 			"@public/*": ["src/Production/public/*"],
 			"@components": ["src/Production/components"],
 			"@constants": ["src/Production/Constants"],
+			"@errorHandling": ["src/Production/ErrorHandling"],
 			"@externalStores": ["src/Production/ExternalStores"],
 			"@interactiveOverlayManager": [
 				"src/Production/InteractiveOverlayManager"

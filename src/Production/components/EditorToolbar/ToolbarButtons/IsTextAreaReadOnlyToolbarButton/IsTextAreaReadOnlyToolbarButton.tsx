@@ -1,6 +1,8 @@
 import { PrimaryButton } from "../../../PrimaryButton";
 import { LockIcon } from "../../../SVGs";
 
+import { toolbarButtonClassName } from "../Utilities";
+
 import type { IsTextAreaReadOnlyToolbarButtonProps } from "./IsTextAreaReadOnlyToolbarButton-types";
 
 export const IsTextAreaReadOnlyToolbarButton = ({
@@ -17,7 +19,11 @@ export const IsTextAreaReadOnlyToolbarButton = ({
 	};
 
 	return (
-		<PrimaryButton checked={isChecked} onClick={onClick}>
+		<PrimaryButton
+			checked={isChecked}
+			onClick={onClick}
+			className={toolbarButtonClassName}
+		>
 			<LockIcon />
 		</PrimaryButton>
 	);

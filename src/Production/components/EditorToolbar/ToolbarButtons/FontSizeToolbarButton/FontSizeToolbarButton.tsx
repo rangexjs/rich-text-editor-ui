@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontSizeIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	FontSizeToolbarButtonProps,
@@ -97,6 +97,7 @@ export const FontSizeToolbarButton = ({
 				isChevron={true}
 				anchorName={fontSizeToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<FontSizeIcon />
 			</PrimaryButton>
@@ -105,7 +106,7 @@ export const FontSizeToolbarButton = ({
 				className="max-h-80 flex-col py-2 text-sm [&:popover-open]:flex"
 			>
 				<PrimaryButton
-					className="justify-center rounded-none px-1 py-0.5 font-semibold"
+					className="justify-center px-1 py-0.5 font-semibold"
 					onClick={() => onFontSizeClick("default")}
 				>
 					Default
@@ -113,7 +114,7 @@ export const FontSizeToolbarButton = ({
 				{sortedFontSizes.map((fontSize) => (
 					<PrimaryButton
 						key={fontSize}
-						className="rounded-none px-8 py-0.5 font-semibold"
+						className="px-8 py-0.5 font-semibold"
 						onClick={() => onFontSizeClick(fontSize)}
 					>
 						<span

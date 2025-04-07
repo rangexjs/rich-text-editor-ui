@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
@@ -7,6 +8,7 @@ export default defineConfig({
 	server: { port: 3300 },
 	plugins: [
 		react(),
+		tailwindcss(),
 		tsconfigPaths(),
 		dts({ entryRoot: "src/Production", outDir: "dist" }),
 	],

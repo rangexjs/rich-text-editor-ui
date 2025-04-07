@@ -11,6 +11,6 @@ export type TableButtons = TableButton[];
 export type TableButtonsGroup = TableButtons[];
 
 export interface TableCellDropdownProps {
-	popoverTargetElementRef: RefObject<HTMLDivElement>;
+	popoverTargetElementRef: RefObject<HTMLDivElement | null>;
 	buttonsGroup: TableButtonsGroup;
 }

@@ -41,7 +41,7 @@ const ColorPalette = ({
 					<button
 						type="button"
 						key={index}
-						className="relative inline-block scale-100 outline-primary transition-[transform] hover:z-10 hover:scale-125 hover:outline"
+						className="relative inline-block scale-100 outline-primary transition-transform hover:z-10 hover:scale-125 hover:outline-3"
 						style={{
 							width: `${colorSize}px`,
 							height: `${colorSize}px`,
@@ -139,7 +139,7 @@ export const ColorPanel = ({
 						style={{
 							// @ts-ignore
 							anchorName,
-							color: activeTabName === name ? "var(--primary-color)" : "",
+							color: activeTabName === name ? "var(--color-primary)" : "",
 						}}
 						onClick={() => setActiveTabName(name)}
 					>
@@ -157,9 +157,9 @@ export const ColorPanel = ({
 						height: `calc(anchor-size(height) - ${activeTabBgSpace * 2}px)`,
 						transition: "left 200ms, right 200ms",
 						border:
-							"1px solid color(from var(--primary-color) srgb r g b / 0.3)",
+							"1px solid color(from var(--color-primary) srgb r g b / 0.3)",
 						backgroundColor:
-							"color(from var(--primary-color) srgb r g b / 0.2)",
+							"color(from var(--color-primary) srgb r g b / 0.2)",
 					}}
 				/>
 			</div>

@@ -4,6 +4,7 @@ import { RichTextEditorUI } from "src/Production";
 import type { ToolbarButtons } from "src/Production/components";
 
 import { getFormattableButtonsState } from "./GetFormattableButtonsState";
+import { mentionList } from "./StaticData";
 import { DevelopmentView } from "./components";
 
 import type { SimulateProductEnvironmentProps } from "./Development-types";
@@ -57,6 +58,11 @@ export const simulateProductEnvironment = ({
 	const richTextEditorUI = new RichTextEditorUI({
 		domNode: innerRoot,
 		toolbarButtons,
+		interactiveOverlays: {
+			anchor: true,
+			caretListbox: true,
+			tableSettings: true,
+		},
 		richTextArea,
 	});
 
@@ -140,20 +146,49 @@ export const simulateProductEnvironment = ({
 		console.log(props);
 	});
 
-	// Feature flags (should be reworked in the future to make manual testing easier)
-	const isAddTable = true;
-	const isAddAnchor = true;
-
-	if (isAddTable) {
-		const tableSettings =
-			richTextEditorUI.interactiveOverlay.createTableSettingsElement();
-
-		richTextArea.append(tableSettings);
-	}
+	// Feature flags (should be reworked in the future to make manual testing easier, consider storybook)
+	const isAddAnchor = false;
+	const isAddCaretListbox = false;
+	const isAddTable = false;
 
 	if (isAddAnchor) {
-		const anchor = richTextEditorUI.interactiveOverlay.createAnchorElement();
+		const { anchorOverlay } = richTextEditorUI;
 
-		richTextArea.append(anchor);
+		anchorOverlay.style.top = "anchor(bottom)";
+		anchorOverlay.style.left = "anchor(left)";
+
+		setTimeout(() => {
+			// @ts-ignore
+			anchorOverlay.showPopover({ source: richTextArea });
+		});
+	}
+
+	if (isAddCaretListbox) {
+		const { caretListboxOverlay } = richTextEditorUI;
+
+		caretListboxOverlay.style.top = "anchor(bottom)";
+		caretListboxOverlay.style.left = "anchor(left)";
+
+		richTextEditorUI.updateCaretListboxOverlayState({
+			mentionSearch: "@",
+			mentionList,
+		});
+
+		setTimeout(() => {
+			// @ts-ignore
+			caretListboxOverlay.showPopover({ source: richTextArea });
+		});
+	}
+
+	if (isAddTable) {
+		const { tableSettingsOverlay } = richTextEditorUI;
+
+		tableSettingsOverlay.style.top = "anchor(bottom)";
+		tableSettingsOverlay.style.left = "anchor(left)";
+
+		setTimeout(() => {
+			// @ts-ignore
+			tableSettingsOverlay.showPopover({ source: richTextArea });
+		});
 	}
 };

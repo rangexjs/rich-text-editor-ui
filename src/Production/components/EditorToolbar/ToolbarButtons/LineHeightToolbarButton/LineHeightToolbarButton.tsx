@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, LineHeightIcon } from "../../../SVGs";
 
-import { ToolbarDropdown } from "../Utilities";
+import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	LineHeightToolbarButtonProps,
@@ -97,6 +97,7 @@ export const LineHeightToolbarButton = ({
 				isChevron={true}
 				anchorName={lineHeightToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
+				className={toolbarButtonClassName}
 			>
 				<LineHeightIcon />
 			</PrimaryButton>
@@ -105,7 +106,7 @@ export const LineHeightToolbarButton = ({
 				className="max-h-80 flex-col py-2 text-sm [&:popover-open]:flex"
 			>
 				<PrimaryButton
-					className="justify-center rounded-none px-1 py-0.5 font-semibold"
+					className="justify-center px-1 py-0.5 font-semibold"
 					onClick={() => onLineHeightClick("default")}
 				>
 					Default
@@ -113,7 +114,7 @@ export const LineHeightToolbarButton = ({
 				{sortedLineHeights.map((lineHeight) => (
 					<PrimaryButton
 						key={lineHeight}
-						className="rounded-none px-8 py-0.5 text-start font-semibold"
+						className="px-8 py-0.5 text-start font-semibold"
 						onClick={() => onLineHeightClick(lineHeight)}
 					>
 						<span
