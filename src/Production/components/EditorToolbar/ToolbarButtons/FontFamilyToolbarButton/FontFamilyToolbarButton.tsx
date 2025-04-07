@@ -31,10 +31,25 @@ export const fontFamilyList = [
 
 export const FontFamilyToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: FontFamilyToolbarButtonProps) => {
+	const { fontFamily } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(fontFamily.isDisabled);
+	const [values, setValues] = useState(fontFamily.values);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateFontFamilyState = ({
+			isDisabled,
+			values,
+		}) => {
+			setIsDisabled(isDisabled);
+			setValues(values);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -68,7 +83,7 @@ export const FontFamilyToolbarButton = ({
 
 	const fontFamilyDropdownAnchor = "--font-family-dropdown-anchor";
 
-	const activeFontFamilies = state.values;
+	const activeFontFamilies = values;
 
 	const onFontFamilyClick = (value: OnFontFamilyClickProps) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -100,7 +115,7 @@ export const FontFamilyToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}

@@ -1,11 +1,19 @@
-import type { FormatStylesButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type IndentationIsDisabled = boolean;
+
+export type IndentationValues = Set<string>;
+
+export interface IndentationToolbarButtonState {
+	isDisabled: IndentationIsDisabled;
+	values: IndentationValues;
+}
 
 export type OnIndentationClickProps = "remove" | number;
 
 export interface IndentationToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormatStylesButtonsState, "indentation">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

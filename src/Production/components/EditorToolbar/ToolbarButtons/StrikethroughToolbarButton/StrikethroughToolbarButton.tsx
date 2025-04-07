@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
 	PrimaryButton,
 	type PrimaryButtonOnClickFn,
@@ -10,12 +12,27 @@ import type { StrikethroughToolbarButtonProps } from "./StrikethroughToolbarButt
 
 export const StrikethroughToolbarButton = ({
 	toolbarButtonsActionManager,
-	states,
+	formatStylesButtonsStateManager,
 }: StrikethroughToolbarButtonProps) => {
-	const { strikethrough, underline } = states;
+	const { strikethrough } = formatStylesButtonsStateManager;
+
+	const [isChecked, setIsChecked] = useState(strikethrough.isChecked);
+	const [isDisabled, setIsDisabled] = useState(strikethrough.isDisabled);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateStrikethroughState = ({
+			isChecked,
+			isDisabled,
+		}) => {
+			setIsChecked(isChecked);
+			setIsDisabled(isDisabled);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	const onClick: PrimaryButtonOnClickFn = () => {
 		const textDecorationList: string[] = [];
+
+		const { strikethrough, underline } = formatStylesButtonsStateManager;
 
 		strikethrough.isChecked || textDecorationList.push("line-through");
 		underline.isChecked && textDecorationList.push("underline");
@@ -28,8 +45,8 @@ export const StrikethroughToolbarButton = ({
 
 	return (
 		<PrimaryButton
-			checked={strikethrough.isChecked}
-			disabled={strikethrough.isDisabled}
+			checked={isChecked}
+			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
 			className={toolbarButtonClassName}

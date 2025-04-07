@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
 	PrimaryButton,
 	type PrimaryButtonOnClickFn,
@@ -10,12 +12,27 @@ import type { UnderlineToolbarButtonProps } from "./UnderlineToolbarButton-types
 
 export const UnderlineToolbarButton = ({
 	toolbarButtonsActionManager,
-	states,
+	formatStylesButtonsStateManager,
 }: UnderlineToolbarButtonProps) => {
-	const { strikethrough, underline } = states;
+	const { underline } = formatStylesButtonsStateManager;
+
+	const [isChecked, setIsChecked] = useState(underline.isChecked);
+	const [isDisabled, setIsDisabled] = useState(underline.isDisabled);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateUnderlineState = ({
+			isChecked,
+			isDisabled,
+		}) => {
+			setIsChecked(isChecked);
+			setIsDisabled(isDisabled);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	const onClick: PrimaryButtonOnClickFn = () => {
 		const textDecorationList: string[] = [];
+
+		const { strikethrough, underline } = formatStylesButtonsStateManager;
 
 		strikethrough.isChecked && textDecorationList.push("line-through");
 		underline.isChecked || textDecorationList.push("underline");
@@ -28,8 +45,8 @@ export const UnderlineToolbarButton = ({
 
 	return (
 		<PrimaryButton
-			checked={underline.isChecked}
-			disabled={underline.isDisabled}
+			checked={isChecked}
+			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
 			className={toolbarButtonClassName}

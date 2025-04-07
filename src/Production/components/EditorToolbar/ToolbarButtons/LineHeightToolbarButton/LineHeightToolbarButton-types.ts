@@ -1,11 +1,19 @@
-import type { FormatStylesButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type LineHeightIsDisabled = boolean;
+
+export type LineHeightValues = Set<number>;
+
+export interface LineHeightToolbarButtonState {
+	isDisabled: LineHeightIsDisabled;
+	values: LineHeightValues;
+}
 
 export type OnLineHeightClickProps = "default" | number;
 
 export interface LineHeightToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormatStylesButtonsState, "lineHeight">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

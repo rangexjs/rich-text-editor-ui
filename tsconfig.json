@@ -17,6 +17,9 @@
 			"@toolbarButtonsActionManager": [
 				"src/Production/ToolbarButtonsActionManager"
 			],
+			"@toolbarButtonsStateManager": [
+				"src/Production/ToolbarButtonsStateManager"
+			],
 			"@utilities": ["src/Production/Utilities"]
 		},
 		"esModuleInterop": true,

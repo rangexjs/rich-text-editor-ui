@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
 	PrimaryButton,
 	type PrimaryButtonOnClickFn,
@@ -10,8 +11,23 @@ import type { ItalicToolbarButtonProps } from "./ItalicToolbarButton-types";
 
 export const ItalicToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: ItalicToolbarButtonProps) => {
+	const { italic } = formatStylesButtonsStateManager;
+
+	const [isChecked, setIsChecked] = useState(italic.isChecked);
+	const [isDisabled, setIsDisabled] = useState(italic.isDisabled);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateItalicState = ({
+			isChecked,
+			isDisabled,
+		}) => {
+			setIsChecked(isChecked);
+			setIsDisabled(isDisabled);
+		};
+	}, [formatStylesButtonsStateManager]);
+
 	const onClick: PrimaryButtonOnClickFn = ({ isChecked }) => {
 		const fontStyle = isChecked ? null : "italic";
 
@@ -20,8 +36,8 @@ export const ItalicToolbarButton = ({
 
 	return (
 		<PrimaryButton
-			checked={state.isChecked}
-			disabled={state.isDisabled}
+			checked={isChecked}
+			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
 			className={toolbarButtonClassName}

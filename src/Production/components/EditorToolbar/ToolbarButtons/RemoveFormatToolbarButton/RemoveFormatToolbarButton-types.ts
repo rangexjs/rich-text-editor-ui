@@ -1,8 +1,8 @@
-import type { FormatStylesButtonsState } from "@externalStores";
-
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
 export interface RemoveFormatToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	formattableButtonsState: FormatStylesButtonsState;
-}
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

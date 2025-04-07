@@ -7,7 +7,7 @@ import type { RemoveFormatToolbarButtonProps } from "./RemoveFormatToolbarButton
 
 export const RemoveFormatToolbarButton = ({
 	toolbarButtonsActionManager,
-	formattableButtonsState,
+	formatStylesButtonsStateManager,
 }: RemoveFormatToolbarButtonProps) => {
 	const {
 		backgroundColor,
@@ -22,7 +22,7 @@ export const RemoveFormatToolbarButton = ({
 		strikethrough,
 		textAlign,
 		underline,
-	} = formattableButtonsState;
+	} = formatStylesButtonsStateManager;
 
 	// TODO: Styles with default values (e.g.: textAlign) has to be reviewed
 	const isDisabled =

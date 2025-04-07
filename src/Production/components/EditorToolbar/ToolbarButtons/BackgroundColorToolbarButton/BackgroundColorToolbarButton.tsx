@@ -12,12 +12,27 @@ import type { CreateBackgroundColorPropsProps } from "./BackgroundColorToolbarBu
 
 export const BackgroundColorToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: CreateBackgroundColorPropsProps) => {
+	const { backgroundColor } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(backgroundColor.isDisabled);
+	const [values, setValues] = useState(backgroundColor.values);
+
 	const anchorName = "--background-color-button";
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateBackgroundColorState = ({
+			isDisabled,
+			values,
+		}) => {
+			setIsDisabled(isDisabled);
+			setValues(values);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	const onColorSelected: OnColorSelected = ({ hsl }) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -63,7 +78,7 @@ export const BackgroundColorToolbarButton = ({
 
 	const activeColors: HSLFormat[] = [];
 
-	for (const color of state.values) {
+	for (const color of values) {
 		try {
 			const hslFormat = Color.fromColor({ color }).hslFormat();
 
@@ -77,7 +92,7 @@ export const BackgroundColorToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}

@@ -1,8 +1,17 @@
-import type { FormatStylesButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type BoldIsChecked = boolean;
 
-export interface BoldToolbarButtonProps extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormatStylesButtonsState, "bold">;
+export type BoldIsDisabled = boolean;
+
+export interface BoldToolbarButtonState {
+	isChecked: BoldIsChecked;
+	isDisabled: BoldIsDisabled;
 }
+
+export interface BoldToolbarButtonProps
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

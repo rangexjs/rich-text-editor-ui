@@ -8,7 +8,6 @@ import {
 	AnchorOverlayStore,
 	CaretListboxOverlayStore,
 	FormatLineTagNameButtonsStore,
-	FormatStylesButtonsStore,
 	HistoryNavigationButtonsStore,
 	NodeInsertionButtonsStore,
 	NonCategorizedOperationButtonsStore,
@@ -21,6 +20,7 @@ import inlineCss from "../global.css?inline";
 
 import { getOverlayElement } from "./Utilities";
 
+import { FormatStylesButtonsStateManager } from "@toolbarButtonsStateManager";
 import type {
 	OnFormatLineTagNameProps,
 	OnFormatStylesProps,
@@ -42,8 +42,8 @@ export class RichTextEditorUI {
 	#shadowRoot;
 	#root;
 	#toolbarButtonsActionManager = new ToolbarButtonsActionManager();
+	#formatStylesButtonsStateManager = new FormatStylesButtonsStateManager();
 	#formatLineTagNameButtonsStore = new FormatLineTagNameButtonsStore();
-	#formatStylesButtonsStore = new FormatStylesButtonsStore();
 	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
 	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
 	#nonCategorizedOperationButtonsStore =
@@ -92,7 +92,9 @@ export class RichTextEditorUI {
 						toolbarButtons={toolbarButtons}
 						toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
 						formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
-						formatStylesButtonsStore={this.#formatStylesButtonsStore}
+						formatStylesButtonsStateManager={
+							this.#formatStylesButtonsStateManager
+						}
 						historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
 						nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
 						nonCategorizedOperationButtonsStore={
@@ -165,7 +167,7 @@ export class RichTextEditorUI {
 	}
 
 	updateFormatStylesButtons(props: UpdateFormatStylesButtonsProps) {
-		this.#formatStylesButtonsStore.updateState(props);
+		this.#formatStylesButtonsStateManager.updateState(props);
 	}
 
 	updateHistoryNavigationButtons(props: UpdateHistoryNavigationButtonsProps) {

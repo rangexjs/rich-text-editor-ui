@@ -36,27 +36,12 @@ export const EditorToolbar = ({
 	toolbarRows,
 	toolbarButtonsActionManager,
 	formatLineTagNameButtonsState,
-	formatStylesButtonsState,
+	formatStylesButtonsStateManager,
 	historyNavigationButtonsState,
 	nodeInsertionButtonsState,
 	nonCategorizedOperationButtonsState,
 }: EditorToolbarProps) => {
 	const { tagName } = formatLineTagNameButtonsState;
-
-	const {
-		backgroundColor,
-		bold,
-		color,
-		fontFamily,
-		fontSize,
-		indentation,
-		italic,
-		letterSpacing,
-		lineHeight,
-		strikethrough,
-		textAlign,
-		underline,
-	} = formatStylesButtonsState;
 
 	const { historyBack, historyForward } = historyNavigationButtonsState;
 
@@ -89,7 +74,7 @@ export const EditorToolbar = ({
 					return (
 						<BackgroundColorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={backgroundColor}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -107,7 +92,7 @@ export const EditorToolbar = ({
 					return (
 						<BoldToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={bold}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -125,7 +110,7 @@ export const EditorToolbar = ({
 					return (
 						<ColorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={color}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -134,7 +119,7 @@ export const EditorToolbar = ({
 					return (
 						<FontFamilyToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={fontFamily}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -143,7 +128,7 @@ export const EditorToolbar = ({
 					return (
 						<FontSizeToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={fontSize}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -179,7 +164,7 @@ export const EditorToolbar = ({
 					return (
 						<IndentationToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={indentation}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -197,7 +182,7 @@ export const EditorToolbar = ({
 					return (
 						<ItalicToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={italic}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -206,7 +191,7 @@ export const EditorToolbar = ({
 					return (
 						<LetterSpacingToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={letterSpacing}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -215,7 +200,7 @@ export const EditorToolbar = ({
 					return (
 						<LineHeightToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={lineHeight}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -242,7 +227,7 @@ export const EditorToolbar = ({
 					return (
 						<RemoveFormatToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							formattableButtonsState={formatStylesButtonsState}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -251,7 +236,7 @@ export const EditorToolbar = ({
 					return (
 						<StrikethroughToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							states={{ strikethrough, underline }}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -278,7 +263,7 @@ export const EditorToolbar = ({
 					return (
 						<TextAlignToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={textAlign}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -296,7 +281,7 @@ export const EditorToolbar = ({
 					return (
 						<UnderlineToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							states={{ strikethrough, underline }}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}

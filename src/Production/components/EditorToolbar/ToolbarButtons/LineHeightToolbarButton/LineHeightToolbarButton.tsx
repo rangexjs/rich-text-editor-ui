@@ -16,10 +16,25 @@ const lineHeights = [
 
 export const LineHeightToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: LineHeightToolbarButtonProps) => {
+	const { lineHeight } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(lineHeight.isDisabled);
+	const [values, setValues] = useState(lineHeight.values);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateLineHeightState = ({
+			isDisabled,
+			values,
+		}) => {
+			setIsDisabled(isDisabled);
+			setValues(values);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -53,7 +68,7 @@ export const LineHeightToolbarButton = ({
 
 	const lineHeightDropdownAnchor = "--line-height-dropdown";
 
-	const activeLineHeights = [...state.values];
+	const activeLineHeights = [...values];
 
 	const commonLineHeights = [
 		...new Set([...lineHeights, ...activeLineHeights]),
@@ -93,7 +108,7 @@ export const LineHeightToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={lineHeightToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

@@ -14,10 +14,25 @@ const indentations = [4, 8, 12, 16, 24, 32, 40, 48, 64, 80] as const;
 
 export const IndentationToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: IndentationToolbarButtonProps) => {
+	const { indentation } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(indentation.isDisabled);
+	const [values, setValues] = useState(indentation.values);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateIndentationState = ({
+			isDisabled,
+			values,
+		}) => {
+			setIsDisabled(isDisabled);
+			setValues(values);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -51,7 +66,7 @@ export const IndentationToolbarButton = ({
 
 	const indentationDropdownAnchor = "--indentation-dropdown";
 
-	const activeIndentations = [...state.values].map((indentation) =>
+	const activeIndentations = [...values].map((indentation) =>
 		Number.parseInt(indentation, 10),
 	);
 
@@ -97,7 +112,7 @@ export const IndentationToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={indentationToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

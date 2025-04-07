@@ -3,7 +3,6 @@ import type {
 	AnchorOverlayState,
 	CaretListboxOverlayState,
 	FormatLineTagNameButtonsState,
-	FormatStylesButtonsState,
 	HistoryNavigationButtonsState,
 	NodeInsertionButtonsState,
 	NonCategorizedOperationButtonsState,
@@ -16,6 +15,7 @@ import type {
 	OnNodeInsertionFn,
 	OnNonCategorizedOperationFn,
 } from "@toolbarButtonsActionManager";
+import type { UpdateFormatStylesButtonsStateProps } from "@toolbarButtonsStateManager";
 
 export interface RichTextEditorUIConstructorProps
 	extends Pick<
@@ -36,7 +36,7 @@ export type OnNodeInsertionProps = OnNodeInsertionFn;
 export type OnNonCategorizedOperationProps = OnNonCategorizedOperationFn;
 
 export interface UpdateFormatStylesButtonsProps
-	extends Partial<FormatStylesButtonsState> {}
+	extends UpdateFormatStylesButtonsStateProps {}
 
 export interface UpdateNodeInsertionButtonsProps
 	extends Partial<NodeInsertionButtonsState> {}

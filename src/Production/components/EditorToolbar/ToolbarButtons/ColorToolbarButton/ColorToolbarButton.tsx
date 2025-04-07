@@ -12,12 +12,27 @@ import type { CreateColorPropsProps } from "./ColorToolbarButton-types";
 
 export const ColorToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: CreateColorPropsProps) => {
+	const { color } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(color.isDisabled);
+	const [values, setValues] = useState(color.values);
+
 	const anchorName = "--color-button";
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateColorState = ({
+			isDisabled,
+			values,
+		}) => {
+			setIsDisabled(isDisabled);
+			setValues(values);
+		};
+	}, [formatStylesButtonsStateManager]);
 
 	const onColorSelected: OnColorSelected = ({ hsl }) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -63,7 +78,7 @@ export const ColorToolbarButton = ({
 
 	const activeColors: HSLFormat[] = [];
 
-	for (const color of state.values) {
+	for (const color of values) {
 		try {
 			const hslFormat = Color.fromColor({ color }).hslFormat();
 
@@ -77,7 +92,7 @@ export const ColorToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}

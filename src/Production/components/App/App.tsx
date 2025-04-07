@@ -9,7 +9,7 @@ export const App = ({
 	toolbarButtons,
 	toolbarButtonsActionManager,
 	formatLineTagNameButtonsStore,
-	formatStylesButtonsStore,
+	formatStylesButtonsStateManager,
 	historyNavigationButtonsStore,
 	nodeInsertionButtonsStore,
 	nonCategorizedOperationButtonsStore,
@@ -24,11 +24,6 @@ export const App = ({
 		formatLineTagNameButtonsStore.getSnapshot.bind(
 			formatLineTagNameButtonsStore,
 		),
-	);
-
-	const formatStylesButtonsState = useSyncExternalStore(
-		formatStylesButtonsStore.subscribe.bind(formatStylesButtonsStore),
-		formatStylesButtonsStore.getSnapshot.bind(formatStylesButtonsStore),
 	);
 
 	const historyNavigationButtonsState = useSyncExternalStore(
@@ -58,7 +53,7 @@ export const App = ({
 				toolbarRows={toolbarButtons}
 				toolbarButtonsActionManager={toolbarButtonsActionManager}
 				formatLineTagNameButtonsState={formatLineTagNameButtonsState}
-				formatStylesButtonsState={formatStylesButtonsState}
+				formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 				historyNavigationButtonsState={historyNavigationButtonsState}
 				nodeInsertionButtonsState={nodeInsertionButtonsState}
 				nonCategorizedOperationButtonsState={

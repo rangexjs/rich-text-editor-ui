@@ -16,9 +16,24 @@ const letterSpacings = [
 
 export const LetterSpacingToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: LetterSpacingToolbarButtonProps) => {
+	const { letterSpacing } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(letterSpacing.isDisabled);
+	const [values, setValues] = useState(letterSpacing.values);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateLetterSpacingState = ({
+			isDisabled,
+			values,
+		}) => {
+			setIsDisabled(isDisabled);
+			setValues(values);
+		};
+	}, [formatStylesButtonsStateManager]);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -53,7 +68,7 @@ export const LetterSpacingToolbarButton = ({
 
 	const letterSpacingDropdownAnchor = "--letter-spacing-dropdown";
 
-	const activeLetterSpacings = [...state.values].map((letterSpacing) =>
+	const activeLetterSpacings = [...values].map((letterSpacing) =>
 		Number.parseFloat(letterSpacing),
 	);
 
@@ -97,7 +112,7 @@ export const LetterSpacingToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={letterSpacingToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}
