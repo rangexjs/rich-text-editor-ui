@@ -7,7 +7,7 @@ import type {
 
 export class NonCategorizedOperationButtonsStateManager {
 	#isTextAreaReadOnly: IsTextAreaReadOnlyToolbarButtonState = {
-		isChecked: true,
+		isChecked: false,
 	};
 
 	get isTextAreaReadOnly() {
