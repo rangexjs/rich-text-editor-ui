@@ -1,9 +1,14 @@
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type BlockQuoteIsDisabled = boolean;
+
+export interface BlockQuoteToolbarButtonState {
+	isDisabled: BlockQuoteIsDisabled;
+}
 
 export interface BlockQuoteToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "blockQuote">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}

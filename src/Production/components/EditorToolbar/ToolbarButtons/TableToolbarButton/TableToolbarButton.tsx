@@ -13,7 +13,7 @@ import type {
 
 export const TableToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: TableToolbarButtonProps) => {
 	const numberOfRows = 10;
 	const numberOfCols = 10;
@@ -28,13 +28,22 @@ export const TableToolbarButton = ({
 		isActive: false,
 	}));
 
+	const { table } = nodeInsertionButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(table.isDisabled);
 	const [squareStateList, setSquareStateList] = useState<SquareStateList>(
 		inactiveSquareStateList,
 	);
 	const [squareNumbers, setSquareNumber] = useState({ row: 1, col: 1 });
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateTableState = ({ isDisabled }) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -136,7 +145,7 @@ export const TableToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={tableToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

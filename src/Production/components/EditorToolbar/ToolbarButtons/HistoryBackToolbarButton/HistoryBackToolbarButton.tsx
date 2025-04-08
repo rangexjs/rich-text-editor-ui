@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
 	PrimaryButton,
 	type PrimaryButtonOnClickFn,
@@ -10,8 +12,18 @@ import type { HistoryBackToolbarButtonProps } from "./HistoryBackToolbarButton-t
 
 export const HistoryBackToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	historyNavigationStateManager,
 }: HistoryBackToolbarButtonProps) => {
+	const { historyBack } = historyNavigationStateManager;
+
+	const [isDisabled, setIsDisabled] = useState(historyBack.isDisabled);
+
+	useEffect(() => {
+		historyNavigationStateManager.updateHistoryBackState = ({ isDisabled }) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [historyNavigationStateManager]);
+
 	const onClick: PrimaryButtonOnClickFn = () => {
 		toolbarButtonsActionManager.onHistoryNavigation?.({ type: "history-back" });
 	};
@@ -19,7 +31,7 @@ export const HistoryBackToolbarButton = ({
 	return (
 		<PrimaryButton
 			checked={false}
-			disabled={state.isDisabled}
+			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
 			className={toolbarButtonClassName}

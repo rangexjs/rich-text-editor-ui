@@ -1,7 +1,13 @@
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type ListIsDisabled = boolean;
+
+export interface ListToolbarButtonState {
+	isDisabled: ListIsDisabled;
+}
 
 export type ListStyleType = "disc" | "circle" | "square" | "decimal";
 
@@ -9,6 +15,6 @@ export type ListItemList = ListStyleType[];
 
 export type OnListButtonClickProps = ListStyleType;
 
-export interface ListToolbarButtonProps extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "list">;
-}
+export interface ListToolbarButtonProps
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}

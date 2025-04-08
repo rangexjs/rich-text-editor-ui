@@ -7,20 +7,22 @@ import { interactiveOverlayId } from "@constants";
 import {
 	AnchorOverlayStore,
 	CaretListboxOverlayStore,
-	FormatLineTagNameButtonsStore,
-	HistoryNavigationButtonsStore,
-	NodeInsertionButtonsStore,
-	NonCategorizedOperationButtonsStore,
 	TableSettingsOverlayStore,
 } from "@externalStores";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
+import {
+	FormatLineTagNameButtonsStateManager,
+	FormatStylesButtonsStateManager,
+	HistoryNavigationButtonsStateManager,
+	NodeInsertionButtonsStateManager,
+	NonCategorizedOperationButtonsStateManager,
+} from "@toolbarButtonsStateManager";
 
 // @ts-ignore
 import inlineCss from "../global.css?inline";
 
 import { getOverlayElement } from "./Utilities";
 
-import { FormatStylesButtonsStateManager } from "@toolbarButtonsStateManager";
 import type {
 	OnFormatLineTagNameProps,
 	OnFormatStylesProps,
@@ -43,11 +45,13 @@ export class RichTextEditorUI {
 	#root;
 	#toolbarButtonsActionManager = new ToolbarButtonsActionManager();
 	#formatStylesButtonsStateManager = new FormatStylesButtonsStateManager();
-	#formatLineTagNameButtonsStore = new FormatLineTagNameButtonsStore();
-	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
-	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
-	#nonCategorizedOperationButtonsStore =
-		new NonCategorizedOperationButtonsStore();
+	#formatLineTagNameButtonsStateManager =
+		new FormatLineTagNameButtonsStateManager();
+	#historyNavigationButtonsStateManager =
+		new HistoryNavigationButtonsStateManager();
+	#nodeInsertionButtonsStateManager = new NodeInsertionButtonsStateManager();
+	#nonCategorizedOperationButtonsStateManager =
+		new NonCategorizedOperationButtonsStateManager();
 	#anchorOverlayStore = new AnchorOverlayStore();
 	#caretListboxOverlayStore = new CaretListboxOverlayStore();
 	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
@@ -91,14 +95,20 @@ export class RichTextEditorUI {
 					<App
 						toolbarButtons={toolbarButtons}
 						toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
-						formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
+						formatLineTagNameButtonsStateManager={
+							this.#formatLineTagNameButtonsStateManager
+						}
 						formatStylesButtonsStateManager={
 							this.#formatStylesButtonsStateManager
 						}
-						historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
-						nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
-						nonCategorizedOperationButtonsStore={
-							this.#nonCategorizedOperationButtonsStore
+						historyNavigationButtonsStateManager={
+							this.#historyNavigationButtonsStateManager
+						}
+						nodeInsertionButtonsStateManager={
+							this.#nodeInsertionButtonsStateManager
+						}
+						nonCategorizedOperationButtonsStateManager={
+							this.#nonCategorizedOperationButtonsStateManager
 						}
 						interactiveOverlays={interactiveOverlays}
 						anchorOverlayStore={this.#anchorOverlayStore}
@@ -163,7 +173,7 @@ export class RichTextEditorUI {
 	}
 
 	updateFormatLineTagNameButtons(props: UpdateFormatLineTagNameButtonsProps) {
-		this.#formatLineTagNameButtonsStore.updateState(props);
+		this.#formatLineTagNameButtonsStateManager.updateState(props);
 	}
 
 	updateFormatStylesButtons(props: UpdateFormatStylesButtonsProps) {
@@ -171,17 +181,17 @@ export class RichTextEditorUI {
 	}
 
 	updateHistoryNavigationButtons(props: UpdateHistoryNavigationButtonsProps) {
-		this.#historyNavigationButtonsStore.updateState(props);
+		this.#historyNavigationButtonsStateManager.updateState(props);
 	}
 
 	updateNodeInsertionButtons(props: UpdateNodeInsertionButtonsProps) {
-		this.#nodeInsertionButtonsStore.updateState(props);
+		this.#nodeInsertionButtonsStateManager.updateState(props);
 	}
 
 	updateNonCategorizedOperationButtons(
 		props: UpdateNonCategorizedOperationButtonsProps,
 	) {
-		this.#nonCategorizedOperationButtonsStore.updateState(props);
+		this.#nonCategorizedOperationButtonsStateManager.updateState(props);
 	}
 
 	updateAnchorOverlayState(props: UpdateAnchorOverlayStateProps) {

@@ -1,9 +1,14 @@
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type TodoListIsDisabled = boolean;
+
+export interface TodoListToolbarButtonState {
+	isDisabled: TodoListIsDisabled;
+}
 
 export interface TodoListToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "todoList">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}

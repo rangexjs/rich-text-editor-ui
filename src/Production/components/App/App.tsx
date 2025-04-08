@@ -1,5 +1,3 @@
-import { useSyncExternalStore } from "react";
-
 import { EditorToolbar } from "../EditorToolbar";
 import { RichTextAreaWrapper } from "../RichTextAreaWrapper";
 
@@ -8,56 +6,32 @@ import type { AppProps } from "./App-types";
 export const App = ({
 	toolbarButtons,
 	toolbarButtonsActionManager,
-	formatLineTagNameButtonsStore,
+	formatLineTagNameButtonsStateManager,
 	formatStylesButtonsStateManager,
-	historyNavigationButtonsStore,
-	nodeInsertionButtonsStore,
-	nonCategorizedOperationButtonsStore,
+	historyNavigationButtonsStateManager,
+	nodeInsertionButtonsStateManager,
+	nonCategorizedOperationButtonsStateManager,
 	interactiveOverlays,
 	anchorOverlayStore,
 	caretListboxOverlayStore,
 	tableSettingsOverlayStore,
 	richTextArea,
 }: AppProps) => {
-	const formatLineTagNameButtonsState = useSyncExternalStore(
-		formatLineTagNameButtonsStore.subscribe.bind(formatLineTagNameButtonsStore),
-		formatLineTagNameButtonsStore.getSnapshot.bind(
-			formatLineTagNameButtonsStore,
-		),
-	);
-
-	const historyNavigationButtonsState = useSyncExternalStore(
-		historyNavigationButtonsStore.subscribe.bind(historyNavigationButtonsStore),
-		historyNavigationButtonsStore.getSnapshot.bind(
-			historyNavigationButtonsStore,
-		),
-	);
-
-	const nodeInsertionButtonsState = useSyncExternalStore(
-		nodeInsertionButtonsStore.subscribe.bind(nodeInsertionButtonsStore),
-		nodeInsertionButtonsStore.getSnapshot.bind(nodeInsertionButtonsStore),
-	);
-
-	const nonCategorizedOperationButtonsState = useSyncExternalStore(
-		nonCategorizedOperationButtonsStore.subscribe.bind(
-			nonCategorizedOperationButtonsStore,
-		),
-		nonCategorizedOperationButtonsStore.getSnapshot.bind(
-			nonCategorizedOperationButtonsStore,
-		),
-	);
-
 	return (
 		<div className="rounded-sm border border-slate-300 border-solid">
 			<EditorToolbar
 				toolbarRows={toolbarButtons}
 				toolbarButtonsActionManager={toolbarButtonsActionManager}
-				formatLineTagNameButtonsState={formatLineTagNameButtonsState}
+				formatLineTagNameButtonsStateManager={
+					formatLineTagNameButtonsStateManager
+				}
 				formatStylesButtonsStateManager={formatStylesButtonsStateManager}
-				historyNavigationButtonsState={historyNavigationButtonsState}
-				nodeInsertionButtonsState={nodeInsertionButtonsState}
-				nonCategorizedOperationButtonsState={
-					nonCategorizedOperationButtonsState
+				historyNavigationButtonsStateManager={
+					historyNavigationButtonsStateManager
+				}
+				nodeInsertionButtonsStateManager={nodeInsertionButtonsStateManager}
+				nonCategorizedOperationButtonsStateManager={
+					nonCategorizedOperationButtonsStateManager
 				}
 			/>
 			<RichTextAreaWrapper

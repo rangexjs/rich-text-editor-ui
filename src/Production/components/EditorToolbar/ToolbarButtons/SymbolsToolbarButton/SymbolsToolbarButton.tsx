@@ -13,11 +13,20 @@ import type { SymbolsToolbarButtonProps } from "./SymbolsToolbarButton-types";
 
 export const SymbolsToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: SymbolsToolbarButtonProps) => {
+	const { symbols } = nodeInsertionButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(symbols.isDisabled);
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateListState = ({ isDisabled }) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -68,7 +77,7 @@ export const SymbolsToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={symbolsToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

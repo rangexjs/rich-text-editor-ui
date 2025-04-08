@@ -1,9 +1,14 @@
-import type { NonCategorizedOperationButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NonCategorizedOperationButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type IsTextAreaReadOnlyIsChecked = boolean;
+
+export interface IsTextAreaReadOnlyToolbarButtonState {
+	isChecked: IsTextAreaReadOnlyIsChecked;
+}
 
 export interface IsTextAreaReadOnlyToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NonCategorizedOperationButtonsState, "isTextAreaReadOnly">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NonCategorizedOperationButtonsStateManagerObj {}

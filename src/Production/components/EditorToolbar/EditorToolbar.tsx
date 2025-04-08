@@ -35,29 +35,12 @@ import type { EditorToolbarProps } from "./EditorToolbar-types";
 export const EditorToolbar = ({
 	toolbarRows,
 	toolbarButtonsActionManager,
-	formatLineTagNameButtonsState,
+	formatLineTagNameButtonsStateManager,
 	formatStylesButtonsStateManager,
-	historyNavigationButtonsState,
-	nodeInsertionButtonsState,
-	nonCategorizedOperationButtonsState,
+	historyNavigationButtonsStateManager,
+	nodeInsertionButtonsStateManager,
+	nonCategorizedOperationButtonsStateManager,
 }: EditorToolbarProps) => {
-	const { tagName } = formatLineTagNameButtonsState;
-
-	const { historyBack, historyForward } = historyNavigationButtonsState;
-
-	const {
-		anchor,
-		blockQuote,
-		codeBlock,
-		image,
-		list,
-		symbols,
-		table,
-		todoList,
-	} = nodeInsertionButtonsState;
-
-	const { isTextAreaReadOnly } = nonCategorizedOperationButtonsState;
-
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
 			groups.map((name) => {
@@ -65,7 +48,9 @@ export const EditorToolbar = ({
 					return (
 						<AnchorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={anchor}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -83,7 +68,9 @@ export const EditorToolbar = ({
 					return (
 						<BlockQuoteToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={blockQuote}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -101,7 +88,9 @@ export const EditorToolbar = ({
 					return (
 						<CodeBlockToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={codeBlock}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -137,7 +126,9 @@ export const EditorToolbar = ({
 					return (
 						<HistoryBackToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={historyBack}
+							historyNavigationStateManager={
+								historyNavigationButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -146,7 +137,9 @@ export const EditorToolbar = ({
 					return (
 						<HistoryForwardToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={historyForward}
+							historyNavigationStateManager={
+								historyNavigationButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -155,7 +148,9 @@ export const EditorToolbar = ({
 					return (
 						<ImageToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={image}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -173,7 +168,9 @@ export const EditorToolbar = ({
 					return (
 						<IsTextAreaReadOnlyToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={isTextAreaReadOnly}
+							nonCategorizedOperationButtonsStateManager={
+								nonCategorizedOperationButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -209,7 +206,9 @@ export const EditorToolbar = ({
 					return (
 						<LineTagNameToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={tagName}
+							formatLineTagNameButtonsStateManager={
+								formatLineTagNameButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -218,7 +217,9 @@ export const EditorToolbar = ({
 					return (
 						<ListToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={list}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -245,7 +246,9 @@ export const EditorToolbar = ({
 					return (
 						<SymbolsToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={symbols}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -254,7 +257,9 @@ export const EditorToolbar = ({
 					return (
 						<TableToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={table}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -272,7 +277,9 @@ export const EditorToolbar = ({
 					return (
 						<TodoListToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={todoList}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}

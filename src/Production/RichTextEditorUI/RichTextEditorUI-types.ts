@@ -2,10 +2,6 @@ import type { AppProps } from "@components";
 import type {
 	AnchorOverlayState,
 	CaretListboxOverlayState,
-	FormatLineTagNameButtonsState,
-	HistoryNavigationButtonsState,
-	NodeInsertionButtonsState,
-	NonCategorizedOperationButtonsState,
 	TableSettingsOverlayState,
 } from "@externalStores";
 import type {
@@ -15,7 +11,13 @@ import type {
 	OnNodeInsertionFn,
 	OnNonCategorizedOperationFn,
 } from "@toolbarButtonsActionManager";
-import type { UpdateFormatStylesButtonsStateProps } from "@toolbarButtonsStateManager";
+import type {
+	UpdateFormatLineTagNameButtonsStateProps,
+	UpdateFormatStylesButtonsStateProps,
+	UpdateHistoryNavigationButtonsStateProps,
+	UpdateNodeInsertionButtonsStateProps,
+	UpdateNonCategorizedOperationButtonsStateProps,
+} from "@toolbarButtonsStateManager";
 
 export interface RichTextEditorUIConstructorProps
 	extends Pick<
@@ -35,20 +37,20 @@ export type OnNodeInsertionProps = OnNodeInsertionFn;
 
 export type OnNonCategorizedOperationProps = OnNonCategorizedOperationFn;
 
+export interface UpdateFormatLineTagNameButtonsProps
+	extends UpdateFormatLineTagNameButtonsStateProps {}
+
 export interface UpdateFormatStylesButtonsProps
 	extends UpdateFormatStylesButtonsStateProps {}
 
 export interface UpdateNodeInsertionButtonsProps
-	extends Partial<NodeInsertionButtonsState> {}
+	extends UpdateNodeInsertionButtonsStateProps {}
 
 export interface UpdateNonCategorizedOperationButtonsProps
-	extends Partial<NonCategorizedOperationButtonsState> {}
-
-export interface UpdateFormatLineTagNameButtonsProps
-	extends Partial<FormatLineTagNameButtonsState> {}
+	extends UpdateNonCategorizedOperationButtonsStateProps {}
 
 export interface UpdateHistoryNavigationButtonsProps
-	extends Partial<HistoryNavigationButtonsState> {}
+	extends UpdateHistoryNavigationButtonsStateProps {}
 
 export interface UpdateAnchorOverlayStateProps
 	extends Partial<AnchorOverlayState> {}

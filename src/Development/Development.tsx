@@ -108,7 +108,7 @@ export const simulateProductEnvironment = ({
 		});
 
 		richTextEditorUI.updateFormatLineTagNameButtons({
-			tagName: { isDisabled: false, values: new Set(["p"]) },
+			lineTagName: { isDisabled: false, values: new Set(["p"]) },
 		});
 	}, 0e3);
 

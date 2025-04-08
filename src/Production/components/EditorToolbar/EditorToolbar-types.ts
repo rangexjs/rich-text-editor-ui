@@ -1,12 +1,12 @@
 import type { buttonsName } from "@constants";
-import type {
-	FormatLineTagNameButtonsState,
-	HistoryNavigationButtonsState,
-	NodeInsertionButtonsState,
-	NonCategorizedOperationButtonsState,
-} from "@externalStores";
 import type { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
-import type { FormatStylesButtonsStateManager } from "@toolbarButtonsStateManager";
+import type {
+	FormatLineTagNameButtonsStateManager,
+	FormatStylesButtonsStateManager,
+	HistoryNavigationButtonsStateManager,
+	NodeInsertionButtonsStateManager,
+	NonCategorizedOperationButtonsStateManager,
+} from "@toolbarButtonsStateManager";
 
 type ButtonsName = typeof buttonsName;
 
@@ -21,9 +21,9 @@ export type EditorToolbarRows = EditorToolbarRow[];
 export interface EditorToolbarProps {
 	toolbarRows: EditorToolbarRows;
 	toolbarButtonsActionManager: ToolbarButtonsActionManager;
-	formatLineTagNameButtonsState: FormatLineTagNameButtonsState;
+	formatLineTagNameButtonsStateManager: FormatLineTagNameButtonsStateManager;
 	formatStylesButtonsStateManager: FormatStylesButtonsStateManager;
-	historyNavigationButtonsState: HistoryNavigationButtonsState;
-	nodeInsertionButtonsState: NodeInsertionButtonsState;
-	nonCategorizedOperationButtonsState: NonCategorizedOperationButtonsState;
+	historyNavigationButtonsStateManager: HistoryNavigationButtonsStateManager;
+	nodeInsertionButtonsStateManager: NodeInsertionButtonsStateManager;
+	nonCategorizedOperationButtonsStateManager: NonCategorizedOperationButtonsStateManager;
 }

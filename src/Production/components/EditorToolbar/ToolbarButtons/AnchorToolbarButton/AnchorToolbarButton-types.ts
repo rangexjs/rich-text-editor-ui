@@ -1,9 +1,17 @@
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type AnchorIsChecked = boolean;
+
+export type AnchorIsDisabled = boolean;
+
+export interface AnchorToolbarButtonState {
+	isChecked: AnchorIsChecked;
+	isDisabled: AnchorIsDisabled;
+}
 
 export interface AnchorToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "anchor">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}

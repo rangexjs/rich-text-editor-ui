@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { PrimaryButton } from "../../../PrimaryButton";
 import { BlockQuoteIcon } from "../../../SVGs";
 
@@ -7,15 +9,27 @@ import type { BlockQuoteToolbarButtonProps } from "./BlockQuoteToolbarButton-typ
 
 export const BlockQuoteToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: BlockQuoteToolbarButtonProps) => {
+	const { blockQuote } = nodeInsertionButtonsStateManager;
+
+	const [isDisabled, setIsDisabled] = useState(blockQuote.isDisabled);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateBlockQuoteState = ({
+			isDisabled,
+		}) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
+
 	const onClick = () => {
 		toolbarButtonsActionManager.onNodeInsertion?.({ type: "blockQuote" });
 	};
 
 	return (
 		<PrimaryButton
-			disabled={state.isDisabled}
+			disabled={isDisabled}
 			onClick={onClick}
 			className={toolbarButtonClassName}
 		>

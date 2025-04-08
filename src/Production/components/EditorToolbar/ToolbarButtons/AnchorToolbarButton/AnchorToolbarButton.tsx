@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { PrimaryButton } from "../../../PrimaryButton";
 import { AnchorIcon } from "../../../SVGs";
 
@@ -7,16 +9,31 @@ import type { AnchorToolbarButtonProps } from "./AnchorToolbarButton-types";
 
 export const AnchorToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: AnchorToolbarButtonProps) => {
+	const { anchor } = nodeInsertionButtonsStateManager;
+
+	const [isChecked, setIsChecked] = useState(anchor.isChecked);
+	const [isDisabled, setIsDisabled] = useState(anchor.isDisabled);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateAnchorState = ({
+			isChecked,
+			isDisabled,
+		}) => {
+			setIsChecked(isChecked);
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
+
 	const onClick = () => {
 		toolbarButtonsActionManager.onNodeInsertion?.({ type: "anchor" });
 	};
 
 	return (
 		<PrimaryButton
-			checked={state.isChecked}
-			disabled={state.isDisabled}
+			checked={isChecked}
+			disabled={isDisabled}
 			onClick={onClick}
 			className={toolbarButtonClassName}
 		>
