@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, LetterSpacingIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	LetterSpacingToolbarButtonProps,
@@ -27,12 +31,15 @@ export const LetterSpacingToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateLetterSpacingState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
 

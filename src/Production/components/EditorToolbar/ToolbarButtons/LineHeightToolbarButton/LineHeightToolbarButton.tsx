@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, LineHeightIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	LineHeightToolbarButtonProps,
@@ -29,12 +33,15 @@ export const LineHeightToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateLineHeightState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;

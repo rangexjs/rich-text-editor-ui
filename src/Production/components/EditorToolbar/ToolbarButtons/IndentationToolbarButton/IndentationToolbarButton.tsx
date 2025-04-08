@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, IndentationIcon } from "../../../SVGs";
 
-import { toolbarButtonClassName } from "../Utilities";
+import { setsAreEqual, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	IndentationToolbarButtonProps,
@@ -27,12 +27,15 @@ export const IndentationToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateIndentationState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;

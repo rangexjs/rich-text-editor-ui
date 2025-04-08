@@ -30,3 +30,10 @@ export interface NodeInsertionButtonsStateManagerObj {
 export interface NonCategorizedOperationButtonsStateManagerObj {
 	nonCategorizedOperationButtonsStateManager: NonCategorizedOperationButtonsStateManager;
 }
+
+export interface SetsAreEqualProps {
+	setA: Set<unknown>;
+	setB: Set<unknown>;
+}
+
+export type SetsAreaEqualReturn = boolean;

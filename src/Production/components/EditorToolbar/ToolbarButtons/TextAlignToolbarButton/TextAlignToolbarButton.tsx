@@ -8,7 +8,11 @@ import {
 	TextAlignRightIcon,
 } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	OnTextAlignClickProps,
@@ -33,12 +37,15 @@ export const TextAlignToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateTextAlignState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;

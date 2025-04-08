@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontSizeIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	FontSizeToolbarButtonProps,
@@ -29,12 +33,15 @@ export const FontSizeToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateFontSizeState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;

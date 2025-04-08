@@ -6,7 +6,11 @@ import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { BackgroundColorIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type { CreateBackgroundColorPropsProps } from "./BackgroundColorToolbarButton-types";
 
@@ -27,12 +31,15 @@ export const BackgroundColorToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateBackgroundColorState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	const onColorSelected: OnColorSelected = ({ hsl }) => {
 		const popoverTargetElement = popoverTargetElementRef.current;

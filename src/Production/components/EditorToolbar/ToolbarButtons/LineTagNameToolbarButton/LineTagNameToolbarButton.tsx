@@ -5,7 +5,11 @@ import type { LineTagNameValue } from "@components";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	DropDownButtonList,
@@ -27,12 +31,15 @@ export const LineTagNameToolbarButton = ({
 	useEffect(() => {
 		formatLineTagNameButtonsStateManager.updateLineTagNameUpdate = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
-			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatLineTagNameButtonsStateManager]);
+	}, [formatLineTagNameButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;

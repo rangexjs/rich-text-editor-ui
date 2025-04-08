@@ -6,7 +6,11 @@ import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { ColorIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type { CreateColorPropsProps } from "./ColorToolbarButton-types";
 
@@ -27,12 +31,16 @@ export const ColorToolbarButton = ({
 	useEffect(() => {
 		formatStylesButtonsStateManager.updateColorState = ({
 			isDisabled,
-			values,
+			values: newValues,
 		}) => {
 			setIsDisabled(isDisabled);
 			setValues(values);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
 		};
-	}, [formatStylesButtonsStateManager]);
+	}, [formatStylesButtonsStateManager, values]);
 
 	const onColorSelected: OnColorSelected = ({ hsl }) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
