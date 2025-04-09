@@ -1,9 +1,9 @@
 import type { AppProps } from "@components";
 import type {
-	AnchorOverlayState,
-	CaretListboxOverlayState,
-	TableSettingsOverlayState,
-} from "@externalStores";
+	UpdateAnchorOverlayStateProps,
+	UpdateCaretListboxOverlayStateProps,
+	UpdateTableSettingsOverlayStateProps,
+} from "@interactiveOverlaysManager";
 import type {
 	OnFormatLineTagNameFn,
 	OnFormatStylesChangeFn,
@@ -52,11 +52,11 @@ export interface UpdateNonCategorizedOperationButtonsProps
 export interface UpdateHistoryNavigationButtonsProps
 	extends UpdateHistoryNavigationButtonsStateProps {}
 
-export interface UpdateAnchorOverlayStateProps
-	extends Partial<AnchorOverlayState> {}
+export interface UpdateAnchorOverlayProps
+	extends UpdateAnchorOverlayStateProps {}
 
-export interface UpdateCaretListboxOverlayStateProps
-	extends Partial<CaretListboxOverlayState> {}
+export interface UpdateCaretListboxOverlayProps
+	extends UpdateCaretListboxOverlayStateProps {}
 
-export interface UpdateTableSettingsOverlayStateProps
-	extends Partial<TableSettingsOverlayState> {}
+export interface UpdateTableSettingsOverlayProps
+	extends UpdateTableSettingsOverlayStateProps {}

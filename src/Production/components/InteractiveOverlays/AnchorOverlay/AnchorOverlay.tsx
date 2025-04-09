@@ -1,10 +1,6 @@
-import { useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 
 import { interactiveOverlayId } from "@constants";
-import {
-	type AnchorLayoutView,
-	anchorLayoutViewOptions,
-} from "@externalStores";
 
 import {
 	type OnPrimaryCharInputChangeFn,
@@ -14,23 +10,58 @@ import { EditIcon, TrashIcon } from "../../SVGs";
 import { ToggleButton } from "../../ToggleButton";
 
 import type {
-	AnchorPopoverProps,
-	SetAnchorPropsFn,
+	AnchorLayoutView,
+	AnchorOverlayProps,
 } from "./AnchorOverlay-types";
 
-export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
-	const anchorOverlayState = useSyncExternalStore(
-		anchorOverlayStore.subscribe.bind(anchorOverlayStore),
-		anchorOverlayStore.getSnapshot.bind(anchorOverlayStore),
+export const anchorLayoutViewOptions = {
+	main: "main",
+	edit: "edit",
+} as const;
+
+export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
+	const [layoutView, setLayoutView] = useState(anchorOverlayManager.layoutView);
+
+	const [textToDisplay, setTextToDisplay] = useState(
+		anchorOverlayManager.textToDisplay,
 	);
 
-	const { anchorProps, layoutView, onAction, onActiveViewChange } =
-		anchorOverlayState;
+	const [url, setUrl] = useState(anchorOverlayManager.url);
+
+	const [isOpenNewTab, setIsOpenNewTab] = useState(
+		anchorOverlayManager.isOpenNewTab,
+	);
+
+	const [isDownloadable, setIsDownloadable] = useState(
+		anchorOverlayManager.isDownloadable,
+	);
+
+	useEffect(() => {
+		anchorOverlayManager.updateLayoutViewState = (layoutView) => {
+			setLayoutView(layoutView);
+		};
+
+		anchorOverlayManager.updateTextToDisplayState = (textToDisplay) => {
+			setTextToDisplay(textToDisplay);
+		};
+
+		anchorOverlayManager.updateUrlState = (url) => {
+			setUrl(url);
+		};
+
+		anchorOverlayManager.updateIsOpenNewTabState = (isOpenNewTab) => {
+			setIsOpenNewTab(isOpenNewTab);
+		};
+
+		anchorOverlayManager.updateIsDownloadableState = (isDownloadable) => {
+			setIsDownloadable(isDownloadable);
+		};
+	}, [anchorOverlayManager]);
 
 	const updateLayoutView = (layoutView: AnchorLayoutView) => {
-		anchorOverlayStore.updateState({ layoutView });
+		anchorOverlayManager.updateState({ layoutView });
 
-		onActiveViewChange({ activeView: layoutView });
+		anchorOverlayManager.onActiveViewChange?.({ activeView: layoutView });
 	};
 
 	const onEdit = () => {
@@ -38,52 +69,42 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 	};
 
 	const onUnlink = () => {
-		onAction({ type: "unlink" });
+		anchorOverlayManager.onAction?.({ type: "unlink" });
 
 		updateLayoutView(anchorLayoutViewOptions.main);
-	};
-
-	const setAnchorProps: SetAnchorPropsFn = (anchorProps) => {
-		anchorOverlayStore.updateState({
-			anchorProps: { ...anchorOverlayState.anchorProps, ...anchorProps },
-		});
 	};
 
 	const onTextToDisplayChange: OnPrimaryCharInputChangeFn = ({ value }) => {
-		setAnchorProps({ textToDisplay: value });
+		setTextToDisplay(value);
 	};
 
 	const onURLChange: OnPrimaryCharInputChangeFn = ({ value }) => {
-		setAnchorProps({ url: value });
+		setUrl(value);
 	};
 
 	const toggleNewTab = () => {
-		const { isOpenNewTab } = anchorProps;
-
-		setAnchorProps({ isOpenNewTab: !isOpenNewTab });
+		setIsOpenNewTab((prev) => !prev);
 	};
 
 	const toggleDownloadable = () => {
-		const { isDownloadable } = anchorProps;
-
-		setAnchorProps({ isDownloadable: !isDownloadable });
+		setIsDownloadable((prev) => !prev);
 	};
 
 	const onCancel = () => {
-		onAction({ type: "cancel" });
+		anchorOverlayManager.onAction?.({ type: "cancel" });
 
 		updateLayoutView(anchorLayoutViewOptions.main);
 	};
 
-	const safeUrl = anchorProps.url.trim().replaceAll(/^javascript:/g, "");
+	const safeUrl = url.trim().replaceAll(/^javascript:/g, "");
 
 	const onApply = () => {
-		onAction({
+		anchorOverlayManager.onAction?.({
 			type: "apply",
-			textToDisplay: anchorProps.textToDisplay,
+			textToDisplay,
 			url: safeUrl,
-			isOpenNewTab: anchorProps.isOpenNewTab,
-			isDownloadable: anchorProps.isDownloadable,
+			isOpenNewTab,
+			isDownloadable,
 		});
 
 		updateLayoutView(anchorLayoutViewOptions.main);
@@ -107,7 +128,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 			>
 				<span className="w-36 overflow-hidden text-ellipsis whitespace-nowrap text-blue-700 text-sm underline">
 					<a href={safeUrl} target="_blank" rel="noreferrer" title={safeUrl}>
-						{anchorProps.textToDisplay || safeUrl}
+						{textToDisplay || safeUrl}
 					</a>
 				</span>
 				<span className="w-px shrink-0 self-stretch bg-slate-400" />
@@ -125,7 +146,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 					className="mb-4 w-full"
 					inputProps={{
 						type: "text",
-						value: anchorProps.textToDisplay,
+						value: textToDisplay,
 						onChange: onTextToDisplayChange,
 						placeholder: "Example website",
 					}}
@@ -135,7 +156,7 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 					className="mb-2 w-full"
 					inputProps={{
 						type: "text",
-						value: anchorProps.url,
+						value: url,
 						onChange: onURLChange,
 						placeholder: "https://example.com",
 					}}
@@ -146,14 +167,14 @@ export const AnchorOverlay = ({ anchorOverlayStore }: AnchorPopoverProps) => {
 					onClick={toggleNewTab}
 				>
 					<span className="text-sm">Open in new tab</span>
-					<ToggleButton isChecked={anchorProps.isOpenNewTab} />
+					<ToggleButton isChecked={isOpenNewTab} />
 				</div>
 				<div
 					className="flex cursor-pointer select-none justify-between"
 					onClick={toggleDownloadable}
 				>
 					<span className="text-sm">Downloadable</span>
-					<ToggleButton isChecked={anchorProps.isDownloadable} />
+					<ToggleButton isChecked={isDownloadable} />
 				</div>
 				<div className="mt-3 flex justify-between gap-3">
 					<button

@@ -11,10 +11,6 @@ export type {
 	CodeBlockLanguage,
 	ListStyleType,
 	ToolbarButtons,
-} from "@components";
-
-export type {
-	AnchorProps,
 	CellProps,
 	TableProps,
 	TableAlignment,
@@ -23,4 +19,6 @@ export type {
 	OnTablePropertiesActionProps,
 	OnCellPropertiesActionFn,
 	OnCellPropertiesActionProps,
-} from "@externalStores";
+} from "@components";
+
+export type { AnchorProps } from "@interactiveOverlaysManager";

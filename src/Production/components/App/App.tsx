@@ -12,9 +12,9 @@ export const App = ({
 	nodeInsertionButtonsStateManager,
 	nonCategorizedOperationButtonsStateManager,
 	interactiveOverlays,
-	anchorOverlayStore,
-	caretListboxOverlayStore,
-	tableSettingsOverlayStore,
+	anchorOverlayManager,
+	caretListboxOverlayManager,
+	tableSettingsOverlayManager,
 	richTextArea,
 }: AppProps) => {
 	return (
@@ -36,9 +36,9 @@ export const App = ({
 			/>
 			<RichTextAreaWrapper
 				interactiveOverlays={interactiveOverlays}
-				anchorOverlayStore={anchorOverlayStore}
-				caretListboxOverlayStore={caretListboxOverlayStore}
-				tableSettingsOverlayStore={tableSettingsOverlayStore}
+				anchorOverlayManager={anchorOverlayManager}
+				caretListboxOverlayManager={caretListboxOverlayManager}
+				tableSettingsOverlayManager={tableSettingsOverlayManager}
 				richTextArea={richTextArea}
 			/>
 		</div>

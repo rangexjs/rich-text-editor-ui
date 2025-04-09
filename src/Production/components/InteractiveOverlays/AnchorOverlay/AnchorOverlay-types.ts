@@ -1,15 +1,22 @@
-import type { AnchorOverlayStore, AnchorProps } from "@externalStores";
+import type { AnchorOverlayManager } from "@interactiveOverlaysManager";
 
-interface SetAnchorPropsProps extends Partial<AnchorProps> {}
+import type { anchorLayoutViewOptions } from "./AnchorOverlay";
 
-export type SetAnchorPropsFn = (props: SetAnchorPropsProps) => void;
+export type AnchorLayoutViewOptions = typeof anchorLayoutViewOptions;
 
-export interface OnAnchorApplyFnProps extends AnchorProps {}
+export type AnchorLayoutViewValue =
+	AnchorLayoutViewOptions[keyof AnchorLayoutViewOptions];
 
-export type OnAnchorApplyFn = (props: OnAnchorApplyFnProps) => void;
+export type AnchorLayoutView = AnchorLayoutViewValue;
 
-export type OnAnchorCancelFn = () => void;
+export type AnchorTextToDisplay = string;
 
-export interface AnchorPopoverProps {
-	anchorOverlayStore: AnchorOverlayStore;
+export type AnchorUrl = string;
+
+export type AnchorIsOpenNewTab = boolean;
+
+export type AnchorIsDownloadable = boolean;
+
+export interface AnchorOverlayProps {
+	anchorOverlayManager: AnchorOverlayManager;
 }

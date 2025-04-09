@@ -1,11 +1,6 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { interactiveOverlayId } from "@constants";
-import {
-	type TableLayoutViewOptionsValue,
-	tableActiveView,
-	tableLayoutViewOptions,
-} from "@externalStores";
 
 import { PrimaryButton } from "../../PrimaryButton";
 import {
@@ -17,41 +12,97 @@ import {
 	TableRowPropertiesIcon,
 } from "../../SVGs";
 
-import { CellProperties, type SetCellPropsFn } from "./CellProperties";
+import { CellProperties, type UpdateCellPropsFn } from "./CellProperties";
 import { type TableButtonsGroup, TableCellDropdown } from "./TableCellDropdown";
-import { type SetTablePropsFn, TableProperties } from "./TableProperties";
+import { TableProperties, type UpdateTablePropsFn } from "./TableProperties";
 
 import type {
 	DropdownIconState,
 	OnTableActionButtonClickProps,
 	TableButtonsList,
+	TableLayoutViewOptionsValue,
 	TableSettingsOverlayProps,
 } from "./TableSettingsOverlay-types";
 
+const tableProperties = "table-properties";
+
+const tableCellProperties = "table-cell-properties";
+
+export const tableLayoutViewOptions = {
+	tableIcons: "table-icons",
+	tableProperties,
+	tableCellProperties,
+} as const;
+
+export const tableActiveView = {
+	tableProperties,
+	tableCellProperties,
+	colButtons: "col-buttons",
+	rowButtons: "row-buttons",
+	cellSpanModifier: "cell-span-modifier",
+} as const;
+
 export const TableSettingsOverlay = ({
-	tableSettingsOverlayStore,
+	tableSettingsOverlayManager,
 }: TableSettingsOverlayProps) => {
-	const tableSettingsOverlayState = useSyncExternalStore(
-		tableSettingsOverlayStore.subscribe.bind(tableSettingsOverlayStore),
-		tableSettingsOverlayStore.getSnapshot.bind(tableSettingsOverlayStore),
+	const [layoutView, setLayoutView] = useState(
+		tableSettingsOverlayManager.layoutView,
 	);
+
+	const [tableProps, setTableProps] = useState(
+		tableSettingsOverlayManager.tableProps,
+	);
+
+	const [cellProps, setCellProps] = useState(
+		tableSettingsOverlayManager.cellProps,
+	);
+
+	const [columnButtons, setColumnButtons] = useState(
+		tableSettingsOverlayManager.columnButtons,
+	);
+
+	const [rowButtons, setRowButtons] = useState(
+		tableSettingsOverlayManager.rowButtons,
+	);
+
+	const [cellSpanModifier, setCellSpanModifier] = useState(
+		tableSettingsOverlayManager.cellSpanModifier,
+	);
+
+	const [dropdownIconState, setDropdownIconState] =
+		useState<DropdownIconState>(null);
 
 	const columnDropdownRef = useRef<HTMLDivElement>(null);
 	const rowDropdownRef = useRef<HTMLDivElement>(null);
 	const cellSpanModifierDropdownRef = useRef<HTMLDivElement>(null);
 
-	const [dropdownIconState, setDropdownIconState] =
-		useState<DropdownIconState>(null);
+	useEffect(() => {
+		tableSettingsOverlayManager.updateLayoutViewState = (layoutView) => {
+			setLayoutView(layoutView);
+		};
 
-	const {
-		layoutView,
-		onActiveViewChange,
-		columnButtons,
-		rowButtons,
-		cellSpanModifier,
-		onTableCellAction,
-		onTableRemove,
-	} = tableSettingsOverlayState;
+		tableSettingsOverlayManager.updateTablePropsState = (tableProps) => {
+			setTableProps(tableProps);
+		};
+
+		tableSettingsOverlayManager.updateCellPropsState = (cellProps) => {
+			setCellProps(cellProps);
+		};
+
+		tableSettingsOverlayManager.updateColumnButtonsState = (columnButtons) => {
+			setColumnButtons(columnButtons);
+		};
+
+		tableSettingsOverlayManager.updateRowButtonsState = (rowButtons) => {
+			setRowButtons(rowButtons);
+		};
+
+		tableSettingsOverlayManager.updateCellSpanModifierState = (
+			cellSpanModifier,
+		) => {
+			setCellSpanModifier(cellSpanModifier);
+		};
+	}, [tableSettingsOverlayManager]);
 
 	useEffect(() => {
 		const columnDropdown = columnDropdownRef.current;
@@ -62,6 +113,8 @@ export const TableSettingsOverlay = ({
 			return;
 		}
 
+		const { onActiveViewChange } = tableSettingsOverlayManager;
+
 		const beforeToggleIconState = (event: ToggleEvent) => {
 			const { currentTarget, newState } = event;
 
@@ -70,15 +123,15 @@ export const TableSettingsOverlay = ({
 			}
 
 			if (currentTarget === columnDropdown) {
-				onActiveViewChange({ activeView: tableActiveView.colButtons });
+				onActiveViewChange?.({ activeView: tableActiveView.colButtons });
 			}
 
 			if (currentTarget === rowDropdown) {
-				onActiveViewChange({ activeView: tableActiveView.rowButtons });
+				onActiveViewChange?.({ activeView: tableActiveView.rowButtons });
 			}
 
 			if (currentTarget === cellSpanModifierDropdown) {
-				onActiveViewChange({ activeView: tableActiveView.cellSpanModifier });
+				onActiveViewChange?.({ activeView: tableActiveView.cellSpanModifier });
 			}
 		};
 
@@ -122,16 +175,18 @@ export const TableSettingsOverlay = ({
 		return () => {
 			abortCtrl.abort();
 		};
-	}, [onActiveViewChange]);
+	}, [tableSettingsOverlayManager]);
 
 	const updateLayoutView = (layoutView: TableLayoutViewOptionsValue) => {
-		tableSettingsOverlayStore.updateState({ layoutView });
+		tableSettingsOverlayManager.updateState({ layoutView });
 
 		if (
 			layoutView === tableActiveView.tableProperties ||
 			layoutView === tableActiveView.tableCellProperties
 		) {
-			onActiveViewChange({ activeView: layoutView });
+			tableSettingsOverlayManager.onActiveViewChange?.({
+				activeView: layoutView,
+			});
 		}
 	};
 
@@ -149,7 +204,7 @@ export const TableSettingsOverlay = ({
 
 		dropdown.hidePopover();
 
-		onTableCellAction({ type });
+		tableSettingsOverlayManager.onTableCellAction?.({ type });
 	};
 
 	const columnButtonsGroup: TableButtonsGroup = [
@@ -334,21 +389,32 @@ export const TableSettingsOverlay = ({
 		},
 		{
 			children: <TableRemoveIcon size={iconSize} />,
-			onClick: onTableRemove,
+			onClick: tableSettingsOverlayManager.onTableRemove ?? undefined,
 		},
 	];
 
-	const setTableProps: SetTablePropsFn = (tableProps) => {
-		tableSettingsOverlayStore.updateState({
-			tableProps: { ...tableSettingsOverlayState.tableProps, ...tableProps },
+	const updateTableProps: UpdateTablePropsFn = (tableProps) => {
+		tableSettingsOverlayManager.updateState({
+			tableProps: { ...tableSettingsOverlayManager.tableProps, ...tableProps },
 		});
 	};
 
-	const setCellProps: SetCellPropsFn = (cellProps) => {
-		tableSettingsOverlayStore.updateState({
-			cellProps: { ...tableSettingsOverlayState.cellProps, ...cellProps },
+	const updateCellProps: UpdateCellPropsFn = (cellProps) => {
+		tableSettingsOverlayManager.updateState({
+			cellProps: { ...tableSettingsOverlayManager.cellProps, ...cellProps },
 		});
 	};
+
+	const shouldDisplayTableIcons =
+		layoutView === tableLayoutViewOptions.tableIcons;
+
+	const display = shouldDisplayTableIcons ? "" : "none";
+
+	const shouldDisplayTableProperties =
+		layoutView === tableLayoutViewOptions.tableProperties;
+
+	const shouldDisplayCellProperties =
+		layoutView === tableLayoutViewOptions.tableCellProperties;
 
 	return (
 		<div
@@ -356,13 +422,7 @@ export const TableSettingsOverlay = ({
 			className="bg-white"
 			popover="manual"
 		>
-			<div
-				className="flex gap-1 p-1"
-				style={{
-					display:
-						layoutView === tableLayoutViewOptions.tableIcons ? "" : "none",
-				}}
-			>
+			<div className="flex gap-1 p-1" style={{ display }}>
 				{tableButtonsList.map(
 					(
 						{ checked, children, isChevron, dropdownRef, popover, onClick },
@@ -384,25 +444,21 @@ export const TableSettingsOverlay = ({
 				)}
 			</div>
 			<TableProperties
-				layoutView={layoutView}
-				updateLayoutView={() =>
-					updateLayoutView(tableLayoutViewOptions.tableIcons)
-				}
-				tableProps={tableSettingsOverlayState.tableProps}
-				setTableProps={setTableProps}
+				shouldDisplay={shouldDisplayTableProperties}
+				onClose={() => updateLayoutView(tableLayoutViewOptions.tableIcons)}
+				tableProps={tableProps}
+				updateTableProps={updateTableProps}
 				onTablePropertiesAction={
-					tableSettingsOverlayState.onTablePropertiesAction
+					tableSettingsOverlayManager.onTablePropertiesAction
 				}
 			/>
 			<CellProperties
-				layoutView={layoutView}
-				updateLayoutView={() =>
-					updateLayoutView(tableLayoutViewOptions.tableIcons)
-				}
-				cellProps={tableSettingsOverlayState.cellProps}
-				setCellProps={setCellProps}
+				shouldDisplay={shouldDisplayCellProperties}
+				onClose={() => updateLayoutView(tableLayoutViewOptions.tableIcons)}
+				cellProps={cellProps}
+				updateCellProps={updateCellProps}
 				onCellPropertiesAction={
-					tableSettingsOverlayState.onCellPropertiesAction
+					tableSettingsOverlayManager.onCellPropertiesAction
 				}
 			/>
 		</div>

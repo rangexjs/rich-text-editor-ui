@@ -11,8 +11,8 @@
 			"@constants": ["src/Production/Constants"],
 			"@errorHandling": ["src/Production/ErrorHandling"],
 			"@externalStores": ["src/Production/ExternalStores"],
-			"@interactiveOverlayManager": [
-				"src/Production/InteractiveOverlayManager"
+			"@interactiveOverlaysManager": [
+				"src/Production/InteractiveOverlaysManager"
 			],
 			"@toolbarButtonsActionManager": [
 				"src/Production/ToolbarButtonsActionManager"

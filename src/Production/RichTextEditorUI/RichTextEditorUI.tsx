@@ -5,10 +5,10 @@ import { createRoot } from "react-dom/client";
 import { App } from "@components";
 import { interactiveOverlayId } from "@constants";
 import {
-	AnchorOverlayStore,
-	CaretListboxOverlayStore,
-	TableSettingsOverlayStore,
-} from "@externalStores";
+	AnchorOverlayManager,
+	CaretListboxOverlayManager,
+	TableSettingsOverlayManager,
+} from "@interactiveOverlaysManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
 import {
 	FormatLineTagNameButtonsStateManager,
@@ -30,14 +30,14 @@ import type {
 	OnNodeInsertionProps,
 	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
-	UpdateAnchorOverlayStateProps,
-	UpdateCaretListboxOverlayStateProps,
+	UpdateAnchorOverlayProps,
+	UpdateCaretListboxOverlayProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
 	UpdateNonCategorizedOperationButtonsProps,
-	UpdateTableSettingsOverlayStateProps,
+	UpdateTableSettingsOverlayProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
@@ -52,9 +52,9 @@ export class RichTextEditorUI {
 	#nodeInsertionButtonsStateManager = new NodeInsertionButtonsStateManager();
 	#nonCategorizedOperationButtonsStateManager =
 		new NonCategorizedOperationButtonsStateManager();
-	#anchorOverlayStore = new AnchorOverlayStore();
-	#caretListboxOverlayStore = new CaretListboxOverlayStore();
-	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
+	#anchorOverlayManager = new AnchorOverlayManager();
+	#caretListboxOverlayManager = new CaretListboxOverlayManager();
+	#tableSettingsOverlayManager = new TableSettingsOverlayManager();
 
 	constructor({
 		domNode,
@@ -111,9 +111,9 @@ export class RichTextEditorUI {
 							this.#nonCategorizedOperationButtonsStateManager
 						}
 						interactiveOverlays={interactiveOverlays}
-						anchorOverlayStore={this.#anchorOverlayStore}
-						caretListboxOverlayStore={this.#caretListboxOverlayStore}
-						tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
+						anchorOverlayManager={this.#anchorOverlayManager}
+						caretListboxOverlayManager={this.#caretListboxOverlayManager}
+						tableSettingsOverlayManager={this.#tableSettingsOverlayManager}
 						richTextArea={richTextArea}
 					/>
 				</StrictMode>,
@@ -194,16 +194,16 @@ export class RichTextEditorUI {
 		this.#nonCategorizedOperationButtonsStateManager.updateState(props);
 	}
 
-	updateAnchorOverlayState(props: UpdateAnchorOverlayStateProps) {
-		this.#anchorOverlayStore.updateState(props);
+	updateAnchorOverlay(props: UpdateAnchorOverlayProps) {
+		this.#anchorOverlayManager.updateState(props);
 	}
 
-	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayStateProps) {
-		this.#caretListboxOverlayStore.updateState(props);
+	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayProps) {
+		this.#caretListboxOverlayManager.updateState(props);
 	}
 
-	updateTableSettingsOverlayState(props: UpdateTableSettingsOverlayStateProps) {
-		this.#tableSettingsOverlayStore.updateState(props);
+	updateTableSettingsOverlay(props: UpdateTableSettingsOverlayProps) {
+		this.#tableSettingsOverlayManager.updateState(props);
 	}
 
 	unmount() {
