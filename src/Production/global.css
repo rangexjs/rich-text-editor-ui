@@ -4,6 +4,7 @@
 
 @theme static {
 	--color-primary: #f29100;
+	--color-error: #ff0000;
 }
 
 @layer base {
