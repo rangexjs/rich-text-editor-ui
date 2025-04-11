@@ -11,7 +11,7 @@ export interface TableProps {
 	borderWidth: string | undefined;
 }
 
-export interface InputValidity {
+export interface TableInputValidity {
 	tableWidth: boolean;
 	tableHeight: boolean;
 	borderWidth: boolean;

@@ -27,7 +27,7 @@ import type {
 	GetTableBorderWidthForActionReturn,
 	GetTableHeightForActionReturn,
 	GetTableWidthForActionReturn,
-	InputValidity,
+	TableInputValidity,
 	TablePropertiesProps,
 } from "./TableProperties-types";
 
@@ -55,7 +55,7 @@ export const TableProperties = ({
 	const tableHeightInputRef = useRef<HTMLInputElement>(null);
 	const borderWidthInputRef = useRef<HTMLInputElement>(null);
 
-	const [inputValidity, setInputValidity] = useState<InputValidity>({
+	const [inputValidity, setInputValidity] = useState<TableInputValidity>({
 		tableWidth: true,
 		tableHeight: true,
 		borderWidth: true,
