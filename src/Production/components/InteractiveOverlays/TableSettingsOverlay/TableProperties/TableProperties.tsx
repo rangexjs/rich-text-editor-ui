@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 
-import { tableBorderStyles, tableLayoutViewOptions } from "@externalStores";
 import {
 	Color,
 	type HSLFormat,
@@ -25,18 +24,31 @@ import {
 import { getValidBorderStyle } from "../Utilities";
 
 import type {
-	GetBorderWidthForActionReturn,
+	GetTableBorderWidthForActionReturn,
 	GetTableHeightForActionReturn,
 	GetTableWidthForActionReturn,
 	InputValidity,
 	TablePropertiesProps,
 } from "./TableProperties-types";
 
+export const tableBorderStyles = [
+	"solid",
+	"dotted",
+	"dashed",
+	"double",
+	"groove",
+	"ridge",
+	"inset",
+	"outset",
+	"none",
+	"hidden",
+];
+
 export const TableProperties = ({
-	layoutView,
-	updateLayoutView,
+	shouldDisplay,
+	onClose,
 	tableProps,
-	setTableProps,
+	updateTableProps,
 	onTablePropertiesAction,
 }: TablePropertiesProps) => {
 	const tableWidthInputRef = useRef<HTMLInputElement>(null);
@@ -52,30 +64,30 @@ export const TableProperties = ({
 	const onTableWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
 		setInputValidity((prev) => ({ ...prev, tableWidth: true }));
 
-		setTableProps({ width: value });
+		updateTableProps({ width: value });
 	};
 
 	const onTableHeightChange: OnPrimaryCharInputChangeFn = ({ value }) => {
 		setInputValidity((prev) => ({ ...prev, tableHeight: true }));
 
-		setTableProps({ height: value });
+		updateTableProps({ height: value });
 	};
 
 	const alignmentButtons: RadioButtonsList = [
 		{
 			checked: tableProps.alignment === "left",
 			children: <ContentAlignLeftIcon />,
-			onClick: () => setTableProps({ alignment: "left" }),
+			onClick: () => updateTableProps({ alignment: "left" }),
 		},
 		{
 			checked: tableProps.alignment === "center",
 			children: <ContentAlignCenterIcon />,
-			onClick: () => setTableProps({ alignment: "center" }),
+			onClick: () => updateTableProps({ alignment: "center" }),
 		},
 		{
 			checked: tableProps.alignment === "right",
 			children: <ContentAlignRightIcon />,
-			onClick: () => setTableProps({ alignment: "right" }),
+			onClick: () => updateTableProps({ alignment: "right" }),
 		},
 	];
 
@@ -85,7 +97,7 @@ export const TableProperties = ({
 				borderStyle[0].toUpperCase() + borderStyle.slice(1);
 
 			const onClick = () => {
-				setTableProps({ borderStyle });
+				updateTableProps({ borderStyle });
 			};
 
 			return { id: borderStyle, children: capitalizedBorderStyle, onClick };
@@ -104,18 +116,18 @@ export const TableProperties = ({
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
 
 		if (hsl === null) {
-			setTableProps({ borderColor: "transparent" });
+			updateTableProps({ borderColor: "transparent" });
 		}
 
 		const { hex } = Color.hsl(definedHSL).hex();
 
-		setTableProps({ borderColor: hex });
+		updateTableProps({ borderColor: hex });
 	};
 
 	const onBorderWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
 		setInputValidity((prev) => ({ ...prev, borderWidth: true }));
 
-		setTableProps({ borderWidth: value });
+		updateTableProps({ borderWidth: value });
 	};
 
 	const closePanel = () => {
@@ -125,11 +137,11 @@ export const TableProperties = ({
 			borderWidth: true,
 		});
 
-		updateLayoutView();
+		onClose();
 	};
 
 	const onCancel = () => {
-		onTablePropertiesAction({ type: "cancel" });
+		onTablePropertiesAction?.({ type: "cancel" });
 
 		closePanel();
 	};
@@ -173,21 +185,25 @@ export const TableProperties = ({
 		return { isInvalid: true };
 	};
 
-	const getBorderWidthForAction = (): GetBorderWidthForActionReturn => {
-		if (tableProps.borderWidth === undefined || tableProps.borderWidth === "") {
-			return { isInvalid: false, borderWidth: undefined };
-		}
+	const getTableBorderWidthForAction =
+		(): GetTableBorderWidthForActionReturn => {
+			if (
+				tableProps.borderWidth === undefined ||
+				tableProps.borderWidth === ""
+			) {
+				return { isInvalid: false, borderWidth: undefined };
+			}
 
-		const pixelValue = getPixelFromInput({ input: tableProps.borderWidth });
+			const pixelValue = getPixelFromInput({ input: tableProps.borderWidth });
 
-		if (pixelValue !== null) {
-			const adjustedPixel = Math.min(20, Math.max(0, pixelValue));
+			if (pixelValue !== null) {
+				const adjustedPixel = Math.min(20, Math.max(0, pixelValue));
 
-			return { isInvalid: false, borderWidth: `${adjustedPixel}px` };
-		}
+				return { isInvalid: false, borderWidth: `${adjustedPixel}px` };
+			}
 
-		return { isInvalid: true };
-	};
+			return { isInvalid: true };
+		};
 
 	const onApply = () => {
 		const tableWidthForAction = getTableWidthForAction();
@@ -218,7 +234,7 @@ export const TableProperties = ({
 			return;
 		}
 
-		const borderWidthForAction = getBorderWidthForAction();
+		const borderWidthForAction = getTableBorderWidthForAction();
 
 		if (borderWidthForAction.isInvalid) {
 			setInputValidity((prev) => ({ ...prev, borderWidth: false }));
@@ -232,7 +248,7 @@ export const TableProperties = ({
 			return;
 		}
 
-		onTablePropertiesAction({
+		onTablePropertiesAction?.({
 			type: "apply",
 			width: tableWidthForAction.tableWidth,
 			height: tableHeightForAction.tableHeight,
@@ -245,14 +261,10 @@ export const TableProperties = ({
 		closePanel();
 	};
 
+	const display = shouldDisplay ? "" : "none";
+
 	return (
-		<div
-			className="w-72 p-2"
-			style={{
-				display:
-					layoutView === tableLayoutViewOptions.tableProperties ? "" : "none",
-			}}
-		>
+		<div className="w-72 p-2" style={{ display }}>
 			<div>Table Properties</div>
 			<hr className="my-1" />
 			<div className="flex flex-col gap-2">

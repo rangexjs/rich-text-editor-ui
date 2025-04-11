@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { PrimaryButton } from "../../../PrimaryButton";
 import { LockIcon } from "../../../SVGs";
 
@@ -7,9 +9,18 @@ import type { IsTextAreaReadOnlyToolbarButtonProps } from "./IsTextAreaReadOnlyT
 
 export const IsTextAreaReadOnlyToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nonCategorizedOperationButtonsStateManager,
 }: IsTextAreaReadOnlyToolbarButtonProps) => {
-	const { isChecked } = state;
+	const { isTextAreaReadOnly } = nonCategorizedOperationButtonsStateManager;
+
+	const [isChecked, setIsChecked] = useState(isTextAreaReadOnly.isChecked);
+
+	useEffect(() => {
+		nonCategorizedOperationButtonsStateManager.updateIsTextAreaReadOnlyState =
+			({ isChecked }) => {
+				setIsChecked(isChecked);
+			};
+	}, [nonCategorizedOperationButtonsStateManager]);
 
 	const onClick = () => {
 		toolbarButtonsActionManager.onNonCategorizedOperation?.({

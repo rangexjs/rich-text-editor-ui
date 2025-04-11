@@ -10,9 +10,9 @@ import type { RichTextAreaWrapperProps } from "./RichTextAreaWrapper-types";
 
 export const RichTextAreaWrapper = ({
 	interactiveOverlays,
-	anchorOverlayStore,
-	caretListboxOverlayStore,
-	tableSettingsOverlayStore,
+	anchorOverlayManager,
+	caretListboxOverlayManager,
+	tableSettingsOverlayManager,
 	richTextArea,
 }: RichTextAreaWrapperProps) => {
 	const richTextAreaHolderRef = useRef<HTMLDivElement>(null);
@@ -35,15 +35,17 @@ export const RichTextAreaWrapper = ({
 		<div>
 			<div ref={richTextAreaHolderRef} />
 			<div>
-				{anchor && <AnchorOverlay anchorOverlayStore={anchorOverlayStore} />}
+				{anchor && (
+					<AnchorOverlay anchorOverlayManager={anchorOverlayManager} />
+				)}
 				{caretListbox && (
 					<CaretListboxOverlay
-						caretListboxOverlayStore={caretListboxOverlayStore}
+						caretListboxOverlayManager={caretListboxOverlayManager}
 					/>
 				)}
 				{tableSettings && (
 					<TableSettingsOverlay
-						tableSettingsOverlayStore={tableSettingsOverlayStore}
+						tableSettingsOverlayManager={tableSettingsOverlayManager}
 					/>
 				)}
 			</div>

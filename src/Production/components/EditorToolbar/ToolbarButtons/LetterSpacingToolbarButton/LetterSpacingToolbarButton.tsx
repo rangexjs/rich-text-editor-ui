@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, LetterSpacingIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	LetterSpacingToolbarButtonProps,
@@ -16,9 +20,27 @@ const letterSpacings = [
 
 export const LetterSpacingToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: LetterSpacingToolbarButtonProps) => {
+	const { letterSpacing } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(letterSpacing.isDisabled);
+	const [values, setValues] = useState(letterSpacing.values);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateLetterSpacingState = ({
+			isDisabled,
+			values: newValues,
+		}) => {
+			setIsDisabled(isDisabled);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
+		};
+	}, [formatStylesButtonsStateManager, values]);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -53,7 +75,7 @@ export const LetterSpacingToolbarButton = ({
 
 	const letterSpacingDropdownAnchor = "--letter-spacing-dropdown";
 
-	const activeLetterSpacings = [...state.values].map((letterSpacing) =>
+	const activeLetterSpacings = [...values].map((letterSpacing) =>
 		Number.parseFloat(letterSpacing),
 	);
 
@@ -97,7 +119,7 @@ export const LetterSpacingToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={letterSpacingToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

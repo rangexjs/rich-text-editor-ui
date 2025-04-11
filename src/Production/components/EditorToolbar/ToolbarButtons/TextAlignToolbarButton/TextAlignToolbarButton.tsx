@@ -8,7 +8,11 @@ import {
 	TextAlignRightIcon,
 } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	OnTextAlignClickProps,
@@ -20,10 +24,28 @@ const textAlignList: TextAlignList = ["start", "center", "end", "justify"];
 
 export const TextAlignToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: TextAlignToolbarButtonProps) => {
+	const { textAlign } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(textAlign.isDisabled);
+	const [values, setValues] = useState(textAlign.values);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateTextAlignState = ({
+			isDisabled,
+			values: newValues,
+		}) => {
+			setIsDisabled(isDisabled);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
+		};
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -55,7 +77,7 @@ export const TextAlignToolbarButton = ({
 
 	const textAlignToolbarButtonAnchor = "--text-align-toolbar-button";
 
-	const textAlignValues = [...state.values];
+	const textAlignValues = [...values];
 
 	// RTL writing mode will be handled later
 	!textAlignValues.length && textAlignValues.push("start");
@@ -86,7 +108,7 @@ export const TextAlignToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={textAlignToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

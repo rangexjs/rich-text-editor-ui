@@ -1,11 +1,15 @@
-import type {
-	OnTablePropertiesActionFn,
-	TableActionBorderWidth,
-	TableActionHeight,
-	TableActionWidth,
-	TableLayoutViewOptionsValue,
-	TableProps,
-} from "@externalStores";
+export type TableAlignment = "left" | "center" | "right";
+
+export type TableBorderColor = string;
+
+export interface TableProps {
+	width: string | undefined;
+	height: string | undefined;
+	alignment: TableAlignment;
+	borderStyle: string | undefined;
+	borderColor: string | undefined;
+	borderWidth: string | undefined;
+}
 
 export interface InputValidity {
 	tableWidth: boolean;
@@ -15,9 +19,35 @@ export interface InputValidity {
 
 export type SelectedBorderColor = string | null;
 
-interface SetTablePropsProps extends Partial<TableProps> {}
+interface UpdateTablePropsProps extends Partial<TableProps> {}
 
-export type SetTablePropsFn = (props: SetTablePropsProps) => void;
+export type UpdateTablePropsFn = (props: UpdateTablePropsProps) => void;
+
+export type TableActionWidth = `${number}%` | `${number}px` | undefined;
+
+export type TableActionHeight = `${number}px` | undefined;
+
+export type TableActionBorderStyle = string | null | undefined;
+
+export type TableActionBorderColor = string | null | undefined;
+
+export type TableActionBorderWidth = `${string}px` | null | undefined;
+
+export type OnTablePropertiesActionProps =
+	| {
+			type: "apply";
+			width: TableActionWidth;
+			height: TableActionHeight;
+			alignment: TableAlignment;
+			borderStyle: TableActionBorderStyle;
+			borderColor: TableActionBorderColor;
+			borderWidth: TableActionBorderWidth;
+	  }
+	| { type: "cancel" };
+
+export type OnTablePropertiesActionFn = (
+	props: OnTablePropertiesActionProps,
+) => void;
 
 export type GetTableWidthForActionReturn =
 	| {
@@ -33,7 +63,7 @@ export type GetTableHeightForActionReturn =
 	  }
 	| { isInvalid: true };
 
-export type GetBorderWidthForActionReturn =
+export type GetTableBorderWidthForActionReturn =
 	| {
 			isInvalid: false;
 			borderWidth: TableActionBorderWidth;
@@ -41,9 +71,9 @@ export type GetBorderWidthForActionReturn =
 	| { isInvalid: true };
 
 export interface TablePropertiesProps {
-	layoutView: TableLayoutViewOptionsValue;
-	updateLayoutView: () => void;
+	shouldDisplay: boolean;
+	onClose: () => void;
 	tableProps: TableProps;
-	setTableProps: SetTablePropsFn;
-	onTablePropertiesAction: OnTablePropertiesActionFn;
+	updateTableProps: UpdateTablePropsFn;
+	onTablePropertiesAction: OnTablePropertiesActionFn | null;
 }

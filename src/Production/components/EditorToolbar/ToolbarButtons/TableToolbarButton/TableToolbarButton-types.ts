@@ -1,7 +1,13 @@
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type TableIsDisabled = boolean;
+
+export interface TableToolbarButtonState {
+	isDisabled: TableIsDisabled;
+}
 
 interface SquareState {
 	index: number;
@@ -15,6 +21,5 @@ export interface OnSquareButtonClickProps {
 }
 
 export interface TableToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "table">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}

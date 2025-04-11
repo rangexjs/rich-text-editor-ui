@@ -6,18 +6,40 @@ import { ColorPanel, type OnColorSelected } from "../../../ColorPanel";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { BackgroundColorIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type { CreateBackgroundColorPropsProps } from "./BackgroundColorToolbarButton-types";
 
 export const BackgroundColorToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: CreateBackgroundColorPropsProps) => {
+	const { backgroundColor } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(backgroundColor.isDisabled);
+	const [values, setValues] = useState(backgroundColor.values);
+
 	const anchorName = "--background-color-button";
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateBackgroundColorState = ({
+			isDisabled,
+			values: newValues,
+		}) => {
+			setIsDisabled(isDisabled);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
+		};
+	}, [formatStylesButtonsStateManager, values]);
 
 	const onColorSelected: OnColorSelected = ({ hsl }) => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -63,7 +85,7 @@ export const BackgroundColorToolbarButton = ({
 
 	const activeColors: HSLFormat[] = [];
 
-	for (const color of state.values) {
+	for (const color of values) {
 		try {
 			const hslFormat = Color.fromColor({ color }).hslFormat();
 
@@ -77,7 +99,7 @@ export const BackgroundColorToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}

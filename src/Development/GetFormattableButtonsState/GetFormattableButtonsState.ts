@@ -1,4 +1,4 @@
-import type { FormatStylesButtonsState } from "@externalStores";
+import type { FormatStylesButtonsState } from "@toolbarButtonsStateManager";
 
 import type {
 	GetFormattableButtonsStateProps,

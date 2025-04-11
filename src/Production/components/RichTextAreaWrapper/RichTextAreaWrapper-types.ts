@@ -1,9 +1,9 @@
 import type { interactiveOverlayName } from "@constants";
 import type {
-	AnchorOverlayStore,
-	CaretListboxOverlayStore,
-	TableSettingsOverlayStore,
-} from "@externalStores";
+	AnchorOverlayManager,
+	CaretListboxOverlayManager,
+	TableSettingsOverlayManager,
+} from "@interactiveOverlaysManager";
 
 type InteractiveOverlayName = typeof interactiveOverlayName;
 
@@ -13,8 +13,8 @@ type ShouldAttachInteractiveOverlay = {
 
 export interface RichTextAreaWrapperProps {
 	interactiveOverlays: ShouldAttachInteractiveOverlay;
-	anchorOverlayStore: AnchorOverlayStore;
-	caretListboxOverlayStore: CaretListboxOverlayStore;
-	tableSettingsOverlayStore: TableSettingsOverlayStore;
+	anchorOverlayManager: AnchorOverlayManager;
+	caretListboxOverlayManager: CaretListboxOverlayManager;
+	tableSettingsOverlayManager: TableSettingsOverlayManager;
 	richTextArea: HTMLElement;
 }

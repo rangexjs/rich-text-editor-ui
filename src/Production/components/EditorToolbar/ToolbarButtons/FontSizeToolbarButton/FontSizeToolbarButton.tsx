@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, FontSizeIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	FontSizeToolbarButtonProps,
@@ -16,10 +20,28 @@ const fontSizes = [
 
 export const FontSizeToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: FontSizeToolbarButtonProps) => {
+	const { fontSize } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(fontSize.isDisabled);
+	const [values, setValues] = useState(fontSize.values);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateFontSizeState = ({
+			isDisabled,
+			values: newValues,
+		}) => {
+			setIsDisabled(isDisabled);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
+		};
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -53,7 +75,7 @@ export const FontSizeToolbarButton = ({
 
 	const fontSizeDropdownAnchor = "--font-size-dropdown";
 
-	const activeFontSizes = [...state.values].map((fontSize) =>
+	const activeFontSizes = [...values].map((fontSize) =>
 		Number.parseInt(fontSize, 10),
 	);
 
@@ -93,7 +115,7 @@ export const FontSizeToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={fontSizeToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

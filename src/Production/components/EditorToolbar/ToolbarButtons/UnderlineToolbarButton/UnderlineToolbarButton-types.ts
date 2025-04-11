@@ -1,8 +1,17 @@
-import type { FormatStylesButtonsState } from "@externalStores";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type UnderlineIsDisabled = boolean;
+
+export type UnderlineIsChecked = boolean;
+
+export interface UnderlineToolbarButtonState {
+	isChecked: UnderlineIsChecked;
+	isDisabled: UnderlineIsDisabled;
+}
 
 export interface UnderlineToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	states: Pick<FormatStylesButtonsState, "strikethrough" | "underline">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

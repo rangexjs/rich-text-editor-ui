@@ -1,8 +1,17 @@
-import type { FormatStylesButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type ColorIsDisabled = boolean;
 
-export interface CreateColorPropsProps extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormatStylesButtonsState, "color">;
+export type ColorValues = Set<string>;
+
+export interface ColorToolbarButtonState {
+	isDisabled: ColorIsDisabled;
+	values: ColorValues;
 }
+
+export interface CreateColorPropsProps
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

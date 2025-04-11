@@ -5,16 +5,18 @@ import { createRoot } from "react-dom/client";
 import { App } from "@components";
 import { interactiveOverlayId } from "@constants";
 import {
-	AnchorOverlayStore,
-	CaretListboxOverlayStore,
-	FormatLineTagNameButtonsStore,
-	FormatStylesButtonsStore,
-	HistoryNavigationButtonsStore,
-	NodeInsertionButtonsStore,
-	NonCategorizedOperationButtonsStore,
-	TableSettingsOverlayStore,
-} from "@externalStores";
+	AnchorOverlayManager,
+	CaretListboxOverlayManager,
+	TableSettingsOverlayManager,
+} from "@interactiveOverlaysManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
+import {
+	FormatLineTagNameButtonsStateManager,
+	FormatStylesButtonsStateManager,
+	HistoryNavigationButtonsStateManager,
+	NodeInsertionButtonsStateManager,
+	NonCategorizedOperationButtonsStateManager,
+} from "@toolbarButtonsStateManager";
 
 // @ts-ignore
 import inlineCss from "../global.css?inline";
@@ -28,29 +30,31 @@ import type {
 	OnNodeInsertionProps,
 	OnNonCategorizedOperationProps,
 	RichTextEditorUIConstructorProps,
-	UpdateAnchorOverlayStateProps,
-	UpdateCaretListboxOverlayStateProps,
+	UpdateAnchorOverlayProps,
+	UpdateCaretListboxOverlayProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
 	UpdateNodeInsertionButtonsProps,
 	UpdateNonCategorizedOperationButtonsProps,
-	UpdateTableSettingsOverlayStateProps,
+	UpdateTableSettingsOverlayProps,
 } from "./RichTextEditorUI-types";
 
 export class RichTextEditorUI {
 	#shadowRoot;
 	#root;
 	#toolbarButtonsActionManager = new ToolbarButtonsActionManager();
-	#formatLineTagNameButtonsStore = new FormatLineTagNameButtonsStore();
-	#formatStylesButtonsStore = new FormatStylesButtonsStore();
-	#historyNavigationButtonsStore = new HistoryNavigationButtonsStore();
-	#nodeInsertionButtonsStore = new NodeInsertionButtonsStore();
-	#nonCategorizedOperationButtonsStore =
-		new NonCategorizedOperationButtonsStore();
-	#anchorOverlayStore = new AnchorOverlayStore();
-	#caretListboxOverlayStore = new CaretListboxOverlayStore();
-	#tableSettingsOverlayStore = new TableSettingsOverlayStore();
+	#formatStylesButtonsStateManager = new FormatStylesButtonsStateManager();
+	#formatLineTagNameButtonsStateManager =
+		new FormatLineTagNameButtonsStateManager();
+	#historyNavigationButtonsStateManager =
+		new HistoryNavigationButtonsStateManager();
+	#nodeInsertionButtonsStateManager = new NodeInsertionButtonsStateManager();
+	#nonCategorizedOperationButtonsStateManager =
+		new NonCategorizedOperationButtonsStateManager();
+	#anchorOverlayManager = new AnchorOverlayManager();
+	#caretListboxOverlayManager = new CaretListboxOverlayManager();
+	#tableSettingsOverlayManager = new TableSettingsOverlayManager();
 
 	constructor({
 		domNode,
@@ -91,17 +95,25 @@ export class RichTextEditorUI {
 					<App
 						toolbarButtons={toolbarButtons}
 						toolbarButtonsActionManager={this.#toolbarButtonsActionManager}
-						formatLineTagNameButtonsStore={this.#formatLineTagNameButtonsStore}
-						formatStylesButtonsStore={this.#formatStylesButtonsStore}
-						historyNavigationButtonsStore={this.#historyNavigationButtonsStore}
-						nodeInsertionButtonsStore={this.#nodeInsertionButtonsStore}
-						nonCategorizedOperationButtonsStore={
-							this.#nonCategorizedOperationButtonsStore
+						formatLineTagNameButtonsStateManager={
+							this.#formatLineTagNameButtonsStateManager
+						}
+						formatStylesButtonsStateManager={
+							this.#formatStylesButtonsStateManager
+						}
+						historyNavigationButtonsStateManager={
+							this.#historyNavigationButtonsStateManager
+						}
+						nodeInsertionButtonsStateManager={
+							this.#nodeInsertionButtonsStateManager
+						}
+						nonCategorizedOperationButtonsStateManager={
+							this.#nonCategorizedOperationButtonsStateManager
 						}
 						interactiveOverlays={interactiveOverlays}
-						anchorOverlayStore={this.#anchorOverlayStore}
-						caretListboxOverlayStore={this.#caretListboxOverlayStore}
-						tableSettingsOverlayStore={this.#tableSettingsOverlayStore}
+						anchorOverlayManager={this.#anchorOverlayManager}
+						caretListboxOverlayManager={this.#caretListboxOverlayManager}
+						tableSettingsOverlayManager={this.#tableSettingsOverlayManager}
 						richTextArea={richTextArea}
 					/>
 				</StrictMode>,
@@ -161,37 +173,37 @@ export class RichTextEditorUI {
 	}
 
 	updateFormatLineTagNameButtons(props: UpdateFormatLineTagNameButtonsProps) {
-		this.#formatLineTagNameButtonsStore.updateState(props);
+		this.#formatLineTagNameButtonsStateManager.updateState(props);
 	}
 
 	updateFormatStylesButtons(props: UpdateFormatStylesButtonsProps) {
-		this.#formatStylesButtonsStore.updateState(props);
+		this.#formatStylesButtonsStateManager.updateState(props);
 	}
 
 	updateHistoryNavigationButtons(props: UpdateHistoryNavigationButtonsProps) {
-		this.#historyNavigationButtonsStore.updateState(props);
+		this.#historyNavigationButtonsStateManager.updateState(props);
 	}
 
 	updateNodeInsertionButtons(props: UpdateNodeInsertionButtonsProps) {
-		this.#nodeInsertionButtonsStore.updateState(props);
+		this.#nodeInsertionButtonsStateManager.updateState(props);
 	}
 
 	updateNonCategorizedOperationButtons(
 		props: UpdateNonCategorizedOperationButtonsProps,
 	) {
-		this.#nonCategorizedOperationButtonsStore.updateState(props);
+		this.#nonCategorizedOperationButtonsStateManager.updateState(props);
 	}
 
-	updateAnchorOverlayState(props: UpdateAnchorOverlayStateProps) {
-		this.#anchorOverlayStore.updateState(props);
+	updateAnchorOverlay(props: UpdateAnchorOverlayProps) {
+		this.#anchorOverlayManager.updateState(props);
 	}
 
-	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayStateProps) {
-		this.#caretListboxOverlayStore.updateState(props);
+	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayProps) {
+		this.#caretListboxOverlayManager.updateState(props);
 	}
 
-	updateTableSettingsOverlayState(props: UpdateTableSettingsOverlayStateProps) {
-		this.#tableSettingsOverlayStore.updateState(props);
+	updateTableSettingsOverlay(props: UpdateTableSettingsOverlayProps) {
+		this.#tableSettingsOverlayManager.updateState(props);
 	}
 
 	unmount() {

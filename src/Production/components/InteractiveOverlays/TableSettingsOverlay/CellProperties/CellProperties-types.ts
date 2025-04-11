@@ -1,15 +1,43 @@
-import type {
-	CellActionBorderWidth,
-	CellProps,
-	OnCellPropertiesActionFn,
-	TableLayoutViewOptionsValue,
-} from "@externalStores";
+export type CellAlignContent = "start" | "center" | "end";
 
-export interface SetCellPropsProps extends Partial<CellProps> {}
+export interface CellProps {
+	borderStyle: string | undefined;
+	borderColor: string | undefined;
+	borderWidth: string | undefined;
+	backgroundColor: string | undefined;
+	alignContent: CellAlignContent;
+}
 
-export type SetCellPropsFn = (props: SetCellPropsProps) => void;
+export type CellActionBorderStyle = string | null | undefined;
 
-export type GetBorderWidthForActionReturn =
+export type CellActionBorderColor = string | null | undefined;
+
+export type CellActionBorderWidth = `${string}px` | null | undefined;
+
+export type CellActionBackgroundColor = string | null | undefined;
+
+export type CellActionAlignContent = "start" | "center" | "end";
+
+export type OnCellPropertiesActionProps =
+	| {
+			type: "apply";
+			borderStyle: CellActionBorderStyle;
+			borderColor: CellActionBorderColor;
+			borderWidth: CellActionBorderWidth;
+			backgroundColor: CellActionBackgroundColor;
+			alignContent: CellActionAlignContent;
+	  }
+	| { type: "cancel" };
+
+export type OnCellPropertiesActionFn = (
+	props: OnCellPropertiesActionProps,
+) => void;
+
+export interface UpdateCellPropsProps extends Partial<CellProps> {}
+
+export type UpdateCellPropsFn = (props: UpdateCellPropsProps) => void;
+
+export type GetCellBorderWidthForActionReturn =
 	| {
 			isInvalid: false;
 			borderWidth: CellActionBorderWidth;
@@ -17,9 +45,9 @@ export type GetBorderWidthForActionReturn =
 	| { isInvalid: true };
 
 export interface CellPropertiesProps {
-	layoutView: TableLayoutViewOptionsValue;
-	updateLayoutView: () => void;
+	shouldDisplay: boolean;
+	onClose: () => void;
 	cellProps: CellProps;
-	setCellProps: SetCellPropsFn;
-	onCellPropertiesAction: OnCellPropertiesActionFn;
+	updateCellProps: UpdateCellPropsFn;
+	onCellPropertiesAction: OnCellPropertiesActionFn | null;
 }

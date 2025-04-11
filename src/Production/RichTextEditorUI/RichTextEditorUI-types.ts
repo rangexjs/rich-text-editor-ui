@@ -1,14 +1,9 @@
 import type { AppProps } from "@components";
 import type {
-	AnchorOverlayState,
-	CaretListboxOverlayState,
-	FormatLineTagNameButtonsState,
-	FormatStylesButtonsState,
-	HistoryNavigationButtonsState,
-	NodeInsertionButtonsState,
-	NonCategorizedOperationButtonsState,
-	TableSettingsOverlayState,
-} from "@externalStores";
+	UpdateAnchorOverlayStateProps,
+	UpdateCaretListboxOverlayStateProps,
+	UpdateTableSettingsOverlayStateProps,
+} from "@interactiveOverlaysManager";
 import type {
 	OnFormatLineTagNameFn,
 	OnFormatStylesChangeFn,
@@ -16,6 +11,13 @@ import type {
 	OnNodeInsertionFn,
 	OnNonCategorizedOperationFn,
 } from "@toolbarButtonsActionManager";
+import type {
+	UpdateFormatLineTagNameButtonsStateProps,
+	UpdateFormatStylesButtonsStateProps,
+	UpdateHistoryNavigationButtonsStateProps,
+	UpdateNodeInsertionButtonsStateProps,
+	UpdateNonCategorizedOperationButtonsStateProps,
+} from "@toolbarButtonsStateManager";
 
 export interface RichTextEditorUIConstructorProps
 	extends Pick<
@@ -35,26 +37,26 @@ export type OnNodeInsertionProps = OnNodeInsertionFn;
 
 export type OnNonCategorizedOperationProps = OnNonCategorizedOperationFn;
 
+export interface UpdateFormatLineTagNameButtonsProps
+	extends UpdateFormatLineTagNameButtonsStateProps {}
+
 export interface UpdateFormatStylesButtonsProps
-	extends Partial<FormatStylesButtonsState> {}
+	extends UpdateFormatStylesButtonsStateProps {}
 
 export interface UpdateNodeInsertionButtonsProps
-	extends Partial<NodeInsertionButtonsState> {}
+	extends UpdateNodeInsertionButtonsStateProps {}
 
 export interface UpdateNonCategorizedOperationButtonsProps
-	extends Partial<NonCategorizedOperationButtonsState> {}
-
-export interface UpdateFormatLineTagNameButtonsProps
-	extends Partial<FormatLineTagNameButtonsState> {}
+	extends UpdateNonCategorizedOperationButtonsStateProps {}
 
 export interface UpdateHistoryNavigationButtonsProps
-	extends Partial<HistoryNavigationButtonsState> {}
+	extends UpdateHistoryNavigationButtonsStateProps {}
 
-export interface UpdateAnchorOverlayStateProps
-	extends Partial<AnchorOverlayState> {}
+export interface UpdateAnchorOverlayProps
+	extends UpdateAnchorOverlayStateProps {}
 
-export interface UpdateCaretListboxOverlayStateProps
-	extends Partial<CaretListboxOverlayState> {}
+export interface UpdateCaretListboxOverlayProps
+	extends UpdateCaretListboxOverlayStateProps {}
 
-export interface UpdateTableSettingsOverlayStateProps
-	extends Partial<TableSettingsOverlayState> {}
+export interface UpdateTableSettingsOverlayProps
+	extends UpdateTableSettingsOverlayStateProps {}

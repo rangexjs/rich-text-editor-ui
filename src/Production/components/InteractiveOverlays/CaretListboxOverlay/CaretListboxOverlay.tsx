@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { interactiveOverlayId } from "@constants";
 
@@ -9,19 +9,30 @@ import type {
 } from "./CaretListboxOverlay-types";
 
 export const CaretListboxOverlay = ({
-	caretListboxOverlayStore,
+	caretListboxOverlayManager,
 }: CaretListboxOverlayProps) => {
+	const [mentionSearch, setMentionSearch] = useState(
+		caretListboxOverlayManager.mentionSearch,
+	);
+
+	const [mentionList, setMentionList] = useState(
+		caretListboxOverlayManager.mentionList,
+	);
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedMentionIndex, setSelectedMentionIndex] = useState(0);
 
-	const caretListBoxOverlayState = useSyncExternalStore(
-		caretListboxOverlayStore.subscribe.bind(caretListboxOverlayStore),
-		caretListboxOverlayStore.getSnapshot.bind(caretListboxOverlayStore),
-	);
-
 	const caretListboxOverlayRef = useRef<HTMLDivElement>(null);
 
-	const { mentionSearch, mentionList } = caretListBoxOverlayState;
+	useEffect(() => {
+		caretListboxOverlayManager.updateMentionSearchState = (mentionSearch) => {
+			setMentionSearch(mentionSearch);
+		};
+
+		caretListboxOverlayManager.updateMentionListState = (mentionList) => {
+			setMentionList(mentionList);
+		};
+	}, [caretListboxOverlayManager]);
 
 	// Should be "@"
 	const mentionSearchFirstChar = mentionSearch.at(0);
@@ -43,7 +54,7 @@ export const CaretListboxOverlay = ({
 
 	const isEmpty = !matchedMentionList.length;
 
-	caretListBoxOverlayState.onMatchedMentionListChange({ isEmpty });
+	caretListboxOverlayManager.onMatchedMentionListChange?.({ isEmpty });
 
 	const onPopoverToggle = (event: React.ToggleEvent) => {
 		const { newState } = event;
@@ -120,7 +131,7 @@ export const CaretListboxOverlay = ({
 
 				const { userId, userName } = user;
 
-				caretListBoxOverlayState.onSelectedMention({ userId, userName });
+				caretListboxOverlayManager.onSelectedMention?.({ userId, userName });
 
 				return;
 			}
@@ -148,7 +159,7 @@ export const CaretListboxOverlay = ({
 			}
 
 			if (key === "Esc") {
-				caretListBoxOverlayState.onCaretListboxClose();
+				caretListboxOverlayManager.onCaretListboxClose?.();
 
 				return;
 			}
@@ -165,7 +176,7 @@ export const CaretListboxOverlay = ({
 		isOpen,
 		selectedMentionIndex,
 		matchedMentionList,
-		caretListBoxOverlayState,
+		caretListboxOverlayManager,
 	]);
 
 	return (
@@ -193,7 +204,10 @@ export const CaretListboxOverlay = ({
 						className={`inline-flex items-center gap-2 p-1 px-3 focus:outline-hidden ${buttonBackground}`}
 						ref={scrollToItem(isActive)}
 						onClick={() => {
-							caretListBoxOverlayState.onSelectedMention({ userId, userName });
+							caretListboxOverlayManager.onSelectedMention?.({
+								userId,
+								userName,
+							});
 						}}
 					>
 						{/* Visualizes the image that will be implemented in the future */}

@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-import type { LineTagNameValue } from "@externalStores";
+import type { LineTagNameValue } from "@components";
 
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon } from "../../../SVGs";
 
-import { ToolbarDropdown, toolbarButtonClassName } from "../Utilities";
+import {
+	ToolbarDropdown,
+	setsAreEqual,
+	toolbarButtonClassName,
+} from "../Utilities";
 
 import type {
 	DropDownButtonList,
@@ -14,11 +18,28 @@ import type {
 
 export const LineTagNameToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatLineTagNameButtonsStateManager,
 }: LineTagNameToolbarButtonProps) => {
+	const { lineTagName } = formatLineTagNameButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(lineTagName.isDisabled);
+	const [values, setValues] = useState(lineTagName.values);
 
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatLineTagNameButtonsStateManager.updateLineTagNameUpdate = ({
+			isDisabled,
+			values: newValues,
+		}) => {
+			setIsDisabled(isDisabled);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
+		};
+	}, [formatLineTagNameButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -50,7 +71,7 @@ export const LineTagNameToolbarButton = ({
 
 	const anchorName = "--tag-name-toolbar-button";
 
-	const lineTagNames = state.values;
+	const lineTagNames = values;
 
 	const buttonText = (() => {
 		const firstItem = lineTagNames.values().next();
@@ -132,7 +153,7 @@ export const LineTagNameToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={anchorName}
 				popoverTargetElementRef={popoverTargetElementRef}

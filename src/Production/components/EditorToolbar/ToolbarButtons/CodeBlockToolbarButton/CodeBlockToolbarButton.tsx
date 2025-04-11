@@ -35,10 +35,22 @@ export const codeBlockLanguages = [
 
 export const CodeBlockToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: CodeBlockToolbarButtonProps) => {
+	const { codeBlock } = nodeInsertionButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(codeBlock.isDisabled);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateCodeBlockState = ({
+			isDisabled,
+		}) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -89,7 +101,7 @@ export const CodeBlockToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={codeBlockToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

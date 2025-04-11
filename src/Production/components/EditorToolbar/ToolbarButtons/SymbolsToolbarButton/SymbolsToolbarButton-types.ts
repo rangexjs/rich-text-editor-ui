@@ -1,9 +1,14 @@
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type SymbolsIsDisabled = boolean;
+
+export interface SymbolsToolbarButtonState {
+	isDisabled: SymbolsIsDisabled;
+}
 
 export interface SymbolsToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "symbols">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}

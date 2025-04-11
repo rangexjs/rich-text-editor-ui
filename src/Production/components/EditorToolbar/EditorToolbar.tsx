@@ -35,44 +35,12 @@ import type { EditorToolbarProps } from "./EditorToolbar-types";
 export const EditorToolbar = ({
 	toolbarRows,
 	toolbarButtonsActionManager,
-	formatLineTagNameButtonsState,
-	formatStylesButtonsState,
-	historyNavigationButtonsState,
-	nodeInsertionButtonsState,
-	nonCategorizedOperationButtonsState,
+	formatLineTagNameButtonsStateManager,
+	formatStylesButtonsStateManager,
+	historyNavigationButtonsStateManager,
+	nodeInsertionButtonsStateManager,
+	nonCategorizedOperationButtonsStateManager,
 }: EditorToolbarProps) => {
-	const { tagName } = formatLineTagNameButtonsState;
-
-	const {
-		backgroundColor,
-		bold,
-		color,
-		fontFamily,
-		fontSize,
-		indentation,
-		italic,
-		letterSpacing,
-		lineHeight,
-		strikethrough,
-		textAlign,
-		underline,
-	} = formatStylesButtonsState;
-
-	const { historyBack, historyForward } = historyNavigationButtonsState;
-
-	const {
-		anchor,
-		blockQuote,
-		codeBlock,
-		image,
-		list,
-		symbols,
-		table,
-		todoList,
-	} = nodeInsertionButtonsState;
-
-	const { isTextAreaReadOnly } = nonCategorizedOperationButtonsState;
-
 	const toolbarButtonProps = toolbarRows.map((toolbarRow) =>
 		toolbarRow.map((groups) =>
 			groups.map((name) => {
@@ -80,7 +48,9 @@ export const EditorToolbar = ({
 					return (
 						<AnchorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={anchor}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -89,7 +59,7 @@ export const EditorToolbar = ({
 					return (
 						<BackgroundColorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={backgroundColor}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -98,7 +68,9 @@ export const EditorToolbar = ({
 					return (
 						<BlockQuoteToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={blockQuote}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -107,7 +79,7 @@ export const EditorToolbar = ({
 					return (
 						<BoldToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={bold}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -116,7 +88,9 @@ export const EditorToolbar = ({
 					return (
 						<CodeBlockToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={codeBlock}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -125,7 +99,7 @@ export const EditorToolbar = ({
 					return (
 						<ColorToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={color}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -134,7 +108,7 @@ export const EditorToolbar = ({
 					return (
 						<FontFamilyToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={fontFamily}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -143,7 +117,7 @@ export const EditorToolbar = ({
 					return (
 						<FontSizeToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={fontSize}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -152,7 +126,9 @@ export const EditorToolbar = ({
 					return (
 						<HistoryBackToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={historyBack}
+							historyNavigationStateManager={
+								historyNavigationButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -161,7 +137,9 @@ export const EditorToolbar = ({
 					return (
 						<HistoryForwardToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={historyForward}
+							historyNavigationStateManager={
+								historyNavigationButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -170,7 +148,9 @@ export const EditorToolbar = ({
 					return (
 						<ImageToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={image}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -179,7 +159,7 @@ export const EditorToolbar = ({
 					return (
 						<IndentationToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={indentation}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -188,7 +168,9 @@ export const EditorToolbar = ({
 					return (
 						<IsTextAreaReadOnlyToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={isTextAreaReadOnly}
+							nonCategorizedOperationButtonsStateManager={
+								nonCategorizedOperationButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -197,7 +179,7 @@ export const EditorToolbar = ({
 					return (
 						<ItalicToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={italic}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -206,7 +188,7 @@ export const EditorToolbar = ({
 					return (
 						<LetterSpacingToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={letterSpacing}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -215,7 +197,7 @@ export const EditorToolbar = ({
 					return (
 						<LineHeightToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={lineHeight}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -224,7 +206,9 @@ export const EditorToolbar = ({
 					return (
 						<LineTagNameToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={tagName}
+							formatLineTagNameButtonsStateManager={
+								formatLineTagNameButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -233,7 +217,9 @@ export const EditorToolbar = ({
 					return (
 						<ListToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={list}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -242,7 +228,7 @@ export const EditorToolbar = ({
 					return (
 						<RemoveFormatToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							formattableButtonsState={formatStylesButtonsState}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -251,7 +237,7 @@ export const EditorToolbar = ({
 					return (
 						<StrikethroughToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							states={{ strikethrough, underline }}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -260,7 +246,9 @@ export const EditorToolbar = ({
 					return (
 						<SymbolsToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={symbols}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -269,7 +257,9 @@ export const EditorToolbar = ({
 					return (
 						<TableToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={table}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -278,7 +268,7 @@ export const EditorToolbar = ({
 					return (
 						<TextAlignToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={textAlign}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}
@@ -287,7 +277,9 @@ export const EditorToolbar = ({
 					return (
 						<TodoListToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							state={todoList}
+							nodeInsertionButtonsStateManager={
+								nodeInsertionButtonsStateManager
+							}
 						/>
 					);
 				}
@@ -296,7 +288,7 @@ export const EditorToolbar = ({
 					return (
 						<UnderlineToolbarButton
 							toolbarButtonsActionManager={toolbarButtonsActionManager}
-							states={{ strikethrough, underline }}
+							formatStylesButtonsStateManager={formatStylesButtonsStateManager}
 						/>
 					);
 				}

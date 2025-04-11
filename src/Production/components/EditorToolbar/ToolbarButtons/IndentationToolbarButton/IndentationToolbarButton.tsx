@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "../../../PrimaryButton";
 import { CheckIcon, IndentationIcon } from "../../../SVGs";
 
-import { toolbarButtonClassName } from "../Utilities";
+import { setsAreEqual, toolbarButtonClassName } from "../Utilities";
 
 import type {
 	IndentationToolbarButtonProps,
@@ -14,10 +14,28 @@ const indentations = [4, 8, 12, 16, 24, 32, 40, 48, 64, 80] as const;
 
 export const IndentationToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: IndentationToolbarButtonProps) => {
+	const { indentation } = formatStylesButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(indentation.isDisabled);
+	const [values, setValues] = useState(indentation.values);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateIndentationState = ({
+			isDisabled,
+			values: newValues,
+		}) => {
+			setIsDisabled(isDisabled);
+
+			if (!setsAreEqual({ setA: values, setB: newValues })) {
+				setValues(newValues);
+			}
+		};
+	}, [formatStylesButtonsStateManager, values]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -51,7 +69,7 @@ export const IndentationToolbarButton = ({
 
 	const indentationDropdownAnchor = "--indentation-dropdown";
 
-	const activeIndentations = [...state.values].map((indentation) =>
+	const activeIndentations = [...values].map((indentation) =>
 		Number.parseInt(indentation, 10),
 	);
 
@@ -97,7 +115,7 @@ export const IndentationToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={indentationToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

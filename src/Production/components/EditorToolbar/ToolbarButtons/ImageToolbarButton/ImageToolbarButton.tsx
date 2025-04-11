@@ -21,13 +21,22 @@ import type {
 
 export const ImageToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: ImageToolbarButtonProps) => {
+	const { image } = nodeInsertionButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(image.isDisabled);
 	const [urlText, setURLText] = useState("");
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const imageUrlDialogRef = useRef<HTMLDialogElement>(null);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateImageState = ({ isDisabled }) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -173,7 +182,7 @@ export const ImageToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={imageToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

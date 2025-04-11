@@ -13,10 +13,20 @@ import type {
 
 export const ListToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	nodeInsertionButtonsStateManager,
 }: ListToolbarButtonProps) => {
+	const { list } = nodeInsertionButtonsStateManager;
+
 	const [isChecked, setIsChecked] = useState(false);
+	const [isDisabled, setIsDisabled] = useState(list.isDisabled);
+
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		nodeInsertionButtonsStateManager.updateListState = ({ isDisabled }) => {
+			setIsDisabled(isDisabled);
+		};
+	}, [nodeInsertionButtonsStateManager]);
 
 	useEffect(() => {
 		const popoverTargetElement = popoverTargetElementRef.current;
@@ -72,7 +82,7 @@ export const ListToolbarButton = ({
 		<>
 			<PrimaryButton
 				checked={isChecked}
-				disabled={state.isDisabled}
+				disabled={isDisabled}
 				isChevron={true}
 				anchorName={listToolbarButtonAnchor}
 				popoverTargetElementRef={popoverTargetElementRef}

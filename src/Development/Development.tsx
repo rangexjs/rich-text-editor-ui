@@ -108,7 +108,7 @@ export const simulateProductEnvironment = ({
 		});
 
 		richTextEditorUI.updateFormatLineTagNameButtons({
-			tagName: { isDisabled: false, values: new Set(["p"]) },
+			lineTagName: { isDisabled: false, values: new Set(["p"]) },
 		});
 	}, 0e3);
 
@@ -160,7 +160,7 @@ export const simulateProductEnvironment = ({
 		setTimeout(() => {
 			// @ts-ignore
 			anchorOverlay.showPopover({ source: richTextArea });
-		});
+		}, 1e3);
 	}
 
 	if (isAddCaretListbox) {
@@ -177,7 +177,7 @@ export const simulateProductEnvironment = ({
 		setTimeout(() => {
 			// @ts-ignore
 			caretListboxOverlay.showPopover({ source: richTextArea });
-		});
+		}, 1e3);
 	}
 
 	if (isAddTable) {
@@ -189,6 +189,6 @@ export const simulateProductEnvironment = ({
 		setTimeout(() => {
 			// @ts-ignore
 			tableSettingsOverlay.showPopover({ source: richTextArea });
-		});
+		}, 1e3);
 	}
 };

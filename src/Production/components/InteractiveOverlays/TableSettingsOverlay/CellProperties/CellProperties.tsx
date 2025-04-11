@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 
-import { cellBorderStyles, tableLayoutViewOptions } from "@externalStores";
 import { Color, type HSLFormat, getPixelFromInput } from "@utilities";
 
 import { ColorInput } from "../../../ColorInput";
@@ -17,14 +16,27 @@ import { getValidBorderStyle } from "../Utilities";
 
 import type {
 	CellPropertiesProps,
-	GetBorderWidthForActionReturn,
+	GetCellBorderWidthForActionReturn,
 } from "./CellProperties-types";
 
+export const cellBorderStyles = [
+	"solid",
+	"dotted",
+	"dashed",
+	"double",
+	"groove",
+	"ridge",
+	"inset",
+	"outset",
+	"none",
+	"hidden",
+];
+
 export const CellProperties = ({
-	layoutView,
-	updateLayoutView,
+	shouldDisplay,
+	onClose,
 	cellProps,
-	setCellProps,
+	updateCellProps,
 	onCellPropertiesAction,
 }: CellPropertiesProps) => {
 	const borderWidthInputRef = useRef<HTMLInputElement>(null);
@@ -35,17 +47,17 @@ export const CellProperties = ({
 		{
 			checked: cellProps.alignContent === "start",
 			children: <AlignTopIcon className="w-6" />,
-			onClick: () => setCellProps({ alignContent: "start" }),
+			onClick: () => updateCellProps({ alignContent: "start" }),
 		},
 		{
 			checked: cellProps.alignContent === "center",
 			children: <AlignMiddleIcon className="w-6" />,
-			onClick: () => setCellProps({ alignContent: "center" }),
+			onClick: () => updateCellProps({ alignContent: "center" }),
 		},
 		{
 			checked: cellProps.alignContent === "end",
 			children: <AlignBottomIcon className="w-6" />,
-			onClick: () => setCellProps({ alignContent: "end" }),
+			onClick: () => updateCellProps({ alignContent: "end" }),
 		},
 	];
 
@@ -55,7 +67,7 @@ export const CellProperties = ({
 				borderStyle[0].toUpperCase() + borderStyle.slice(1);
 
 			const onClick = () => {
-				setCellProps({ borderStyle });
+				updateCellProps({ borderStyle });
 			};
 
 			return { id: borderStyle, children: capitalizedBorderStyle, onClick };
@@ -74,45 +86,45 @@ export const CellProperties = ({
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
 
 		if (hsl === null) {
-			setCellProps({ borderColor: "transparent" });
+			updateCellProps({ borderColor: "transparent" });
 		}
 
 		const { hex } = Color.hsl(definedHSL).hex();
 
-		setCellProps({ borderColor: hex });
+		updateCellProps({ borderColor: hex });
 	};
 
 	const onBorderWidthChange: OnPrimaryCharInputChangeFn = ({ value }) => {
 		setIsBorderWidthValid(true);
 
-		setCellProps({ borderWidth: value });
+		updateCellProps({ borderWidth: value });
 	};
 
 	const onBackgroundSelected: OnColorSelected = ({ hsl }) => {
 		const definedHSL: HSLFormat = hsl || { h: 0, s: 0, l: 0, a: 0 };
 
 		if (hsl === null) {
-			setCellProps({ backgroundColor: "transparent" });
+			updateCellProps({ backgroundColor: "transparent" });
 		}
 
 		const { hex } = Color.hsl(definedHSL).hex();
 
-		setCellProps({ backgroundColor: hex });
+		updateCellProps({ backgroundColor: hex });
 	};
 
 	const closePanel = () => {
 		setIsBorderWidthValid(true);
 
-		updateLayoutView();
+		onClose();
 	};
 
 	const onCancel = () => {
-		onCellPropertiesAction({ type: "cancel" });
+		onCellPropertiesAction?.({ type: "cancel" });
 
 		closePanel();
 	};
 
-	const getBorderWidthForAction = (): GetBorderWidthForActionReturn => {
+	const getBorderWidthForAction = (): GetCellBorderWidthForActionReturn => {
 		if (cellProps.borderWidth === undefined || cellProps.borderWidth === "") {
 			return { isInvalid: false, borderWidth: undefined };
 		}
@@ -143,7 +155,7 @@ export const CellProperties = ({
 			return;
 		}
 
-		onCellPropertiesAction({
+		onCellPropertiesAction?.({
 			type: "apply",
 			borderStyle: cellProps.borderStyle,
 			borderColor: cellProps.borderColor,
@@ -154,16 +166,11 @@ export const CellProperties = ({
 
 		closePanel();
 	};
+
+	const display = shouldDisplay ? "" : "none";
+
 	return (
-		<div
-			className="w-72 p-2"
-			style={{
-				display:
-					layoutView === tableLayoutViewOptions.tableCellProperties
-						? ""
-						: "none",
-			}}
-		>
+		<div className="w-72 p-2" style={{ display }}>
 			<div>Cell Properties</div>
 			<hr className="my-1" />
 			<div className="flex flex-col gap-2">

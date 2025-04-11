@@ -1,10 +1,18 @@
 import type {
-	FormatLineTagNameButtonsState,
-	LineTagNameValue,
-} from "@externalStores";
-import type { PickType } from "@utilities";
+	FormatLineTagNameButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type LineTagNameValue = "p" | `h${1 | 2 | 3 | 4 | 5 | 6}`;
+
+export type LineTagNameIsDisabled = boolean;
+
+export type LineTagNameValues = Set<LineTagNameValue>;
+
+export interface LineTagNameToolbarButtonState {
+	isDisabled: LineTagNameIsDisabled;
+	values: LineTagNameValues;
+}
 
 interface DropDownButton {
 	tagName: LineTagNameValue;
@@ -15,6 +23,5 @@ interface DropDownButton {
 export type DropDownButtonList = DropDownButton[];
 
 export interface LineTagNameToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormatLineTagNameButtonsState, "tagName">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		FormatLineTagNameButtonsStateManagerObj {}

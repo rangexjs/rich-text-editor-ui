@@ -1,12 +1,68 @@
-import type {
-	TableCellActionType,
-	TableSettingsOverlayStore,
-} from "@externalStores";
 import type { ReactNode, RefObject } from "react";
+
+import type { TableSettingsOverlayManager } from "@interactiveOverlaysManager";
 
 import type { PrimaryButtonProps } from "../../PrimaryButton";
 
+import type {
+	tableActiveView,
+	tableLayoutViewOptions,
+} from "./TableSettingsOverlay";
+
+export type TableLayoutViewOptions = typeof tableLayoutViewOptions;
+
+export type TableLayoutViewOptionsValue =
+	TableLayoutViewOptions[keyof TableLayoutViewOptions];
+
+export type TableActiveView = typeof tableActiveView;
+
+export type TableActiveViewValue = TableActiveView[keyof TableActiveView];
+
 export type DropdownIconState = "col" | "row" | "cell-modifier" | null;
+
+interface CellButtonProps {
+	disabled: boolean;
+}
+
+export interface ColumnButtons {
+	insertColumnLeft: CellButtonProps;
+	insertColumnRight: CellButtonProps;
+	deleteColumn: CellButtonProps;
+}
+
+export interface RowButtons {
+	insertRowAbove: CellButtonProps;
+	insertRowBelow: CellButtonProps;
+	deleteRow: CellButtonProps;
+}
+
+export interface CellSpanModifier {
+	mergeSelectedCells: CellButtonProps;
+	mergeCellUp: CellButtonProps;
+	mergeCellRight: CellButtonProps;
+	mergeCellDown: CellButtonProps;
+	mergeCellLeft: CellButtonProps;
+	splitCellHorizontally: CellButtonProps;
+	splitCellVertically: CellButtonProps;
+}
+
+type CellColActionType = "insert-col-left" | "insert-col-right" | "delete-col";
+
+type CellRowActionType = "insert-row-above" | "insert-row-below" | "delete-row";
+
+type CellSpanModifierType =
+	| "merge-selected-cells"
+	| "merge-cell-up"
+	| "merge-cell-down"
+	| "merge-cell-left"
+	| "merge-cell-right"
+	| "split-cell-horizontally"
+	| "split-cell-vertically";
+
+export type TableCellActionType =
+	| CellColActionType
+	| CellRowActionType
+	| CellSpanModifierType;
 
 export interface OnTableActionButtonClickProps {
 	dropdownRef: RefObject<HTMLDivElement | null>;
@@ -21,5 +77,5 @@ interface TableIconButton extends PrimaryButtonProps {
 export type TableButtonsList = TableIconButton[];
 
 export interface TableSettingsOverlayProps {
-	tableSettingsOverlayStore: TableSettingsOverlayStore;
+	tableSettingsOverlayManager: TableSettingsOverlayManager;
 }

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
 	PrimaryButton,
 	type PrimaryButtonOnClickFn,
@@ -9,18 +11,33 @@ import type { BoldToolbarButtonProps } from "./BoldToolbarButton-types";
 
 export const BoldToolbarButton = ({
 	toolbarButtonsActionManager,
-	state,
+	formatStylesButtonsStateManager,
 }: BoldToolbarButtonProps) => {
+	const { bold } = formatStylesButtonsStateManager;
+
+	const [isChecked, setIsChecked] = useState(bold.isChecked);
+	const [isDisabled, setIsDisabled] = useState(bold.isDisabled);
+
 	const onClick: PrimaryButtonOnClickFn = ({ isChecked }) => {
 		const fontWeight = isChecked ? null : "bold";
 
 		toolbarButtonsActionManager.onFormatStyles?.({ fontWeight });
 	};
 
+	useEffect(() => {
+		formatStylesButtonsStateManager.updateBoldState = ({
+			isChecked,
+			isDisabled,
+		}) => {
+			setIsChecked(isChecked);
+			setIsDisabled(isDisabled);
+		};
+	}, [formatStylesButtonsStateManager]);
+
 	return (
 		<PrimaryButton
-			checked={state.isChecked}
-			disabled={state.isDisabled}
+			checked={isChecked}
+			disabled={isDisabled}
 			isChevron={false}
 			onClick={onClick}
 			className={toolbarButtonClassName}

@@ -1,11 +1,19 @@
-import type { FormatStylesButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	FormatStylesButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type FontSizeIsDisabled = boolean;
+
+export type FontSizeValues = Set<string>;
+
+export interface FontSizeToolbarButtonState {
+	isDisabled: FontSizeIsDisabled;
+	values: FontSizeValues;
+}
 
 export type OnFontSizeClickProps = "default" | number;
 
 export interface FontSizeToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<FormatStylesButtonsState, "fontSize">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		FormatStylesButtonsStateManagerObj {}

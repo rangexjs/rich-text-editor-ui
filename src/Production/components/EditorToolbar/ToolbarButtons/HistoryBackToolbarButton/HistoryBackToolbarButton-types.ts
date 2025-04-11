@@ -1,9 +1,14 @@
-import type { HistoryNavigationButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	HistoryNavigationButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type HistoryBackIsDisabled = boolean;
+
+export interface HistoryBackToolbarButtonState {
+	isDisabled: HistoryBackIsDisabled;
+}
 
 export interface HistoryBackToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<HistoryNavigationButtonsState, "historyBack">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		HistoryNavigationButtonsStateManagerObj {}

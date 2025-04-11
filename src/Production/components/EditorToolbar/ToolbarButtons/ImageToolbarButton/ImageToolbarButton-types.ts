@@ -1,9 +1,15 @@
 import type { ReactNode } from "react";
 
-import type { NodeInsertionButtonsState } from "@externalStores";
-import type { PickType } from "@utilities";
+import type {
+	NodeInsertionButtonsStateManagerObj,
+	ToolbarButtonsActionManagerObj,
+} from "../Utilities";
 
-import type { ToolbarButtonsActionManagerObj } from "../Utilities";
+export type ImageIsDisabled = boolean;
+
+export interface ImageToolbarButtonState {
+	isDisabled: ImageIsDisabled;
+}
 
 interface PopoverButton {
 	children: ReactNode;
@@ -13,6 +19,5 @@ interface PopoverButton {
 export type PopoverButtons = PopoverButton[];
 
 export interface ImageToolbarButtonProps
-	extends ToolbarButtonsActionManagerObj {
-	state: PickType<NodeInsertionButtonsState, "image">;
-}
+	extends ToolbarButtonsActionManagerObj,
+		NodeInsertionButtonsStateManagerObj {}
