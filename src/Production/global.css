@@ -11,16 +11,18 @@
 	:host {
 		/* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
 		interpolate-size: allow-keywords;
+
+		--tw-inset-shadow: 0 0 #0000;
+		--tw-ring-shadow: 0 0 #0000;
+		--tw-inset-ring-shadow: 0 0 #0000;
+		--tw-ring-offset-width: 0px;
+		--tw-ring-offset-color: #fff;
+		--tw-ring-offset-shadow: 0 0 #0000;
 	}
 
 	::-webkit-inner-spin-button {
 		display: none;
 	}
-
-	/* [popover] {
-		padding: 0;
-		margin: 0;
-	} */
 
 	button {
 		cursor: pointer;
