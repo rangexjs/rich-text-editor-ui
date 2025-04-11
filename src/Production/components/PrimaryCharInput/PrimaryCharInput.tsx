@@ -91,8 +91,8 @@ export const PrimaryCharInput = ({
 	const isShowInvalid = isInvalid && invalidMessage && isFocus;
 
 	const inputColors = isInvalid
-		? "focus:shadow-error/15 focus:border-error/40"
-		: "focus:shadow-primary/15 focus:border-primary/40";
+		? "focus:ring-error/15 focus:border-error/40"
+		: "focus:ring-primary/15 focus:border-primary/40";
 
 	return (
 		<div
@@ -125,7 +125,7 @@ export const PrimaryCharInput = ({
 				value={inputValue}
 				placeholder={inputProps.placeholder}
 				readOnly={inputProps.readOnly}
-				className={` ${inputColors} w-full rounded-sm border border-slate-400/30 bg-inherit p-2 text-sm transition-[border-color,_box-shadow] focus:shadow-[0_0_0_4px]`}
+				className={` ${inputColors} w-full rounded-sm border border-slate-400/30 bg-inherit p-2 text-sm shadow-none transition-[border-color,_box-shadow] focus:ring-4`}
 				style={{ ...inputProps.style }}
 				onChange={onInputChange}
 				onClick={onClick}
