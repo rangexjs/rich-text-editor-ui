@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { interactiveOverlayId } from "@constants";
 
@@ -10,6 +10,7 @@ import { EditIcon, TrashIcon } from "../../SVGs";
 import { ToggleButton } from "../../ToggleButton";
 
 import type {
+	AnchorInputValidity,
 	AnchorLayoutView,
 	AnchorOverlayProps,
 } from "./AnchorOverlay-types";
@@ -28,6 +29,10 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 
 	const [url, setUrl] = useState(anchorOverlayManager.url);
 
+	const [initialFocusTarget, setInitialFocusTarget] = useState(
+		anchorOverlayManager.initialFocusTarget,
+	);
+
 	const [isOpenNewTab, setIsOpenNewTab] = useState(
 		anchorOverlayManager.isOpenNewTab,
 	);
@@ -35,6 +40,14 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 	const [isDownloadable, setIsDownloadable] = useState(
 		anchorOverlayManager.isDownloadable,
 	);
+
+	const [inputValidity, setInputValidity] = useState<AnchorInputValidity>({
+		url: true,
+	});
+
+	const textToDisplayInputRef = useRef<HTMLInputElement>(null);
+
+	const urlInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		anchorOverlayManager.updateLayoutViewState = (layoutView) => {
@@ -47,6 +60,12 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 
 		anchorOverlayManager.updateUrlState = (url) => {
 			setUrl(url);
+		};
+
+		anchorOverlayManager.updateInitialFocusTargetState = (
+			initialFocusTarget,
+		) => {
+			setInitialFocusTarget(initialFocusTarget);
 		};
 
 		anchorOverlayManager.updateIsOpenNewTabState = (isOpenNewTab) => {
@@ -79,6 +98,8 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 	};
 
 	const onURLChange: OnPrimaryCharInputChangeFn = ({ value }) => {
+		setInputValidity((prev) => ({ ...prev, url: true }));
+
 		setUrl(value);
 	};
 
@@ -91,14 +112,30 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 	};
 
 	const onCancel = () => {
-		anchorOverlayManager.onAction?.({ type: "cancel" });
+		setInputValidity({ url: true });
 
 		updateLayoutView(anchorLayoutViewOptions.main);
+
+		anchorOverlayManager.onAction?.({ type: "cancel" });
 	};
 
 	const safeUrl = url.trim().replaceAll(/^javascript:/g, "");
 
 	const onApply = () => {
+		const urlInput = urlInputRef.current;
+
+		if (!urlInput) {
+			throw new Error("URLInput can't be null.");
+		}
+
+		if (!safeUrl) {
+			setInputValidity((prev) => ({ ...prev, url: false }));
+
+			urlInput.focus();
+
+			return;
+		}
+
 		anchorOverlayManager.onAction?.({
 			type: "apply",
 			textToDisplay,
@@ -110,6 +147,33 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 		updateLayoutView(anchorLayoutViewOptions.main);
 	};
 
+	const onPopoverToggle = (event: React.ToggleEvent) => {
+		const { newState } = event;
+
+		if (newState === "open") {
+			if (initialFocusTarget === null) {
+				return;
+			}
+
+			const input = {
+				textToDisplay: textToDisplayInputRef.current,
+				url: urlInputRef.current,
+			}[initialFocusTarget];
+
+			if (!input) {
+				throw new Error("Input can't be null.");
+			}
+
+			input.focus();
+		}
+
+		if (newState === "closed") {
+			setInputValidity({ url: true });
+
+			anchorOverlayManager.onClose?.();
+		}
+	};
+
 	const shouldShowMain = layoutView === anchorLayoutViewOptions.main;
 
 	const shouldShowEdit = layoutView === anchorLayoutViewOptions.edit;
@@ -119,12 +183,11 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 			id={interactiveOverlayId.anchor}
 			className="w-60 rounded-md border border-slate-200 bg-white p-3 shadow-md"
 			popover="manual"
+			onToggle={onPopoverToggle}
 		>
 			<div
 				className="flex items-center gap-1"
-				style={{
-					display: shouldShowMain ? "" : "none",
-				}}
+				style={{ display: shouldShowMain ? "" : "none" }}
 			>
 				<span className="w-36 overflow-hidden text-ellipsis whitespace-nowrap text-blue-700 text-sm underline">
 					<a href={safeUrl} target="_blank" rel="noreferrer" title={safeUrl}>
@@ -143,6 +206,7 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 			</div>
 			<div style={{ display: shouldShowEdit ? "" : "none" }}>
 				<PrimaryCharInput
+					inputRef={textToDisplayInputRef}
 					className="mb-4 w-full"
 					inputProps={{
 						type: "text",
@@ -153,6 +217,7 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 					title={"Text to display"}
 				/>
 				<PrimaryCharInput
+					inputRef={urlInputRef}
 					className="mb-2 w-full"
 					inputProps={{
 						type: "text",
@@ -161,6 +226,8 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 						placeholder: "https://example.com",
 					}}
 					title={"URL"}
+					isInvalid={!inputValidity.url}
+					invalidMessage="URL can't be empty."
 				/>
 				<div
 					className="mb-1 flex cursor-pointer select-none justify-between"
