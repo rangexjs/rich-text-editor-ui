@@ -1,3 +1,5 @@
+import type { TableSettingsOverlayManager } from "@interactiveOverlaysManager";
+
 export type TableAlignment = "left" | "center" | "right";
 
 export type TableBorderColor = string;
@@ -75,5 +77,5 @@ export interface TablePropertiesProps {
 	onClose: () => void;
 	tableProps: TableProps;
 	updateTableProps: UpdateTablePropsFn;
-	onTablePropertiesAction: OnTablePropertiesActionFn | null;
+	tableSettingsOverlayManager: TableSettingsOverlayManager;
 }

@@ -49,7 +49,7 @@ export const TableProperties = ({
 	onClose,
 	tableProps,
 	updateTableProps,
-	onTablePropertiesAction,
+	tableSettingsOverlayManager,
 }: TablePropertiesProps) => {
 	const tableWidthInputRef = useRef<HTMLInputElement>(null);
 	const tableHeightInputRef = useRef<HTMLInputElement>(null);
@@ -141,7 +141,7 @@ export const TableProperties = ({
 	};
 
 	const onCancel = () => {
-		onTablePropertiesAction?.({ type: "cancel" });
+		tableSettingsOverlayManager.onTablePropertiesAction?.({ type: "cancel" });
 
 		closePanel();
 	};
@@ -248,7 +248,7 @@ export const TableProperties = ({
 			return;
 		}
 
-		onTablePropertiesAction?.({
+		tableSettingsOverlayManager.onTablePropertiesAction?.({
 			type: "apply",
 			width: tableWidthForAction.tableWidth,
 			height: tableHeightForAction.tableHeight,

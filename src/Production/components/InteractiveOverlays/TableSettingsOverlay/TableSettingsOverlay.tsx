@@ -448,18 +448,14 @@ export const TableSettingsOverlay = ({
 				onClose={() => updateLayoutView(tableLayoutViewOptions.tableIcons)}
 				tableProps={tableProps}
 				updateTableProps={updateTableProps}
-				onTablePropertiesAction={
-					tableSettingsOverlayManager.onTablePropertiesAction
-				}
+				tableSettingsOverlayManager={tableSettingsOverlayManager}
 			/>
 			<CellProperties
 				shouldDisplay={shouldDisplayCellProperties}
 				onClose={() => updateLayoutView(tableLayoutViewOptions.tableIcons)}
 				cellProps={cellProps}
 				updateCellProps={updateCellProps}
-				onCellPropertiesAction={
-					tableSettingsOverlayManager.onCellPropertiesAction
-				}
+				tableSettingsOverlayManager={tableSettingsOverlayManager}
 			/>
 		</div>
 	);

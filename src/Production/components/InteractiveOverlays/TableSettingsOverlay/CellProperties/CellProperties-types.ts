@@ -1,3 +1,5 @@
+import type { TableSettingsOverlayManager } from "@interactiveOverlaysManager";
+
 export type CellAlignContent = "start" | "center" | "end";
 
 export interface CellProps {
@@ -49,5 +51,5 @@ export interface CellPropertiesProps {
 	onClose: () => void;
 	cellProps: CellProps;
 	updateCellProps: UpdateCellPropsFn;
-	onCellPropertiesAction: OnCellPropertiesActionFn | null;
+	tableSettingsOverlayManager: TableSettingsOverlayManager;
 }
