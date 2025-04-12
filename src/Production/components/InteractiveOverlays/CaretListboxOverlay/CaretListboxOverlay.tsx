@@ -116,7 +116,7 @@ export const CaretListboxOverlay = ({
 				key !== "ArrowUp" &&
 				key !== "ArrowDown" &&
 				key !== "Tab" &&
-				key !== "Esc"
+				key !== "Escape"
 			) {
 				return;
 			}
@@ -168,7 +168,7 @@ export const CaretListboxOverlay = ({
 				return;
 			}
 
-			if (key === "Esc") {
+			if (key === "Escape") {
 				caretListboxOverlayManager.onCaretListboxClose?.();
 
 				return;
