@@ -103,6 +103,11 @@ export class TableSettingsOverlayManager {
 		columnButtons,
 		rowButtons,
 		cellSpanModifier,
+		onActiveViewChange,
+		onTablePropertiesAction,
+		onCellPropertiesAction,
+		onTableCellAction,
+		onTableRemove,
 	}: UpdateTableSettingsOverlayStateProps) {
 		if (layoutView) {
 			this.#layoutView = layoutView;
@@ -132,6 +137,26 @@ export class TableSettingsOverlayManager {
 		if (cellSpanModifier) {
 			this.#cellSpanModifier = cellSpanModifier;
 			this.updateCellSpanModifierState?.(cellSpanModifier);
+		}
+
+		if (onActiveViewChange !== undefined) {
+			this.onActiveViewChange = onActiveViewChange;
+		}
+
+		if (onTablePropertiesAction !== undefined) {
+			this.onTablePropertiesAction = onTablePropertiesAction;
+		}
+
+		if (onCellPropertiesAction !== undefined) {
+			this.onCellPropertiesAction = onCellPropertiesAction;
+		}
+
+		if (onTableCellAction) {
+			this.onTableCellAction = onTableCellAction;
+		}
+
+		if (onTableRemove) {
+			this.onTableRemove = onTableRemove;
 		}
 	}
 }
