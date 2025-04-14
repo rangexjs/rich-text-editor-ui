@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import { interactiveOverlayId } from "@constants";
-
 import { assertNever } from "@errorHandling";
+
 import type {
 	CaretListboxOverlayProps,
 	ScrollToItemFn,
@@ -19,7 +19,6 @@ export const CaretListboxOverlay = ({
 		caretListboxOverlayManager.mentionList,
 	);
 
-	const [isOpen, setIsOpen] = useState(false);
 	const [selectedMentionIndex, setSelectedMentionIndex] = useState(0);
 
 	const caretListboxOverlayRef = useRef<HTMLDivElement>(null);
@@ -27,6 +26,7 @@ export const CaretListboxOverlay = ({
 	useEffect(() => {
 		caretListboxOverlayManager.updateMentionSearchState = (mentionSearch) => {
 			setMentionSearch(mentionSearch);
+			setSelectedMentionIndex(0);
 		};
 
 		caretListboxOverlayManager.updateMentionListState = (mentionList) => {
@@ -56,19 +56,6 @@ export const CaretListboxOverlay = ({
 
 	caretListboxOverlayManager.onMatchedMentionListChange?.({ isEmpty });
 
-	const onPopoverToggle = (event: React.ToggleEvent) => {
-		const { newState } = event;
-
-		if (newState === "open") {
-			setSelectedMentionIndex(0);
-			setIsOpen(true);
-		}
-
-		if (newState === "closed") {
-			setIsOpen(false);
-		}
-	};
-
 	const getMentionUserId = (userId: string) => `@${userId}`;
 
 	const scrollToItem: ScrollToItemFn = (isActive) => (node) => {
@@ -79,34 +66,49 @@ export const CaretListboxOverlay = ({
 		node.scrollIntoView({ block: "nearest" });
 	};
 
+	const dataUserId = "data-user-id";
+	const dataIsActive = "data-is-active";
+
 	useEffect(() => {
-		if (!isOpen) {
+		const caretListboxOverlay = caretListboxOverlayRef.current;
+
+		if (!caretListboxOverlay) {
 			return;
 		}
 
-		const abortController = new AbortController();
+		const getSelectedUserInfos = () => {
+			const activeButton = caretListboxOverlay.querySelector<HTMLButtonElement>(
+				`[${dataIsActive}="true"]`,
+			);
 
-		const { signal } = abortController;
+			if (!activeButton) {
+				throw new Error("ActiveButton can't be null.");
+			}
 
-		const navigateBackward = () => {
-			const updatedSelectedMentionIndex =
-				(selectedMentionIndex === 0
-					? matchedMentionList.length
-					: selectedMentionIndex) - 1;
+			const userId = activeButton.getAttribute(dataUserId);
 
-			setSelectedMentionIndex(updatedSelectedMentionIndex);
+			if (userId === null) {
+				throw new Error("UserId can't be null.");
+			}
+
+			const user = matchedMentionList.find((user) => user.userId === userId);
+
+			if (!user) {
+				throw new Error("User can't be undefined.");
+			}
+
+			const { userName } = user;
+
+			return { userId, userName };
 		};
 
-		const navigateForward = () => {
-			const updatedSelectedMentionIndex =
-				selectedMentionIndex === matchedMentionList.length - 1
-					? 0
-					: selectedMentionIndex + 1;
+		const manageKeyboardNavigation = (event: KeyboardEvent) => {
+			const isOpen = caretListboxOverlay.matches(":popover-open");
 
-			setSelectedMentionIndex(updatedSelectedMentionIndex);
-		};
+			if (!isOpen) {
+				return;
+			}
 
-		const handleKeyboardNavigation = (event: KeyboardEvent) => {
 			const { key, shiftKey } = event;
 
 			if (
@@ -114,7 +116,7 @@ export const CaretListboxOverlay = ({
 				key !== "ArrowUp" &&
 				key !== "ArrowDown" &&
 				key !== "Tab" &&
-				key !== "Esc"
+				key !== "Escape"
 			) {
 				return;
 			}
@@ -123,18 +125,26 @@ export const CaretListboxOverlay = ({
 			event.stopPropagation();
 
 			if (key === "Enter") {
-				const user = matchedMentionList.at(selectedMentionIndex);
-
-				if (!user) {
-					throw new Error("User can't be undefined.");
-				}
-
-				const { userId, userName } = user;
+				const { userId, userName } = getSelectedUserInfos();
 
 				caretListboxOverlayManager.onSelectedMention?.({ userId, userName });
 
 				return;
 			}
+
+			const navigateBackward = () => {
+				setSelectedMentionIndex(
+					(prev) => (prev === 0 ? matchedMentionList.length : prev) - 1,
+				);
+			};
+
+			const navigateForward = () => {
+				setSelectedMentionIndex((selectedIndex) =>
+					selectedIndex === matchedMentionList.length - 1
+						? 0
+						: selectedIndex + 1,
+				);
+			};
 
 			if (key === "ArrowUp") {
 				navigateBackward();
@@ -158,7 +168,7 @@ export const CaretListboxOverlay = ({
 				return;
 			}
 
-			if (key === "Esc") {
+			if (key === "Escape") {
 				caretListboxOverlayManager.onCaretListboxClose?.();
 
 				return;
@@ -167,17 +177,19 @@ export const CaretListboxOverlay = ({
 			assertNever(key);
 		};
 
-		document.addEventListener("keydown", handleKeyboardNavigation, { signal });
+		const abortController = new AbortController();
+
+		const { signal } = abortController;
+
+		document.addEventListener("keydown", manageKeyboardNavigation, {
+			capture: true,
+			signal,
+		});
 
 		return () => {
 			abortController.abort();
 		};
-	}, [
-		isOpen,
-		selectedMentionIndex,
-		matchedMentionList,
-		caretListboxOverlayManager,
-	]);
+	}, [caretListboxOverlayManager, matchedMentionList]);
 
 	return (
 		<div
@@ -185,7 +197,6 @@ export const CaretListboxOverlay = ({
 			id={interactiveOverlayId.caretListbox}
 			popover="manual"
 			className="max-h-64 max-w-64 flex-col rounded-md py-2 shadow-md [&:popover-open]:flex"
-			onToggle={onPopoverToggle}
 		>
 			{/* biome-ignore lint/correctness/noUnusedVariables: <Explanation> */}
 			{matchedMentionList.map(({ userId, userName, userImage }, index) => {
@@ -209,6 +220,7 @@ export const CaretListboxOverlay = ({
 								userName,
 							});
 						}}
+						{...{ [dataUserId]: userId, [dataIsActive]: isActive }}
 					>
 						{/* Visualizes the image that will be implemented in the future */}
 						<span className="inline-block size-6 shrink-0 rounded-full bg-slate-300" />

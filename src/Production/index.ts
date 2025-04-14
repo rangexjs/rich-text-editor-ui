@@ -19,6 +19,8 @@ export type {
 	OnTablePropertiesActionProps,
 	OnCellPropertiesActionFn,
 	OnCellPropertiesActionProps,
+	MentionList,
+	MentionListItem,
 } from "@components";
 
 export type { AnchorProps } from "@interactiveOverlaysManager";

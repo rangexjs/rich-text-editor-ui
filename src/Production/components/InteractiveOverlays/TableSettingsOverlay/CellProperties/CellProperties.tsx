@@ -37,7 +37,7 @@ export const CellProperties = ({
 	onClose,
 	cellProps,
 	updateCellProps,
-	onCellPropertiesAction,
+	tableSettingsOverlayManager,
 }: CellPropertiesProps) => {
 	const borderWidthInputRef = useRef<HTMLInputElement>(null);
 
@@ -119,7 +119,7 @@ export const CellProperties = ({
 	};
 
 	const onCancel = () => {
-		onCellPropertiesAction?.({ type: "cancel" });
+		tableSettingsOverlayManager.onCellPropertiesAction?.({ type: "cancel" });
 
 		closePanel();
 	};
@@ -155,7 +155,7 @@ export const CellProperties = ({
 			return;
 		}
 
-		onCellPropertiesAction?.({
+		tableSettingsOverlayManager.onCellPropertiesAction?.({
 			type: "apply",
 			borderStyle: cellProps.borderStyle,
 			borderColor: cellProps.borderColor,

@@ -1,3 +1,5 @@
+import type { TableSettingsOverlayManager } from "@interactiveOverlaysManager";
+
 export type TableAlignment = "left" | "center" | "right";
 
 export type TableBorderColor = string;
@@ -11,7 +13,7 @@ export interface TableProps {
 	borderWidth: string | undefined;
 }
 
-export interface InputValidity {
+export interface TableInputValidity {
 	tableWidth: boolean;
 	tableHeight: boolean;
 	borderWidth: boolean;
@@ -75,5 +77,5 @@ export interface TablePropertiesProps {
 	onClose: () => void;
 	tableProps: TableProps;
 	updateTableProps: UpdateTablePropsFn;
-	onTablePropertiesAction: OnTablePropertiesActionFn | null;
+	tableSettingsOverlayManager: TableSettingsOverlayManager;
 }

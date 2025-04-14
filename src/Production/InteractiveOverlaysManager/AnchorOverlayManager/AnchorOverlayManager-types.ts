@@ -1,4 +1,5 @@
 import type {
+	AnchorInitialFocusTarget,
 	AnchorIsDownloadable,
 	AnchorIsOpenNewTab,
 	AnchorLayoutView,
@@ -25,6 +26,13 @@ export type UpdateUrlStateProps = AnchorUrl;
 
 export type UpdateUrlStateFn = (props: UpdateUrlStateProps) => void;
 
+// InitialFocusTarget
+export type UpdateInitialFocusTargetStateProps = AnchorInitialFocusTarget;
+
+export type UpdateInitialFocusTargetStateFn = (
+	props: UpdateInitialFocusTargetStateProps,
+) => void;
+
 // IsOpenNewTab
 export type UpdateIsOpenNewTabStateProps = AnchorIsOpenNewTab;
 
@@ -47,6 +55,8 @@ export type OnAnchorActiveViewChangeFn = (
 	props: OnAnchorActiveViewChangeProps,
 ) => void;
 
+export type OnAnchorCloseFn = () => void;
+
 export interface AnchorProps {
 	textToDisplay: AnchorTextToDisplay;
 	url: AnchorUrl;
@@ -65,10 +75,12 @@ export interface AnchorOverlayState {
 	layoutView: AnchorLayoutView;
 	textToDisplay: AnchorTextToDisplay;
 	url: AnchorUrl;
+	initialFocusTarget: AnchorInitialFocusTarget;
 	isOpenNewTab: AnchorIsOpenNewTab;
 	isDownloadable: AnchorIsDownloadable;
 	onActiveViewChange: OnAnchorActiveViewChangeFn;
 	onAction: OnActionFn;
+	onClose: OnAnchorCloseFn;
 }
 
 export interface UpdateAnchorOverlayStateProps

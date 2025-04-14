@@ -1,4 +1,5 @@
 import type {
+	AnchorInitialFocusTarget,
 	AnchorIsDownloadable,
 	AnchorIsOpenNewTab,
 	AnchorLayoutView,
@@ -9,8 +10,10 @@ import type {
 import type {
 	OnActionFn,
 	OnAnchorActiveViewChangeFn,
+	OnAnchorCloseFn,
 	UpdateAnchorLayoutViewStateFn,
 	UpdateAnchorOverlayStateProps,
+	UpdateInitialFocusTargetStateFn,
 	UpdateIsDownloadableStateFn,
 	UpdateIsOpenNewTabStateFn,
 	UpdateTextToDisplayStateFn,
@@ -21,6 +24,7 @@ export class AnchorOverlayManager {
 	#layoutView: AnchorLayoutView = "main";
 	#textToDisplay: AnchorTextToDisplay = "Example website";
 	#url: AnchorUrl = "https://example.com";
+	#initialFocusTarget: AnchorInitialFocusTarget = null;
 	#isOpenNewTab: AnchorIsOpenNewTab = true;
 	#isDownloadable: AnchorIsDownloadable = false;
 
@@ -36,6 +40,10 @@ export class AnchorOverlayManager {
 		return this.#url;
 	}
 
+	get initialFocusTarget() {
+		return this.#initialFocusTarget;
+	}
+
 	get isOpenNewTab() {
 		return this.#isOpenNewTab;
 	}
@@ -47,20 +55,24 @@ export class AnchorOverlayManager {
 	updateLayoutViewState: UpdateAnchorLayoutViewStateFn | null = null;
 	updateTextToDisplayState: UpdateTextToDisplayStateFn | null = null;
 	updateUrlState: UpdateUrlStateFn | null = null;
+	updateInitialFocusTargetState: UpdateInitialFocusTargetStateFn | null = null;
 	updateIsOpenNewTabState: UpdateIsOpenNewTabStateFn | null = null;
 	updateIsDownloadableState: UpdateIsDownloadableStateFn | null = null;
 
 	onActiveViewChange: OnAnchorActiveViewChangeFn | null = null;
 	onAction: OnActionFn | null = null;
+	onClose: OnAnchorCloseFn | null = null;
 
 	updateState({
 		layoutView,
 		textToDisplay,
 		url,
+		initialFocusTarget,
 		isOpenNewTab,
 		isDownloadable,
 		onActiveViewChange,
 		onAction,
+		onClose,
 	}: UpdateAnchorOverlayStateProps) {
 		if (layoutView) {
 			this.#layoutView = layoutView;
@@ -77,6 +89,11 @@ export class AnchorOverlayManager {
 			this.updateUrlState?.(url);
 		}
 
+		if (initialFocusTarget !== undefined) {
+			this.#initialFocusTarget = initialFocusTarget;
+			this.updateInitialFocusTargetState?.(initialFocusTarget);
+		}
+
 		if (isOpenNewTab !== undefined) {
 			this.#isOpenNewTab = isOpenNewTab;
 			this.updateIsOpenNewTabState?.(isOpenNewTab);
@@ -87,12 +104,16 @@ export class AnchorOverlayManager {
 			this.updateIsDownloadableState?.(isDownloadable);
 		}
 
-		if (onActiveViewChange) {
+		if (onActiveViewChange !== undefined) {
 			this.onActiveViewChange = onActiveViewChange;
 		}
 
-		if (onAction) {
+		if (onAction !== undefined) {
 			this.onAction = onAction;
+		}
+
+		if (onClose !== undefined) {
+			this.onClose = onClose;
 		}
 	}
 }
