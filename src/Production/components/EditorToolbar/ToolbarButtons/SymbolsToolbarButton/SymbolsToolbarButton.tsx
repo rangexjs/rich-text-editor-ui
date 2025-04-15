@@ -23,7 +23,7 @@ export const SymbolsToolbarButton = ({
 	const popoverTargetElementRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		nodeInsertionButtonsStateManager.updateListState = ({ isDisabled }) => {
+		nodeInsertionButtonsStateManager.updateSymbolsState = ({ isDisabled }) => {
 			setIsDisabled(isDisabled);
 		};
 	}, [nodeInsertionButtonsStateManager]);
