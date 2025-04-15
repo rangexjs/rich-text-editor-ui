@@ -23,8 +23,10 @@ The repository is structured as follows:
 
 ## 📦 Installation
 
-You can install **RichTextEditorUI** via **bun**:
+```sh
+bun add @rangex/rich-text-editor-ui
+```
 
 ```sh
-bun i @rangex/rich-text-editor-ui
+npm i @rangex/rich-text-editor-ui
 ```
