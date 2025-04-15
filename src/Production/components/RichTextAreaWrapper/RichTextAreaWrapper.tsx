@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import {
 	AnchorOverlay,
 	CaretListboxOverlay,
+	FloatingControlsOverlay,
 	TableSettingsOverlay,
 } from "../InteractiveOverlays";
 
@@ -12,12 +13,14 @@ export const RichTextAreaWrapper = ({
 	interactiveOverlays,
 	anchorOverlayManager,
 	caretListboxOverlayManager,
+	floatingControlsOverlayManager,
 	tableSettingsOverlayManager,
 	richTextArea,
 }: RichTextAreaWrapperProps) => {
 	const richTextAreaHolderRef = useRef<HTMLDivElement>(null);
 
-	const { anchor, caretListbox, tableSettings } = interactiveOverlays;
+	const { anchor, caretListbox, floatingControls, tableSettings } =
+		interactiveOverlays;
 
 	useEffect(() => {
 		if (!richTextAreaHolderRef.current) {
@@ -41,6 +44,11 @@ export const RichTextAreaWrapper = ({
 				{caretListbox && (
 					<CaretListboxOverlay
 						caretListboxOverlayManager={caretListboxOverlayManager}
+					/>
+				)}
+				{floatingControls && (
+					<FloatingControlsOverlay
+						floatingControlsOverlayManager={floatingControlsOverlayManager}
 					/>
 				)}
 				{tableSettings && (

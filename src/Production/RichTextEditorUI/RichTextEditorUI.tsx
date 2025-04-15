@@ -7,6 +7,7 @@ import { interactiveOverlayId } from "@constants";
 import {
 	AnchorOverlayManager,
 	CaretListboxOverlayManager,
+	FloatingControlsOverlayManager,
 	TableSettingsOverlayManager,
 } from "@interactiveOverlaysManager";
 import { ToolbarButtonsActionManager } from "@toolbarButtonsActionManager";
@@ -32,6 +33,7 @@ import type {
 	RichTextEditorUIConstructorProps,
 	UpdateAnchorOverlayProps,
 	UpdateCaretListboxOverlayProps,
+	UpdateFloatingControlsOverlayProps,
 	UpdateFormatLineTagNameButtonsProps,
 	UpdateFormatStylesButtonsProps,
 	UpdateHistoryNavigationButtonsProps,
@@ -54,6 +56,7 @@ export class RichTextEditorUI {
 		new NonCategorizedOperationButtonsStateManager();
 	#anchorOverlayManager = new AnchorOverlayManager();
 	#caretListboxOverlayManager = new CaretListboxOverlayManager();
+	#floatingControlsOverlayManager = new FloatingControlsOverlayManager();
 	#tableSettingsOverlayManager = new TableSettingsOverlayManager();
 
 	constructor({
@@ -113,6 +116,9 @@ export class RichTextEditorUI {
 						interactiveOverlays={interactiveOverlays}
 						anchorOverlayManager={this.#anchorOverlayManager}
 						caretListboxOverlayManager={this.#caretListboxOverlayManager}
+						floatingControlsOverlayManager={
+							this.#floatingControlsOverlayManager
+						}
 						tableSettingsOverlayManager={this.#tableSettingsOverlayManager}
 						richTextArea={richTextArea}
 					/>
@@ -141,6 +147,15 @@ export class RichTextEditorUI {
 		});
 
 		return caretListboxOverlay;
+	}
+
+	get floatingControlsOverlay() {
+		const floatingControlsOverlay = getOverlayElement({
+			id: interactiveOverlayId.floatingControls,
+			shadowRoot: this.#shadowRoot,
+		});
+
+		return floatingControlsOverlay;
 	}
 
 	get tableSettingsOverlay() {
@@ -198,8 +213,12 @@ export class RichTextEditorUI {
 		this.#anchorOverlayManager.updateState(props);
 	}
 
-	updateCaretListboxOverlayState(props: UpdateCaretListboxOverlayProps) {
+	updateCaretListboxOverlay(props: UpdateCaretListboxOverlayProps) {
 		this.#caretListboxOverlayManager.updateState(props);
+	}
+
+	updateFloatingControlsOverlay(props: UpdateFloatingControlsOverlayProps) {
+		this.#floatingControlsOverlayManager.updateState(props);
 	}
 
 	updateTableSettingsOverlay(props: UpdateTableSettingsOverlayProps) {
