@@ -182,7 +182,7 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 		<div
 			id={interactiveOverlayId.anchor}
 			className="w-60 rounded-md border border-slate-200 bg-white p-3 shadow-md"
-			popover="manual"
+			popover="auto"
 			onToggle={onPopoverToggle}
 		>
 			<div
