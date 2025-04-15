@@ -14,6 +14,7 @@ export const App = ({
 	interactiveOverlays,
 	anchorOverlayManager,
 	caretListboxOverlayManager,
+	floatingControlsOverlayManager,
 	tableSettingsOverlayManager,
 	richTextArea,
 }: AppProps) => {
@@ -38,6 +39,7 @@ export const App = ({
 				interactiveOverlays={interactiveOverlays}
 				anchorOverlayManager={anchorOverlayManager}
 				caretListboxOverlayManager={caretListboxOverlayManager}
+				floatingControlsOverlayManager={floatingControlsOverlayManager}
 				tableSettingsOverlayManager={tableSettingsOverlayManager}
 				richTextArea={richTextArea}
 			/>

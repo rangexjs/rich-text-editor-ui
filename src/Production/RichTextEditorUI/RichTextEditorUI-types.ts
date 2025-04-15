@@ -2,6 +2,7 @@ import type { AppProps } from "@components";
 import type {
 	UpdateAnchorOverlayStateProps,
 	UpdateCaretListboxOverlayStateProps,
+	UpdateFloatingControlsOverlayStateProps,
 	UpdateTableSettingsOverlayStateProps,
 } from "@interactiveOverlaysManager";
 import type {
@@ -57,6 +58,9 @@ export interface UpdateAnchorOverlayProps
 
 export interface UpdateCaretListboxOverlayProps
 	extends UpdateCaretListboxOverlayStateProps {}
+
+export interface UpdateFloatingControlsOverlayProps
+	extends UpdateFloatingControlsOverlayStateProps {}
 
 export interface UpdateTableSettingsOverlayProps
 	extends UpdateTableSettingsOverlayStateProps {}

@@ -61,6 +61,7 @@ export const simulateProductEnvironment = ({
 		interactiveOverlays: {
 			anchor: true,
 			caretListbox: true,
+			floatingControls: true,
 			tableSettings: true,
 		},
 		richTextArea,
@@ -149,6 +150,7 @@ export const simulateProductEnvironment = ({
 	// Feature flags (should be reworked in the future to make manual testing easier, consider storybook)
 	const isAddAnchor = false;
 	const isAddCaretListbox = false;
+	const isAddFloatingControls = false;
 	const isAddTable = false;
 
 	if (isAddAnchor) {
@@ -169,7 +171,7 @@ export const simulateProductEnvironment = ({
 		caretListboxOverlay.style.top = "anchor(bottom)";
 		caretListboxOverlay.style.left = "anchor(left)";
 
-		richTextEditorUI.updateCaretListboxOverlayState({
+		richTextEditorUI.updateCaretListboxOverlay({
 			mentionSearch: "@",
 			mentionList,
 		});
@@ -178,6 +180,17 @@ export const simulateProductEnvironment = ({
 			// @ts-ignore
 			caretListboxOverlay.showPopover({ source: richTextArea });
 		}, 1e3);
+	}
+
+	if (isAddFloatingControls) {
+		const { floatingControlsOverlay } = richTextEditorUI;
+
+		richTextEditorUI.updateFloatingControlsOverlay({ copy: true, drag: true });
+
+		setTimeout(() => {
+			// @ts-ignore
+			floatingControlsOverlay.showPopover({ source: richTextArea });
+		}, 1e2);
 	}
 
 	if (isAddTable) {
