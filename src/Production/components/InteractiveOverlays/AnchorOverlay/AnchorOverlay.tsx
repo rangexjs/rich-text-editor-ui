@@ -191,7 +191,7 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 			>
 				<span className="w-36 overflow-hidden text-ellipsis whitespace-nowrap text-blue-700 text-sm underline">
 					<a href={safeUrl} target="_blank" rel="noreferrer" title={safeUrl}>
-						{textToDisplay || safeUrl}
+						{safeUrl}
 					</a>
 				</span>
 				<span className="w-px shrink-0 self-stretch bg-slate-400" />
