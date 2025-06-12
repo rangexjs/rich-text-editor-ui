@@ -45,6 +45,8 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 		url: true,
 	});
 
+	const [invalidURLMessage, setInvalidURLMessage] = useState("");
+
 	const textToDisplayInputRef = useRef<HTMLInputElement>(null);
 
 	const urlInputRef = useRef<HTMLInputElement>(null);
@@ -119,7 +121,17 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 		anchorOverlayManager.onAction?.({ type: "cancel" });
 	};
 
-	const safeUrl = url.trim().replaceAll(/^javascript:/g, "");
+	const isProtocolAllowed = (url: string) => {
+		try {
+			const parsedUrl = new URL(url, window.location.origin);
+
+			const allowedProtocols = ["http:", "https:", "mailto:", "tel:"];
+
+			return allowedProtocols.includes(parsedUrl.protocol);
+		} catch {
+			return false;
+		}
+	};
 
 	const onApply = () => {
 		const urlInput = urlInputRef.current;
@@ -128,8 +140,20 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 			throw new Error("URLInput can't be null.");
 		}
 
-		if (!safeUrl) {
+		if (!url) {
 			setInputValidity((prev) => ({ ...prev, url: false }));
+
+			setInvalidURLMessage("URL can't be empty.");
+
+			urlInput.focus();
+
+			return;
+		}
+
+		if (!isProtocolAllowed(url)) {
+			setInputValidity((prev) => ({ ...prev, url: false }));
+
+			setInvalidURLMessage("Protocol is not allowed.");
 
 			urlInput.focus();
 
@@ -139,7 +163,7 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 		anchorOverlayManager.onAction?.({
 			type: "apply",
 			textToDisplay,
-			url: safeUrl,
+			url,
 			isOpenNewTab,
 			isDownloadable,
 		});
@@ -190,8 +214,8 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 				style={{ display: shouldShowMain ? "" : "none" }}
 			>
 				<span className="w-36 overflow-hidden text-ellipsis whitespace-nowrap text-blue-700 text-sm underline">
-					<a href={safeUrl} target="_blank" rel="noreferrer" title={safeUrl}>
-						{safeUrl}
+					<a href={url} target="_blank" rel="noreferrer" title={url}>
+						{url}
 					</a>
 				</span>
 				<span className="w-px shrink-0 self-stretch bg-slate-400" />
@@ -227,7 +251,7 @@ export const AnchorOverlay = ({ anchorOverlayManager }: AnchorOverlayProps) => {
 					}}
 					title={"URL"}
 					isInvalid={!inputValidity.url}
-					invalidMessage="URL can't be empty."
+					invalidMessage={invalidURLMessage}
 				/>
 				<div
 					className="mb-1 flex cursor-pointer select-none justify-between"
