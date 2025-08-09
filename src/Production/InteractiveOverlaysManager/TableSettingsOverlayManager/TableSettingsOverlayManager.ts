@@ -45,6 +45,9 @@ export class TableSettingsOverlayManager {
 		deleteColumn: { disabled: false },
 	};
 	#rowButtons: RowButtons = {
+		moveRowsToHead: { disabled: false },
+		moveRowsToBody: { disabled: false },
+		moveRowsToFoot: { disabled: false },
 		insertRowAbove: { disabled: false },
 		insertRowBelow: { disabled: false },
 		deleteRow: { disabled: false },
@@ -57,6 +60,7 @@ export class TableSettingsOverlayManager {
 		mergeCellLeft: { disabled: false },
 		splitCellHorizontally: { disabled: false },
 		splitCellVertically: { disabled: false },
+		splitCellFully: { disabled: false },
 	};
 
 	get layoutView() {

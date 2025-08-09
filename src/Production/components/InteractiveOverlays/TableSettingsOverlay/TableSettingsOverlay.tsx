@@ -242,6 +242,38 @@ export const TableSettingsOverlay = ({
 	const rowButtonsGroup: TableButtonsGroup = [
 		[
 			{
+				name: "Move rows to Header",
+				disabled: rowButtons.moveRowsToHead.disabled,
+				disabledReason: rowButtons.moveRowsToHead.disabledReason,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: rowDropdownRef,
+						type: "move-row-head",
+					}),
+			},
+			{
+				name: "Move rows to Body",
+				disabled: rowButtons.moveRowsToBody.disabled,
+				disabledReason: rowButtons.moveRowsToBody.disabledReason,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: rowDropdownRef,
+						type: "move-row-body",
+					}),
+			},
+			{
+				name: "Move rows to Footer",
+				disabled: rowButtons.moveRowsToFoot.disabled,
+				disabledReason: rowButtons.moveRowsToBody.disabledReason,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: rowDropdownRef,
+						type: "move-row-foot",
+					}),
+			},
+		],
+		[
+			{
 				name: "Insert row above",
 				disabled: rowButtons.insertRowAbove.disabled,
 				onClick: () =>
@@ -336,6 +368,15 @@ export const TableSettingsOverlay = ({
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
 						type: "split-cell-vertically",
+					}),
+			},
+			{
+				name: "Split cell fully",
+				disabled: cellSpanModifier.splitCellFully.disabled,
+				onClick: () =>
+					onTableActionButtonClick({
+						dropdownRef: cellSpanModifierDropdownRef,
+						type: "split-cell-fully",
 					}),
 			},
 		],

@@ -22,6 +22,7 @@ export type DropdownIconState = "col" | "row" | "cell-modifier" | null;
 
 interface CellButtonProps {
 	disabled: boolean;
+	disabledReason?: string;
 }
 
 export interface ColumnButtons {
@@ -31,6 +32,9 @@ export interface ColumnButtons {
 }
 
 export interface RowButtons {
+	moveRowsToHead: CellButtonProps;
+	moveRowsToBody: CellButtonProps;
+	moveRowsToFoot: CellButtonProps;
 	insertRowAbove: CellButtonProps;
 	insertRowBelow: CellButtonProps;
 	deleteRow: CellButtonProps;
@@ -44,11 +48,18 @@ export interface CellSpanModifier {
 	mergeCellLeft: CellButtonProps;
 	splitCellHorizontally: CellButtonProps;
 	splitCellVertically: CellButtonProps;
+	splitCellFully: CellButtonProps;
 }
 
 type CellColActionType = "insert-col-left" | "insert-col-right" | "delete-col";
 
-type CellRowActionType = "insert-row-above" | "insert-row-below" | "delete-row";
+type CellRowActionType =
+	| "move-row-head"
+	| "move-row-body"
+	| "move-row-foot"
+	| "insert-row-above"
+	| "insert-row-below"
+	| "delete-row";
 
 type CellSpanModifierType =
 	| "merge-selected-cells"
@@ -57,7 +68,8 @@ type CellSpanModifierType =
 	| "merge-cell-left"
 	| "merge-cell-right"
 	| "split-cell-horizontally"
-	| "split-cell-vertically";
+	| "split-cell-vertically"
+	| "split-cell-fully";
 
 export type TableCellActionType =
 	| CellColActionType
