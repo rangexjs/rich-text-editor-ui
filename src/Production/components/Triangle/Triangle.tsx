@@ -3,6 +3,7 @@ import type { TriangleProps } from "./Triangle-types";
 export const Triangle = ({
 	width,
 	height,
+	ref,
 	className,
 	style,
 }: TriangleProps) => {
@@ -10,6 +11,7 @@ export const Triangle = ({
 
 	return (
 		<span
+			ref={ref}
 			className={`inline-block ${className}`}
 			style={{
 				...style,
