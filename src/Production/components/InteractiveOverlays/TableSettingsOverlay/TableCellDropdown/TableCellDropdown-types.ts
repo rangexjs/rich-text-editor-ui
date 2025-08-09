@@ -1,8 +1,14 @@
 import type { RefObject } from "react";
 
+export interface ButtonInfoProps {
+	disabled: boolean;
+	disabledReason: string | undefined;
+}
+
 interface TableButton {
 	name: string;
 	disabled: boolean;
+	disabledReason?: string;
 	onClick: () => void;
 }
 
