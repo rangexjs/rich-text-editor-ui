@@ -212,6 +212,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Insert column left",
 				disabled: columnButtons.insertColumnLeft.disabled,
+				disabledReason: columnButtons.insertColumnLeft.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: columnDropdownRef,
@@ -221,6 +222,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Insert column right",
 				disabled: columnButtons.insertColumnRight.disabled,
+				disabledReason: columnButtons.insertColumnRight.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: columnDropdownRef,
@@ -230,6 +232,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Delete column",
 				disabled: columnButtons.deleteColumn.disabled,
+				disabledReason: columnButtons.deleteColumn.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: columnDropdownRef,
@@ -276,6 +279,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Insert row above",
 				disabled: rowButtons.insertRowAbove.disabled,
+				disabledReason: rowButtons.insertRowAbove.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: rowDropdownRef,
@@ -285,6 +289,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Insert row below",
 				disabled: rowButtons.insertRowBelow.disabled,
+				disabledReason: rowButtons.insertRowBelow.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: rowDropdownRef,
@@ -294,6 +299,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Delete row",
 				disabled: rowButtons.deleteRow.disabled,
+				disabledReason: rowButtons.deleteRow.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: rowDropdownRef,
@@ -308,6 +314,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Merge selected cells",
 				disabled: cellSpanModifier.mergeSelectedCells.disabled,
+				disabledReason: cellSpanModifier.mergeSelectedCells.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -317,6 +324,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Merge cell up",
 				disabled: cellSpanModifier.mergeCellUp.disabled,
+				disabledReason: cellSpanModifier.mergeCellUp.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -326,6 +334,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Merge cell down",
 				disabled: cellSpanModifier.mergeCellDown.disabled,
+				disabledReason: cellSpanModifier.mergeCellDown.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -335,6 +344,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Merge cell left",
 				disabled: cellSpanModifier.mergeCellLeft.disabled,
+				disabledReason: cellSpanModifier.mergeCellLeft.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -344,6 +354,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Merge cell right",
 				disabled: cellSpanModifier.mergeCellRight.disabled,
+				disabledReason: cellSpanModifier.mergeCellRight.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -355,6 +366,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Split cell horizontally",
 				disabled: cellSpanModifier.splitCellHorizontally.disabled,
+				disabledReason: cellSpanModifier.splitCellHorizontally.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -364,6 +376,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Split cell vertically",
 				disabled: cellSpanModifier.splitCellVertically.disabled,
+				disabledReason: cellSpanModifier.splitCellVertically.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
@@ -373,6 +386,7 @@ export const TableSettingsOverlay = ({
 			{
 				name: "Split cell fully",
 				disabled: cellSpanModifier.splitCellFully.disabled,
+				disabledReason: cellSpanModifier.splitCellFully.disabledReason,
 				onClick: () =>
 					onTableActionButtonClick({
 						dropdownRef: cellSpanModifierDropdownRef,
