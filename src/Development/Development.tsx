@@ -151,7 +151,7 @@ export const simulateProductEnvironment = ({
 	const isAddAnchor = false;
 	const isAddCaretListbox = false;
 	const isAddFloatingControls = false;
-	const isAddTable = false;
+	const isAddTable = true;
 
 	if (isAddAnchor) {
 		const { anchorOverlay } = richTextEditorUI;

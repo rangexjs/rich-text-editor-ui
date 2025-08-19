@@ -24,6 +24,7 @@ export * from "./HistoryForwardIcon";
 export * from "./ImageIcon";
 export * from "./ImageUploadIcon";
 export * from "./IndentationIcon";
+export * from "./InfoIcon";
 export * from "./ItalicIcon";
 export * from "./LetterSpacingIcon";
 export * from "./LineHeightIcon";
