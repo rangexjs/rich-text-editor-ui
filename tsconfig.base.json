@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"moduleResolution": "bundler",
+		"module": "esnext",
+		"strict": true,
+		"newLine": "lf",
+		"baseUrl": ".",
+		"paths": {
+			"@public/*": ["src/Production/public/*"],
+			"@components": ["src/Production/components"],
+			"@constants": ["src/Production/Constants"],
+			"@errorHandling": ["src/Production/ErrorHandling"],
+			"@externalStores": ["src/Production/ExternalStores"],
+			"@interactiveOverlaysManager": [
+				"src/Production/InteractiveOverlaysManager"
+			],
+			"@toolbarButtonsActionManager": [
+				"src/Production/ToolbarButtonsActionManager"
+			],
+			"@toolbarButtonsStateManager": [
+				"src/Production/ToolbarButtonsStateManager"
+			],
+			"@utilities": ["src/Production/Utilities"]
+		},
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"jsx": "preserve",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"resolveJsonModule": true,
+		"isolatedModules": true
+	}
+}
