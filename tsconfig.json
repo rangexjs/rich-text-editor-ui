@@ -1,39 +1,6 @@
 {
-	"compilerOptions": {
-		"target": "ES2022",
-		"moduleResolution": "Bundler",
-		"strict": true,
-		"newLine": "lf",
-		"baseUrl": ".",
-		"paths": {
-			"@public/*": ["src/Production/public/*"],
-			"@components": ["src/Production/components"],
-			"@constants": ["src/Production/Constants"],
-			"@errorHandling": ["src/Production/ErrorHandling"],
-			"@externalStores": ["src/Production/ExternalStores"],
-			"@interactiveOverlaysManager": [
-				"src/Production/InteractiveOverlaysManager"
-			],
-			"@toolbarButtonsActionManager": [
-				"src/Production/ToolbarButtonsActionManager"
-			],
-			"@toolbarButtonsStateManager": [
-				"src/Production/ToolbarButtonsStateManager"
-			],
-			"@utilities": ["src/Production/Utilities"]
-		},
-		"esModuleInterop": true,
-		"module": "ESNext",
-		"noEmit": true,
-		"skipLibCheck": true,
-		"jsx": "preserve",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"incremental": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"plugins": [{ "name": "next" }],
-		"allowJs": true
-	},
-	"include": ["src/**/*", "declaration.d.ts", "index.ts"],
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": { "noEmit": true },
+	"include": ["src/**/*", "declaration.d.ts"],
 	"exclude": ["node_modules"]
 }

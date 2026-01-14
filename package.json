@@ -5,15 +5,25 @@
 	"type": "module",
 	"repository": "git@github.com:rangexjs/rich-text-editor-ui.git",
 	"license": "MIT",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": ["./dist"],
+	"exports": {
+		".": {
+			"development": {
+				"types": "./dist/index.d.ts",
+				"import": "./dist/index.js"
+			},
+			"production": {
+				"types": "./dist/index.d.ts",
+				"import": "./dist/index.js"
+			}
+		}
+	},
+	"files": ["dist", "LICENSE.md", "README.md"],
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "vite build && tsc -p ./tsconfig.build.json",
 		"fix": "biome check --write",
 		"fix:unsafe": "biome check --write --unsafe",
-		"lint": "biome check && tsc",
+		"check": "biome check && tsc",
 		"npm:publish": "biome check && tsc && vite build && npm publish"
 	},
 	"dependencies": {
